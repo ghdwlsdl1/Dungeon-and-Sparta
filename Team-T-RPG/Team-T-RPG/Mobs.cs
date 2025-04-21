@@ -8,5 +8,6 @@ namespace Team_T_RPG
 {
     class Mobs
     {
+        int level = Data.Level;
     }
 }

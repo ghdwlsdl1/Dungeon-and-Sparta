@@ -8,8 +8,10 @@ namespace Team_T_RPG
 {
     class MainFrame
     {
+        
         static void Main()
         {
+            
             StartScene(); // 게임 시작, 이어하기 및 캐릭터 생성 (이어하기는 추후 구현)
 
             while (true) // 아래 조건 미충족 시 break
@@ -17,7 +19,7 @@ namespace Team_T_RPG
             {
                 PayTax(); // 세금 납부
 
-                if (false) // 체력 == 0 || 세금을 내고 골드가 음수값이 된 경우 게임오버 처리
+                if (data.Level == 0) // 체력 == 0 || 세금을 내고 골드가 음수값이 된 경우 게임오버 처리
                     break;
                 else
                 {
@@ -34,6 +36,7 @@ namespace Team_T_RPG
         public static void StartScene()
         {
             GameStarter gameStarter = new GameStarter();
+            
             gameStarter.StartSceneArt();
             Console.WriteLine("던전 엔 스파르타에 오신 것을 환영합니다.");
 
@@ -80,6 +83,7 @@ namespace Team_T_RPG
             {
                 case 1: // 스탯창
                     {
+                        
                         break;
                     }
 
@@ -93,12 +97,12 @@ namespace Team_T_RPG
                         break;
                     }
 
-                case 4: // 퀘스트
+                case 4: // 퀘스트 <<
                     {
                         break;
                     }
 
-                case 5: // 휴식
+                case 5: // 휴식 <<
                     {
                         break;
                     }

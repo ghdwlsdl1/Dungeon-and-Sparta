@@ -18,7 +18,7 @@
     <Compile Include="GameStarter.cs" />
     <Compile Include="Mobs.cs" />
     <Compile Include="Item.cs" />
-	
+	  <Compile Include="Data.cs" />
   </ItemGroup>
 
 </Project>
