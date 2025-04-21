@@ -58,7 +58,7 @@ namespace Team_T_RPG
 
 
         //====================주사위====================
-        public Random random = new Random(); //랜덤
+        public static Random random = new Random(); //랜덤
         public static int dice20() //20면 주사위
         {
             return random.Next(1, 21) + Luk;

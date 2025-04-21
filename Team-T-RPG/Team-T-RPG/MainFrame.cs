@@ -6,9 +6,33 @@ using System.Threading.Tasks;
 
 namespace Team_T_RPG
 {
+  
     class MainFrame
     {
-        
+        static void Stats()
+        {
+            Console.WriteLine("상태 보기");
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine($"chad ( {Data.Job[0]} )");
+            Console.WriteLine($"공격력 : {Data.Atk}");
+            Console.WriteLine($"방어력 : {Data.Def}");
+            Console.WriteLine($"체  력 : {Data.Hp}");
+            Console.WriteLine($"Gold   : {Data.Money}");
+            Console.WriteLine("1");
+            Console.WriteLine("0.나가기");
+            string input = Console.ReadLine();
+            int outInput;
+            bool intInput = int.TryParse( input,out outInput );
+            if (intInput)
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("다시입력");
+            }
+        }
+
         static void Main()
         {
             
@@ -19,7 +43,7 @@ namespace Team_T_RPG
             {
                 PayTax(); // 세금 납부
 
-                if (data.Level == 0) // 체력 == 0 || 세금을 내고 골드가 음수값이 된 경우 게임오버 처리
+                if (Data.Level == 0) // 체력 == 0 || 세금을 내고 골드가 음수값이 된 경우 게임오버 처리
                     break;
                 else
                 {
@@ -78,12 +102,18 @@ namespace Team_T_RPG
 
         public static void TownScene() // 가장 중심 씬이 될 마을. 각 선택지에 따라 기능 구현 (업무 여기서 나누는 느낌으로)
         {
+            Console.WriteLine("1.스탯창");
+            Console.WriteLine("2");
+            Console.WriteLine("3");
+            Console.WriteLine("4");
+            Console.WriteLine("5");
+            Console.WriteLine("6");
             int userinput = UserInputHandler(1,6);
             switch (userinput)
             {
                 case 1: // 스탯창
                     {
-                        
+                        Stats();
                         break;
                     }
 
