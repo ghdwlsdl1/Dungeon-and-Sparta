@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Compile Include="MainFrame.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Stats.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="GameStarter.cs" />
     <Compile Include="Mobs.cs" />
