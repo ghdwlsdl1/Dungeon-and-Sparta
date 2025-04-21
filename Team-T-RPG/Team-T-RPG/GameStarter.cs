@@ -42,6 +42,7 @@ namespace Team_T_RPG
                 }
                 else if (userinput == 2) // 추후 이어하기 구현 시 여기서 다 불러오고 break
                 {
+                    Console.Clear();
                     Console.WriteLine("저장 기능은 미구현입니다. 죄송합니다.\n잠시 후 시작화면으로 돌아갑니다.");
                     Thread.Sleep(1500); // 1.5초 대기
                     Console.Clear();
@@ -71,7 +72,60 @@ namespace Team_T_RPG
 
         public void ChooseJob()
         {
-            Console.WriteLine("아무튼 직업 선택");
+            Console.Clear();
+            Console.WriteLine($"당신의 캐릭터 이름 : {Data.Name}");
+            Console.WriteLine("당신의 직업을 선택해 주세요.\n 직업에 따라 시작 스텟이 다를 수 있으며,\n확률에 따라 보너스 스텟이 추가로 부여됩니다.\n");
+
+            Console.WriteLine("1. 전사 ( + Str )");
+            Console.WriteLine("2. 도적 ( + Dex )");
+            Console.WriteLine("3. 법사 ( + Int )");
+            Console.WriteLine("4. 야만인 ( + Con )\n");
+
+            int userinput = MainFrame.UserInputHandler(1,4);
+            Console.Clear();
+
+            // 유저인풋 받고 직업선택에 따른 스텟 적용 시작 (1) 직업 인덱스 할당
+            Data.JobNames = userinput;
+
+            // 스탯 적용 (2) 랜덤 스텟보너스 적용 
+            Data.startStr = Data.dice6();
+            Data.startDex = Data.dice6();
+            Data.startInt = Data.dice6();
+            Data.startCon = Data.dice6();
+            Data.startWis = Data.dice6();
+            Data.startLuk = Data.dice6();
+
+            // 스탯 적용 (3) 직업에 따른 스텟보너스 적용
+            switch (userinput)
+            {
+                case 1: // 전사
+                    Data.startStr += 2; // 힘
+                    Data.startDex += 2; // 민첩
+                    Data.startCon += 3; // 체력
+                    break;
+
+                case 2: // 도적
+                    Data.startDex += 4; // 민첩
+                    Data.startStr += 1; // 힘
+                    Data.startCon += 2; // 체력
+                    break;
+
+                case 3: // 마법사
+                    Data.startInt += 3; // 지능
+                    Data.startWis += 3; // 마나
+                    Data.startCon += 1; // 체력
+                    break;
+
+                case 4: // 야만인
+                    Data.startStr += 2; // 힘
+                    Data.startCon += 5; // 체력
+                    break;
+            }
+            //(4) 스텟에 따른 최종 스테이터스 갱신 및 Hp,Mp 풀회복
+            Stats stats = new Stats();
+            stats.UpdateStats();
+            Data.Hp += Data.HpMax;
+            Data.Mp += Data.MpMax;
         }
     }
 }

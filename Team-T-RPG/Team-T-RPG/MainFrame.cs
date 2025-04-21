@@ -12,19 +12,34 @@ namespace Team_T_RPG
         static void Main()
         {
             
-            GameStarter gameStarter = new GameStarter(); // 게임스타터 불러오기 : 게임 시작, 캐릭터 생성 및 저장 데이터 불러오기
+            GameStarter gameStarter = new GameStarter(); // 게임스타터 인스턴스 생성 : 게임 시작, 캐릭터 생성 및 저장 데이터 불러오기
             gameStarter.StartScene();
 
             while (true) // 게임오버 조건 미달성 시 무한 반복
-
             {
-                PayTax(); // 세금 납부
+                int daychangecheck = Data.Day;
 
-                if (Data.Hp == 0 || Data.Money <= 0) // 체력 == 0 || 세금을 내고 골드가 음수값이 된 경우 게임오버
+                if (Data.Hp <= 0) // 우선 체력 체크 : 엔딩 조건 1
+                {
+                    Console.WriteLine("당신은 체력이 다하여 죽었습니다!");
                     break;
+                }
+                    
+                if (!Data.duty) // 세금 납부
+                {
+                    PayTax();
+                }
+
+                if (Data.Money <= 0) // 납부할 골드 부족 시 사망 : 엔딩 조건 2
+                {
+                    Console.WriteLine("당신은 납부할 세금이 부족하여 처형당했습니다!");
+                    break;
+                }
+
                 else
                 {
                     TownScene(); // 마을 씬으로 진입
+                    Data.duty = (Data.Day - daychangecheck == 0)? false : true; // 루프 전후로 일자변화 감지하여 세금납부 여부 확인
                 }
             }
 
@@ -32,9 +47,6 @@ namespace Team_T_RPG
             // 사인을 넣고 싶으면 다 하고 추후 기능 구현하기!
 
         }
-
-
-
         
         public static int UserInputHandler(int min, int max, int failcount = 0)
         {
@@ -62,17 +74,45 @@ namespace Team_T_RPG
 
         public static void PayTax() // 세금 계속 루프돌때마다 세금내면 곤란하니 bool값 써서 Day 변동이 있을 시만 걷기
         {
-            Console.WriteLine("세금내라우 동무");
+            if (Data.Day <= 7)
+            {
+                Console.WriteLine("7일 간은 세금이 면제됩니다.");
+                return; // 7일이 지날 때까진 바로 리턴
+            }
+            
+            if (Data.duty)
+            {
+                Console.WriteLine($"마을에 온 지 {Data.Day}일이 지났습니다.");
+                Console.WriteLine($"당신은 세금으로 {Data.Day * 143} G를 납부해야 합니다.");
+                Console.WriteLine($"( 현재 소지 골드 : {Data.Money} G )\n");
+                Data.Money -= Data.Day * 143;
+                Console.Write("세금 정산 중");
+                for (int i = 0; i < 5; i++)
+                {
+                    Thread.Sleep(150);
+                    Console.Write(" > ");
+                    Thread.Sleep(150);
+                }
+                Console.WriteLine();
+                /*
+                세금 계산식에 대해서 논의 요망 : 인던하면 3일씩 보내는 거 같은데, 밀린 세금 한번에 받는 건지
+                아니면 그냥 돌아온 날에만 해당하는 일자의 세금을 걷는 건지 알아야 할 듯.
+                또한 왜 하필 143을 곱하셨나요? 그냥 적당한 밸런싱을 위한 수치?
+                */
+            }
         }
 
         public static void TownScene() // 가장 중심 씬이 될 마을. 각 선택지에 따라 기능 구현 (업무 여기서 나누는 느낌으로)
         {
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine("마을입니다. 하려는 행동을 선택해 주세요."); // 추후 꾸밀 것 (시나리오 및 아트 담당?)
+
+            Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n");
             int userinput = UserInputHandler(1,6);
             switch (userinput)
             {
                 case 1: // 스탯창
                     {
-                        
                         break;
                     }
 
