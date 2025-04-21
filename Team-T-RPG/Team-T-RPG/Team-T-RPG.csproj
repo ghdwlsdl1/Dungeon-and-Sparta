@@ -6,6 +6,19 @@
     <RootNamespace>Team_T_RPG</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+	<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	  
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="MainFrame.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Inventory.cs" />
+    <Compile Include="GameStarter.cs" />
+    <Compile Include="Mobs.cs" />
+    <Compile Include="Item.cs" />
+	
+  </ItemGroup>
 
 </Project>
