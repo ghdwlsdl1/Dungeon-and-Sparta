@@ -1,24 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Team_T_RPG</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<RootNamespace>Team_T_RPG</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 
-	<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-	  
-  </PropertyGroup>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
-  <ItemGroup>
-    <Compile Include="MainFrame.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="Inventory.cs" />
-    <Compile Include="GameStarter.cs" />
-    <Compile Include="Mobs.cs" />
-    <Compile Include="Item.cs" />
-	  <Compile Include="Data.cs" />
-  </ItemGroup>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="MainFrame.cs" />
+		<Compile Include="User.cs" />
+		<Compile Include="Inventory.cs" />
+		<Compile Include="GameStarter.cs" />
+		<Compile Include="Mobs.cs" />
+		<Compile Include="Item.cs" />
+		<Compile Include="Data.cs" />
+	</ItemGroup>
 
 </Project>
