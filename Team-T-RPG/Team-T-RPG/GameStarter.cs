@@ -68,7 +68,7 @@ namespace Team_T_RPG
 
                 if ((userinput?.Length ?? 0) > 10 || (userinput?.Length ?? 0) == 0) // ?. 연산자와 ?? 연산자 활용해서 null에러 방지
                 {
-                    //MainFrame.ClearConsoleLine(4); // 입력한 줄 지워버리고 아래 출력
+                    MainFrame.ClearConsoleLine(4); // 입력한 줄 지워버리고 아래 출력
                     Console.WriteLine("닉네임이 너무 짧거나 깁니다. 다시 입력하세요.");
                 }
                 else
@@ -133,9 +133,9 @@ namespace Team_T_RPG
                     Data.startCon += 5; // 체력
                     break;
             }
-            //(4) 스텟에 따른 최종 스테이터스 갱신 및 Hp,Mp 풀회복
-            //Stats stats = new Stats();
-            //stats.UpdateStats();
+            // (4) 스텟에 따른 최종 스테이터스 갱신 및 Hp,Mp 풀회복
+            Stats stats = new Stats();
+            stats.UpdateStats();
             Data.Hp += Data.HpMax;
             Data.Mp += Data.MpMax;
         }
@@ -147,7 +147,7 @@ namespace Team_T_RPG
             for (int i = 0; i < 5; i++)
             {
                 Thread.Sleep(300);
-                Console.Write(" > ");
+                Console.Write(">");
                 Thread.Sleep(300);
             }
             Console.Clear();
