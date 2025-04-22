@@ -19,7 +19,7 @@ namespace Team_T_RPG
             {
                 PayTax(); // 세금 납부
 
-                if (data.Level == 0) // 체력 == 0 || 세금을 내고 골드가 음수값이 된 경우 게임오버 처리
+                if (Data.Level == 0) // 체력 == 0 || 세금을 내고 골드가 음수값이 된 경우 게임오버 처리
                     break;
                 else
                 {
