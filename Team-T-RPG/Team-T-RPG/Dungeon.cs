@@ -77,37 +77,11 @@ public static class DungeonSystem
         switch (text)
         {
             case "1":
-                bool windowsError = false;
-                bool windowsRepeat = SystemWindow.systemWindows(windowsError);
-                while (!windowsRepeat)
-                {
-                    if (!windowsError) windowsError = true;
-                    windowsRepeat = SystemWindow.systemWindows(windowsError);
-                }
+        
                 break;
 
             case "2":
-                bool invenError = false;
-                bool invenEquipError = false;
-                bool invenNext = false;
-
-                bool inventoryRepeat = Inventory.inventory(invenError, out invenNext);
-                while (!inventoryRepeat)
-                {
-                    if (!invenError) invenError = true;
-                    inventoryRepeat = Inventory.inventory(invenError, out invenNext);
-                }
-
-                if (invenNext)
-                {
-                    bool inventoryEquipRepeat = Inventory.inventoryEquip(invenEquipError);
-                    while (!inventoryEquipRepeat)
-                    {
-                        if (!invenEquipError) invenEquipError = true;
-                        inventoryEquipRepeat = Inventory.inventoryEquip(invenEquipError);
-                    }
-                }
-                Console.Clear();
+                
                 break;
 
             case "3":
