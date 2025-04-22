@@ -159,7 +159,16 @@ namespace Team_T_RPG
                 if (Data.weaponTf[i] >= 0)
                 {
                     string equippedMark = Data.weaponEquip[i] ? " (장착중)" : "";
-                    Console.WriteLine($"{i}. {Data.weapon[i]} 소지 갯수: {Data.weaponTf[i]}  공격력: {Data.weaponAtk[i]}  스탯+: {Data.weaponStats[i]}{equippedMark}");
+                    if (i == 0)
+                    {
+                        // weapon[0]은 장비 없음이므로 갯수 출력 제외
+                        Console.WriteLine($"{i}. {Data.weapon[i]}{equippedMark} 공격력: {Data.weaponAtk[i]}  스탯+: {Data.weaponStats[i]}{equippedMark}");
+                    }
+                    else
+                    {
+                        // 나머지 무기는 상세 정보 출력
+                        Console.WriteLine($"{i}. {Data.weapon[i]} 소지 갯수: {Data.weaponTf[i]}  공격력: {Data.weaponAtk[i]}  스탯+: {Data.weaponStats[i]}{equippedMark}");
+                    }
                 }
             }
             Console.Write("\n장착할 무기 번호를 입력하세요: ");
@@ -187,7 +196,7 @@ namespace Team_T_RPG
                         Data.weaponEquip[i] = false;
                     }
                     Data.weaponEquip[0] = true;
-                    Console.WriteLine($"\n▶ [{Data.weapon[selectedIndex]}]를 장착했습니다!");
+                    Console.WriteLine($"\n▶ [{Data.weapon[selectedIndex]}]을 선택해 장비가 장착 해제되었습니다!");
 
                 }
                 else
