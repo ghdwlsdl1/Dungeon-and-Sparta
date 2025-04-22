@@ -109,13 +109,13 @@ namespace Team_T_RPG
 
                 case "6":
                     {
-                        bool questError = false;
-                        bool dungeonEnd = false;
+                        bool DungeonEntryError = false;
+                        bool DungeonEntryEnd = false;
 
-                        bool dungeonRepeat = DungeonSystem.DungeonEntry(ref questError, ref dungeonEnd);
-                        while (!dungeonRepeat && !dungeonEnd)
+                        bool DungeonEntryRepeat = DungeonSystem.DungeonEntry(ref DungeonEntryError, ref DungeonEntryEnd);
+                        while (!DungeonEntryRepeat && !DungeonEntryEnd)
                         {
-                            dungeonRepeat = DungeonSystem.DungeonEntry(ref questError, ref dungeonEnd);
+                            DungeonEntryRepeat = DungeonSystem.DungeonEntry(ref DungeonEntryError, ref DungeonEntryEnd);
                         }
 
                         Console.Clear();

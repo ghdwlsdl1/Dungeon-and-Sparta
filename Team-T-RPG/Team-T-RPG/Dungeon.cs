@@ -31,13 +31,13 @@ public static class DungeonSystem
             Data.playerX = -1; Data.playerY = -1;
             Data.portalX = -2; Data.portalY = -2;
             Data.floorChange = true;
-            dungeonEnd = true;
+            DungeonEntryEnd = true;
             return false;
         }
 
         if (Data.Hp <= 0)
         {
-            dungeonEnd = true;
+            DungeonEntryEnd = true;
             return false;
         }
 
