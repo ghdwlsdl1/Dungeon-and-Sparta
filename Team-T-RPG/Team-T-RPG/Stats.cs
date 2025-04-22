@@ -83,6 +83,7 @@ namespace Team_T_RPG
             {
                 assistBonus += assistStats[4];
             }
+
             Wis = startWis + assistBonus + Level;
         }
 
@@ -93,6 +94,7 @@ namespace Team_T_RPG
             {
                 assistBonus += assistStats[3];
             }
+
             Luk = startLuk + assistBonus;
         }
 
@@ -123,6 +125,7 @@ namespace Team_T_RPG
                     assistBonus += assistDef[i];
                 }
             }
+
             for (int i = 0; i < armorEquip.Length; i++)
             {
                 if (armorEquip[i])
@@ -130,6 +133,7 @@ namespace Team_T_RPG
                     armorBonus += armorDef[i];
                 }
             }
+
             Def = Con / 3 + armorBonus + assistBonus;
         }
 
@@ -151,3 +155,4 @@ namespace Team_T_RPG
         }
 
     }
+}
