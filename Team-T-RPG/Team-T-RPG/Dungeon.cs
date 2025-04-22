@@ -7,9 +7,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Team_T_RPG;
+using static DungeonSystem.Dungeon;
 
 public static class DungeonSystem
 {
+    //던전타임
     public static void dungeonTime()
     {
         if (Data.dungeonHour >= 24)
@@ -18,9 +20,28 @@ public static class DungeonSystem
             Data.dungeonHour -= 24;
         }
     }
-
+    //던전입장
     public static bool DungeonEntry(ref bool DungeonEntryError, ref bool DungeonEntryEnd)
     {
+        // === 턴 시작 시 몬스터 이동 ===
+        Dungeon.MoveMonsters();
+
+        // === 충돌 체크 ===
+        for (int i = 0; i < Data.monsterPositions.Count; i++)
+        {
+            if (Data.playerX == Data.monsterPositions[i].x &&
+                Data.playerY == Data.monsterPositions[i].y)
+            {
+                Battle();
+
+                Data.monsterPositions.RemoveAt(i);
+                Data.map[Data.playerY, Data.playerX] = ' ';
+                Dungeon.PlaceMonsters(1); // 리젠
+                Data.dungeonHour += 2;
+
+                return true;
+            }
+        }
         dungeonTime();
 
         if (Data.dungeonDay == 0)
@@ -85,13 +106,6 @@ public static class DungeonSystem
                 break;
 
             case "3":
-                if (Data.dice6() >= 4)
-                {
-                    Data.dungeonHour += 2;
-                    battle();
-                }
-                else
-                {
                     Data.dungeonHour += 1;
                     bool moveError = false;
                     bool moveError2 = false;
@@ -101,7 +115,6 @@ public static class DungeonSystem
                         moveRepeat = Dungeon.Move(ref moveError, ref moveError2);
                     }
                     Console.Clear();
-                }
                 break;
 
             case "4":
@@ -126,7 +139,7 @@ public static class DungeonSystem
                 else
                 {
                     Data.dungeonHour += 2;
-                    battle();
+                    Battle();
                 }
                 break;
 
@@ -141,7 +154,7 @@ public static class DungeonSystem
         }
         return true;
     }
-
+    //던전
     public static class Dungeon
     {
         public static int GetMapSize(int floor)
@@ -151,14 +164,13 @@ public static class DungeonSystem
 
         public static void MiniMap()
         {
-            if (Data.floor == 1) Data.floorChange = true; //첫층 강제실행
+            if (Data.floor == 1) Data.floorChange = true; // 첫 층 강제 실행
+            if (!Data.floorChange) return;
 
-            if (!Data.floorChange) return; // 이미 맵이 있는 상태면 탈출
-
-            int size = GetMapSize(Data.floor); // 현재 층의 맵 크기
+            int size = GetMapSize(Data.floor);
             Data.map = new char[size, size];
 
-            // 지도 초기화: 빈 공간(' ')으로
+            // 지도 초기화
             for (int y = 0; y < size; y++)
             {
                 for (int x = 0; x < size; x++)
@@ -167,59 +179,98 @@ public static class DungeonSystem
                 }
             }
 
-            // 플레이어 위치 초기화
-            if (Data.floorChange)
-            {
-                Data.playerX = Data.random.Next(0, size);
-                Data.playerY = Data.random.Next(0, size);
-            }
-
-            // 포탈 위치 초기화
-            if (Data.floorChange)
-            {
-                Data.portalX = Data.random.Next(0, size);
-                Data.portalY = Data.random.Next(0, size);
-            }
-
-            // 벽 랜덤 배치
-            int wallCount = size * size / 10; // 맵 크기의 10%를 벽
+            // 1. 벽 랜덤 배치
+            int wallCount = size * size / 10;
             int placed = 0;
-
-            while (placed < wallCount && Data.floorChange)
+            while (placed < wallCount)
             {
                 int wallX = Data.random.Next(0, size);
                 int wallY = Data.random.Next(0, size);
 
-                // 포탈, 플레이어 위치 이미 배치된 칸은 제외
-                if ((wallX == Data.playerX && wallY == Data.playerY) ||
-                    (wallX == Data.portalX && wallY == Data.portalY) ||
-                    Data.map[wallY, wallX] != ' ')
+                if (Data.map[wallY, wallX] != ' ')
                     continue;
 
-                Data.map[wallY, wallX] = '■'; // 장애물 기호
+                Data.map[wallY, wallX] = '■';
                 placed++;
             }
 
-            // 보물 랜덤 배치
-            while (Data.floorChange)
+            // 2. 플레이어 위치 배치
+            while (true)
             {
-                int treasureX = Data.random.Next(0, size);
-                int treasureY = Data.random.Next(0, size);
-                // 포탈, 플레이어 위치, 벽 이미 배치된 칸은 제외
-                if ((treasureX == Data.playerX && treasureY == Data.playerY) ||
-                    (treasureX == Data.portalX && treasureY == Data.portalY) ||
-                    Data.map[treasureY, treasureX] != ' ')
-                    continue;
+                int px = Data.random.Next(0, size);
+                int py = Data.random.Next(0, size);
 
-                Data.map[Data.treasureY, Data.treasureX] = ' ';
-                break;
+                if (Data.map[py, px] == ' ')
+                {
+                    Data.playerX = px;
+                    Data.playerY = py;
+                    break;
+                }
+            }
+
+            // 3. 포탈 위치 배치
+            while (true)
+            {
+                int gx = Data.random.Next(0, size);
+                int gy = Data.random.Next(0, size);
+
+                if (Data.map[gy, gx] == ' ' && (gx != Data.playerX || gy != Data.playerY))
+                {
+                    Data.portalX = gx;
+                    Data.portalY = gy;
+                    break;
+                }
+            }
+
+            // 4. 보물 위치 배치
+            while (true)
+            {
+                int tx = Data.random.Next(0, size);
+                int ty = Data.random.Next(0, size);
+
+                if (Data.map[ty, tx] == ' ' &&
+                    (tx != Data.playerX || ty != Data.playerY) &&
+                    (tx != Data.portalX || ty != Data.portalY))
+                {
+                    Data.treasureX = tx;
+                    Data.treasureY = ty;
+                    break;
+                }
             }
 
             Data.floorChange = false;
 
-            // 지도에 포탈, 플레이어 표시
+            int monsterCount = Data.floor; // 층 수에 비례한 몬스터 수
+            PlaceMonsters(monsterCount);
+
+            // 5. 지도에 포탈, 플레이어 표시
             Data.map[Data.portalY, Data.portalX] = '◇';
             Data.map[Data.playerY, Data.playerX] = 'P';
+        }
+
+        public static void PlaceMonsters(int count)
+        {
+            Data.monsterPositions.Clear();
+
+            int size = Data.map.GetLength(0);
+            int placed = 0;
+
+            while (placed < count)
+            {
+                int x = Data.random.Next(0, size);
+                int y = Data.random.Next(0, size);
+
+                // 플레이어, 포탈, 벽, 다른 몬스터와 겹치면 건너뜀
+                if (Data.map[y, x] != ' ' ||
+                    (x == Data.playerX && y == Data.playerY) ||
+                    (x == Data.portalX && y == Data.portalY) ||
+                    Data.monsterPositions.Any(pos => pos.x == x && pos.y == y))
+                    continue;
+
+                Data.monsterPositions.Add((x, y));
+                Data.map[y, x] = 'M';
+                placed++;
+            }
         }
 
         public static void PrintMap()
@@ -238,7 +289,7 @@ public static class DungeonSystem
         public static bool Move(ref bool moveError, ref bool moveError2)
         {
             Console.Clear();
-            MiniMap();
+            MiniMap(); // floorChange true일 때만 작동
             PrintMap();
 
             Console.WriteLine("이동 방향을 정해주세요.");
@@ -276,13 +327,13 @@ public static class DungeonSystem
             }
 
             int size = GetMapSize(Data.floor);
-
             if (newX < 0 || newX >= size || newY < 0 || newY >= size || Data.map[newY, newX] == '■')
             {
                 moveError2 = true;
                 return false;
             }
 
+            // 이동 처리
             Data.map[Data.playerY, Data.playerX] = ' ';
             Data.playerX = newX;
             Data.playerY = newY;
@@ -290,24 +341,60 @@ public static class DungeonSystem
 
             return true;
         }
+
+        public static void MoveMonsters()
+        {
+            int size = Data.map.GetLength(0);
+            var newPositions = new List<(int x, int y)>();
+
+            foreach (var m in Data.monsterPositions)
+            {
+                int[] dx = { 0, 1, 0, -1 };
+                int[] dy = { -1, 0, 1, 0 };
+
+                int dir = Data.random.Next(0, 4);
+                int nx = m.x + dx[dir];
+                int ny = m.y + dy[dir];
+
+                // 범위 밖, 벽, 플레이어, 다른 몬스터랑 겹치면 이동 안 함
+                if (nx < 0 || ny < 0 || nx >= size || ny >= size) continue;
+                if (Data.map[ny, nx] != ' ' || (nx == Data.playerX && ny == Data.playerY)) continue;
+                if (newPositions.Any(pos => pos.x == nx && pos.y == ny)) continue;
+
+                newPositions.Add((nx, ny));
+                Data.map[m.y, m.x] = ' '; // 이전 위치 비움
+                Data.map[ny, nx] = 'M';   // 새 위치에 몬스터 배치
+            }
+
+            // 새 위치 반영
+            Data.monsterPositions = newPositions;
+        }
     }
 
-    public static void Search() // 탐색
+    // 방향 문자열을 반환하는 메서드
+    private static string GetDirection(int dx, int dy)
+    {
+        string vertical = dy < 0 ? "북" : dy > 0 ? "남" : "";
+        string horizontal = dx < 0 ? "서" : dx > 0 ? "동" : "";
+        return vertical + horizontal;
+    }
+    // 조사하기
+    public static void Search()
     {
         int px = Data.playerX;
         int py = Data.playerY;
 
-        // 보물과 같은 위치면 습득
         if (px == Data.treasureX && py == Data.treasureY)
         {
-            Console.WriteLine("[보물을 획득했다]");
-            Data.map[py, px] = ' '; // 보물 제거
+            Console.WriteLine("보물을 획득했다");
+            Data.map[py, px] = ' ';
             Data.treasureX = -1;
             Data.treasureY = -1;
             return;
         }
 
-        int range = 1 + (Data.Wis / 10); // 지혜 수치로 탐색 범위 결정
+        int range = 1 + (Data.Wis / 10);
+        bool found = false;
 
         for (int y = py - range; y <= py + range; y++)
         {
@@ -318,22 +405,31 @@ public static class DungeonSystem
 
                 if (x == Data.treasureX && y == Data.treasureY)
                 {
-                    if (Data.dice20() + (Data.Wis / 2) >= 10)
+                    found = true;
+                    int roll = Data.dice20() + (Data.Wis / 2);
+                    if (roll >= 10)
                     {
-                        Console.WriteLine("[보물의 기운이 느껴진다…]");
+                        int dx = x - px;
+                        int dy = y - py;
+                        string direction = GetDirection(dx, dy);
+                        Console.WriteLine($"{direction}에서 희미한 기운이 느껴진다…");
                     }
                     else
                     {
-                        Console.WriteLine("[뭔가 있을 것 같지만 확신이 없다.]");
+                        Console.WriteLine("뭔가 있을 것 같지만 확신이 없다.");
                     }
                     return;
                 }
             }
         }
+
+        if (!found)
+        {
+            Console.WriteLine("[아무것도 느껴지지 않는다.]");
+        }
     }
 
-
-    public static void battle()
+    public static void Battle()
     {
         Console.Clear();
         Console.WriteLine("적을 만났습니다! 전투를 시작합니다.\n\n\n");
@@ -449,7 +545,7 @@ public static class DungeonSystem
         }
     }
 
-    public static void Skill()
+    public static void Skill(ref int enemyHP, int enemyAttack)
     {
         while (Data.Hp > 0 && enemyHP > 0)
         {
@@ -459,9 +555,6 @@ public static class DungeonSystem
             Console.WriteLine($"현재 마나:   {Data.Mp} / {Data.MpMax}");
             Console.WriteLine("\n행동을 선택하세요:");
 
-
-
-            if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
             string action = Console.ReadLine();
 
             switch (action)

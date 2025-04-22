@@ -107,7 +107,7 @@ namespace Team_T_RPG
                         break;
                     }
 
-                case "6":
+                case 6:
                     {
                         bool DungeonEntryError = false;
                         bool DungeonEntryEnd = false;

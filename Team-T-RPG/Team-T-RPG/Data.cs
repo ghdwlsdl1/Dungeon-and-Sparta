@@ -82,5 +82,6 @@ namespace Team_T_RPG
         public static int floor = 1; //층수
         public static bool floorChange = false; //층변경감지
         public static char[,] map; //맵
+        public static List<(int x, int y)> monsterPositions = new List<(int x, int y)>();
     }
 }
