@@ -16,7 +16,7 @@ namespace Team_T_RPG
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine("");
-            Console.WriteLine($"힘11  : {Data.Str}");
+            Console.WriteLine($"힘    : {Data.Str}");
             Console.WriteLine($"민첩  : {Data.Dex}");
             Console.WriteLine($"지능  : {Data.Int}");
             Console.WriteLine($"체력  : {Data.Con}");
@@ -120,7 +120,7 @@ namespace Team_T_RPG
         public static void TownScene() // 가장 중심 씬이 될 마을. 각 선택지에 따라 기능 구현 (업무 여기서 나누는 느낌으로)
         {
             Console.WriteLine("1.스탯창");
-            Console.WriteLine("2");
+            Console.WriteLine("2.인벤토리");
             Console.WriteLine("3");
             Console.WriteLine("4");
             Console.WriteLine("5");
@@ -136,7 +136,7 @@ namespace Team_T_RPG
 
                 case 2: // 인벤토리
                     {
-                       
+                        testInven();
                         break;
                     }
 
@@ -197,7 +197,7 @@ namespace Team_T_RPG
 
             if (weaponEquipNum >= 0)
             {
-                weaponBonus= Data.weaponStats[weaponEquipNum];
+                weaponBonus = Data.weaponStats[weaponEquipNum];
             }
 
 
@@ -315,10 +315,10 @@ namespace Team_T_RPG
         {
             for (int i = 0; i < Data.weapon.Length; i++)
             {
-                if (Data.weaponTf[i] >= 0) // 소지한 무기만 표시
+                if (Data.weaponTf[i] >= 0)
                 {
                     string equippedMark = Data.weaponEquip[i] ? " (장착중)" : "";
-                    Console.WriteLine($"{i}. {Data.weapon[i]} x{Data.weaponTf[i]}  ATK:{Data.weaponAtk[i]}  INT+:{Data.weaponStats[i]}{equippedMark}");
+                    Console.WriteLine($"{i}. {Data.weapon[i]} 소지 갯수: {Data.weaponTf[i]}  공격력: {Data.weaponAtk[i]}  스탯+: {Data.weaponStats[i]}{equippedMark}");
                 }
             }
             Console.Write("\n장착할 무기 번호를 입력하세요: ");
@@ -326,7 +326,7 @@ namespace Team_T_RPG
 
             if (int.TryParse(input, out int selectedIndex))
             {
-                if (selectedIndex >= 0 && selectedIndex < Data.weapon.Length && Data.weaponTf[selectedIndex] > 0)
+                if (selectedIndex > 0 && selectedIndex < Data.weapon.Length && Data.weaponTf[selectedIndex] > 0)
                 {
                     // 기존 무기 해제
                     for (int i = 0; i < Data.weaponEquip.Length; i++)
@@ -338,6 +338,16 @@ namespace Team_T_RPG
                     Data.weaponEquip[selectedIndex] = true;
 
                     Console.WriteLine($"\n▶ [{Data.weapon[selectedIndex]}]를 장착했습니다!");
+                }
+                else if (selectedIndex == 0)
+                {
+                    for (int i = 0; i < Data.weaponEquip.Length; i++)
+                    {
+                        Data.weaponEquip[i] = false;
+                    }
+                    Data.weaponEquip[0] = true;
+                    Console.WriteLine($"\n▶ [{Data.weapon[selectedIndex]}]를 장착했습니다!");
+
                 }
                 else
                 {
