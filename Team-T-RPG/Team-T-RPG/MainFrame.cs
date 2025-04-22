@@ -21,7 +21,15 @@ namespace Team_T_RPG
 
                 if (Data.Hp <= 0) // 우선 체력 체크 : 엔딩 조건 1
                 {
-                    Console.WriteLine("당신은 체력이 다하여 죽었습니다!");
+                    Console.WriteLine("\n당신의 체력이 끝내 고갈되고 말았습니다!\n");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    for (int i = 0; i < 8; i++)
+                    {
+                        string death = "사망하셨습니다!";
+                        Thread.Sleep(150);
+                        Console.Write(death[i]);
+                    }
+                    Console.ResetColor();
                     break;
                 }
                     
@@ -32,7 +40,15 @@ namespace Team_T_RPG
 
                 if (Data.Money <= 0) // 납부할 골드 부족 시 사망 : 엔딩 조건 2
                 {
-                    Console.WriteLine("당신은 납부할 세금이 부족하여 처형당했습니다!");
+                    Console.WriteLine("\n납부할 세금이 부족한 당신은, 형장의 이슬이 되고 맙니다!\n");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    for (int i = 0; i < 8; i++)
+                    {
+                        string death = "사망하셨습니다!";
+                        Thread.Sleep(150);
+                        Console.Write(death[i]);
+                    }
+                    Console.ResetColor();
                     break;
                 }
 
@@ -43,7 +59,9 @@ namespace Team_T_RPG
                 }
             }
 
-            Console.WriteLine("게임 오버!\n 다시 시작하려면 재실행해주세요.");
+
+            Console.WriteLine($"\n당신의 생존 일수 : {Data.Day} 일\n");
+            Console.WriteLine("다시 시작하려면 재실행해주세요.");
             // 사인을 넣고 싶으면 다 하고 추후 기능 구현하기!
 
         }
@@ -51,7 +69,7 @@ namespace Team_T_RPG
         public static int UserInputHandler(int min, int max, int failcount = 0)
         {
             Console.WriteLine("--------------------------------");
-            Console.WriteLine("원하는 행동을 선택하세요.");
+            Console.WriteLine("원하는 번호를 선택하세요.");
            
             string userInput = Console.ReadLine();
             bool isVaildInput = Int32.TryParse(userInput, out int result);
@@ -65,7 +83,7 @@ namespace Team_T_RPG
                 int isFailAgain = (failcount == 0) ? 0 : 1; // 첫 실행 때만 0이고 다음 루프부터는 1
                 ClearConsoleLine(3 + isFailAgain);
                 failcount++;
-                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요");
+                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
                 return UserInputHandler(min, max, failcount);
             }
         }
@@ -76,7 +94,7 @@ namespace Team_T_RPG
         {
             if (Data.Day <= 7)
             {
-                Console.WriteLine("7일 간은 세금이 면제됩니다.");
+                Console.WriteLine("\n7일 간은 세금이 면제됩니다.\n");
                 return; // 7일이 지날 때까진 바로 리턴
             }
             
@@ -87,7 +105,7 @@ namespace Team_T_RPG
                 Console.WriteLine($"( 현재 소지 골드 : {Data.Money} G )\n");
                 Data.Money -= Data.Day * 143;
                 Console.Write("세금 정산 중");
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Thread.Sleep(150);
                     Console.Write(" > ");
@@ -105,8 +123,8 @@ namespace Team_T_RPG
         public static void TownScene() // 가장 중심 씬이 될 마을. 각 선택지에 따라 기능 구현 (업무 여기서 나누는 느낌으로)
         {
             Console.WriteLine("--------------------------------");
-            Console.WriteLine("마을입니다. 하려는 행동을 선택해 주세요."); // 추후 꾸밀 것 (시나리오 및 아트 담당?)
-
+            Console.WriteLine("마을은 살기엔 좋지만, 매일 세금을 납부하지 못하면 위험합니다."); // 추후 꾸밀 것 (시나리오 및 아트 담당?)
+            Console.WriteLine("준비를 단단히 하고, 던전에 들어가야 합니다.");
             Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n");
             int userinput = UserInputHandler(1,6);
             switch (userinput)

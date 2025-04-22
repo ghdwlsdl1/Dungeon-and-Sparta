@@ -10,8 +10,13 @@ namespace Team_T_RPG
     {
         public void StartSceneArt()
         {
-            Console.WriteLine("________                     ____                          \r\n\\______ \\   __ __   ____    / ___\\   ____   ____    ____   \r\n |    |  \\ |  |  \\ /    \\  / /_/  >_/ __ \\ /  _ \\  /    \\  \r\n |    `   \\|  |  /|   |  \\ \\___  / \\  ___/(  <_> )|   |  \\ \r\n/_______  /|____/ |___|  //_____/   \\___  >\\____/ |___|  / \r\n        \\/             \\/               \\/             \\/  \r\n                                                           \r\n                          ____                             \r\n                         /  _ \\                            \r\n                         >  _ </\\                          \r\n                        /  <_\\ \\/                          \r\n                        \\_____\\ \\                          \r\n                               \\/                          \r\n                                                           \r\n      _________                        __                  \r\n     /   _____/______ _____  _______ _/  |_ _____          \r\n     \\_____  \\ \\____ \\\\__  \\ \\_  __ \\\\   __\\\\__  \\         \r\n     /        \\|  |_> >/ __ \\_|  | \\/ |  |   / __ \\_       \r\n    /_______  /|   __/(____  /|__|    |__|  (____  /       \r\n            \\/ |__|        \\/                    \\/        \r\n                                                           ");
-
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("________                     ____                          \r\n\\______ \\   __ __   ____    / ___\\   ____   ____    ____   \r\n |    |  \\ |  |  \\ /    \\  / /_/  >_/ __ \\ /  _ \\  /    \\  \r\n |    `   \\|  |  /|   |  \\ \\___  / \\  ___/(  <_> )|   |  \\ \r\n/_______  /|____/ |___|  //_____/   \\___  >\\____/ |___|  / \r\n        \\/             \\/               \\/             \\/  \r\n                                                           \r\n");
+            Console.ForegroundColor= ConsoleColor.Cyan;
+            Console.Write("                          ____                             \r\n                         /  _ \\                            \r\n                         >  _ </\\                          \r\n                        /  <_\\ \\/                          \r\n                        \\_____\\ \\                          \r\n                               \\/                          \r\n");
+            Console.ForegroundColor= ConsoleColor.DarkRed;
+            Console.WriteLine("                                                           \r\n      _________                        __                  \r\n     /   _____/______ _____  _______ _/  |_ _____          \r\n     \\_____  \\ \\____ \\\\__  \\ \\_  __ \\\\   __\\\\__  \\         \r\n     /        \\|  |_> >/ __ \\_|  | \\/ |  |   / __ \\_       \r\n    /_______  /|   __/(____  /|__|    |__|  (____  /       \r\n            \\/ |__|        \\/                    \\/        \r\n                                                           ");
+            Console.ResetColor();
         }
 
         /*
@@ -37,6 +42,7 @@ namespace Team_T_RPG
                     Console.Clear();
                     NameCharacter();
                     ChooseJob();
+                    EnteringTown();
                     break;
 
                 }
@@ -44,7 +50,7 @@ namespace Team_T_RPG
                 {
                     Console.Clear();
                     Console.WriteLine("저장 기능은 미구현입니다. 죄송합니다.\n잠시 후 시작화면으로 돌아갑니다.");
-                    Thread.Sleep(1500); // 1.5초 대기
+                    Thread.Sleep(2000); // 2초 대기
                     Console.Clear();
                 }
             }
@@ -54,7 +60,10 @@ namespace Team_T_RPG
         {
             while (true)
             {
-                Console.WriteLine("캐릭터를 생성합니다. \n닉네임을 입력하세요. (10자 이하)");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\n[캐릭터 생성]\n");
+                Console.ResetColor();
+                Console.WriteLine("닉네임을 입력하세요. (10자 이하)");
                 string userinput = Console.ReadLine();
 
                 if ((userinput?.Length ?? 0) > 10 || (userinput?.Length ?? 0) == 0) // ?. 연산자와 ?? 연산자 활용해서 null에러 방지
@@ -73,14 +82,17 @@ namespace Team_T_RPG
         public void ChooseJob()
         {
             Console.Clear();
-            Console.WriteLine($"당신의 캐릭터 이름 : {Data.Name}");
-            Console.WriteLine("당신의 직업을 선택해 주세요.\n 직업에 따라 시작 스텟이 다를 수 있으며,\n확률에 따라 보너스 스텟이 추가로 부여됩니다.\n");
-
+            Console.Write("\n당신의 캐릭터 이름 : ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(Data.Name);
+            Console.ResetColor();
+            Console.WriteLine("\n당신의 직업을 선택해 주세요.\n직업에 따라 시작 스텟이 다를 수 있으며,\n확률에 따라 보너스 스텟이 추가로 부여됩니다.\n");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 전사 ( + Str )");
             Console.WriteLine("2. 도적 ( + Dex )");
             Console.WriteLine("3. 법사 ( + Int )");
             Console.WriteLine("4. 야만인 ( + Con )\n");
-
+            Console.ResetColor();
             int userinput = MainFrame.UserInputHandler(1,4);
             Console.Clear();
 
@@ -126,6 +138,19 @@ namespace Team_T_RPG
             stats.UpdateStats();
             Data.Hp += Data.HpMax;
             Data.Mp += Data.MpMax;
+        }
+
+        public void EnteringTown()
+        {
+            Console.WriteLine($"\n 당신( {Data.Name}, {Data.Job[Data.JobNames]} )은 낯선 마을에서 눈을 뜹니다.\n");
+            Console.Write("정신 차리는 중");
+            for (int i = 0; i < 5; i++)
+            {
+                Thread.Sleep(300);
+                Console.Write(" > ");
+                Thread.Sleep(300);
+            }
+            Console.Clear();
         }
     }
 }
