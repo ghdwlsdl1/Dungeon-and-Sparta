@@ -107,8 +107,18 @@ namespace Team_T_RPG
                         break;
                     }
 
-                case 6: // 던전 입장
+                case "6":
                     {
+                        bool questError = false;
+                        bool dungeonEnd = false;
+
+                        bool dungeonRepeat = DungeonSystem.DungeonEntry(ref questError, ref dungeonEnd);
+                        while (!dungeonRepeat && !dungeonEnd)
+                        {
+                            dungeonRepeat = DungeonSystem.DungeonEntry(ref questError, ref dungeonEnd);
+                        }
+
+                        Console.Clear();
                         break;
                     }
             }

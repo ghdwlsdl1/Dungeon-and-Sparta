@@ -19,7 +19,7 @@ public static class DungeonSystem
         }
     }
 
-    public static bool quest(ref bool questError, ref bool dungeonEnd)
+    public static bool DungeonEntry(ref bool DungeonEntryError, ref bool DungeonEntryEnd)
     {
         dungeonTime();
 
@@ -66,10 +66,10 @@ public static class DungeonSystem
         Console.WriteLine("4. 휴식하기");
         Console.WriteLine("5. 조사하기");
 
-        if (questError)
+        if (DungeonEntryError)
         {
             Console.WriteLine("잘못된 입력입니다.\n");
-            questError = false;
+            DungeonEntryError = false;
         }
 
         string text = Console.ReadLine();
@@ -157,12 +157,12 @@ public static class DungeonSystem
                 break;
 
             case "5":
-                Dungeon.Search();
+                Search();
                 break;
 
             default:
                 Console.Clear();
-                questError = true;
+                DungeonEntryError = true;
                 break;
         }
         return true;
@@ -200,14 +200,14 @@ public static class DungeonSystem
             }
 
             // 플레이어 위치 초기화
-            if (floorChange)
+            if (Data.floorChange)
             {
                 Data.playerX = Data.random.Next(0, size);
                 Data.playerY = Data.random.Next(0, size);
             }
 
             // 포탈 위치 초기화
-            if (floorChange)
+            if (Data.floorChange)
             {
                 Data.portalX = Data.random.Next(0, size);
                 Data.portalY = Data.random.Next(0, size);
@@ -217,7 +217,7 @@ public static class DungeonSystem
             int wallCount = size * size / 10; // 맵 크기의 10%를 장애물로
             int placed = 0;
 
-            while (placed < wallCount && floorChange)
+            while (placed < wallCount && Data.floorChange)
             {
                 int wallX = Data.random.Next(0, size);
                 int wallY = Data.random.Next(0, size);
@@ -232,17 +232,17 @@ public static class DungeonSystem
                 placed++;
             }
 
-            while (floorChange)
+            while (Data.floorChange)
             {
                 int treasureX = Data.random.Next(0, size);
                 int treasureY = Data.random.Next(0, size);
                 if ((treasureX == Data.playerX && treasureY == Data.playerY) ||
-                        (treasureX == Data.portalX && treasureY == Data.portalY) ||
-                        (treasureX == Data.portalX && treasureY == Data.portalY) ||
-                        Data.map[treasureY, treasureX] != ' ')
+                    (treasureX == Data.portalX && treasureY == Data.portalY) ||
+                    Data.map[treasureY, treasureX] != ' ')
                     continue;
 
-                Data.map[treasureY, treasureX] = ' '; // 보물
+                Data.map[Data.treasureY, Data.treasureX] = ' ';
+                break;
             }
 
             Data.floorChange = false;
@@ -348,7 +348,7 @@ public static class DungeonSystem
 
                 if (x == Data.treasureX && y == Data.treasureY)
                 {
-                    if (dice20() + (Data.Wis / 2) >= 10)
+                    if (Data.dice20() + (Data.Wis / 2) >= 10)
                     {
                         Console.WriteLine("[보물의 기운이 느껴진다…]");
                     }
