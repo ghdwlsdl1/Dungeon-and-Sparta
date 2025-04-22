@@ -342,97 +342,109 @@ public static class DungeonSystem
         int enemyAttack = Data.random.Next(1 + Data.floor, 3 + Data.floor * 2);
         bool battleError = false;
 
+        int playerSpeed = Data.Dex; //민첩비례 속도값
+        int enemySpeed = Data.random.Next(Data.floor, Data.floor * 2);  //적의 속도값
+        bool playerTurn = playerSpeed >= enemySpeed;// 턴조건
+
         while (Data.Hp > 0 && enemyHP > 0)
         {
-            Console.WriteLine($"\n\n적의 체력:   {enemyHP}");
-            Console.WriteLine($"기본 공격력: {enemyAttack}");
-            Console.WriteLine($"\n\n현재 체력:   {Data.Hp} / {Data.HpMax}");
-            Console.WriteLine($"현재 마나:   {Data.Mp} / {Data.MpMax}");
-            Console.WriteLine("\n당신의 차례입니다. 행동을 선택하세요:");
-            Console.WriteLine("1. 공격하기");
-            Console.WriteLine("2. 마법 사용하기 (MP 2 소모)");
-            Console.WriteLine("3. 장비 사용하기");
-
-            if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
-            string action = Console.ReadLine();
-
-            switch (action)
+            if (playerTurn)
             {
-                case "1":  // 공격
-                    Console.Clear();
-                    int damage = 0;
-                    int roll = Data.dice20();
-                    damage = roll >= 20 ? Data.Atk * 3 :
-                             roll >= 10 ? Data.Atk * 2 :
-                             Data.Atk;
+                Console.WriteLine($"\n\n적의 체력:   {enemyHP}");
+                Console.WriteLine($"기본 공격력: {enemyAttack}");
+                Console.WriteLine($"\n\n현재 체력:   {Data.Hp} / {Data.HpMax}");
+                Console.WriteLine($"현재 마나:   {Data.Mp} / {Data.MpMax}");
+                Console.WriteLine("\n당신의 차례입니다. 행동을 선택하세요:");
+                Console.WriteLine("1. 공격하기");
+                Console.WriteLine("2. 마법 사용하기 (MP 2 소모)");
+                Console.WriteLine("3. 장비 사용하기");
 
-                    Console.WriteLine($"공격! {damage}의 피해");
-                    enemyHP -= damage;
+                if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
+                string action = Console.ReadLine();
+
+                switch (action)
+                {
+                    case "1":  // 공격
+                        Console.Clear();
+                        int damage = 0;
+                        int roll = Data.dice20();
+                        damage = roll >= 20 ? Data.Atk * 3 :
+                                 roll >= 10 ? Data.Atk * 2 :
+                                 Data.Atk;
+
+                        Console.WriteLine($"공격! {damage}의 피해");
+                        enemyHP -= damage;
+                        break;
+
+                    case "2": // 마법
+                        Console.Clear();
+                        int magicDamage = 0;
+                        int mRoll = Data.dice20();
+                        magicDamage = mRoll >= 20 ? Data.Int * 4 :
+                                      mRoll >= 10 ? Data.Int * 3 :
+                                      Data.Int * 2;
+
+                        if (Data.Mp >= 2)
+                        {
+                            Console.WriteLine($"마법 공격! {magicDamage}의 피해");
+                            enemyHP -= magicDamage;
+                            Data.Mp -= 2;
+                        }
+                        else
+                        {
+                            Console.WriteLine("마나가 부족합니다.");
+                        }
+                        break;
+
+                    case "3":  // 장비
+
+
+
+
+                        break;
+
+                    default:
+                        Console.Clear();
+                        battleError = true;
+                        continue;
+                }
+
+                if (enemyHP <= 0)
+                {
+                    Console.WriteLine("적을 쓰러뜨렸습니다!");
+                    Data.experience += Data.dice20() * Data.floor;
+                    Data.Money += Data.dice20() * (Data.floor * Data.floor);
+                    //Stats.UpdateStats();                                                                                                        스텟업데이트필요
                     break;
+                }
 
-                case "2": // 마법
-                    Console.Clear();
-                    int magicDamage = 0;
-                    int mRoll = Data.dice20();
-                    magicDamage = mRoll >= 20 ? Data.Int * 4 :
-                                  mRoll >= 10 ? Data.Int * 3 :
-                                  Data.Int * 2;
-
-                    if (Data.Mp >= 2)
-                    {
-                        Console.WriteLine($"마법 공격! {magicDamage}의 피해");
-                        enemyHP -= magicDamage;
-                        Data.Mp -= 2;
-                    }
-                    else
-                    {
-                        Console.WriteLine("마나가 부족합니다.");
-                    }
-                    break;
-
-                case "3":  // 장비
-
-
-
-
-                    break;
-
-                default:
-                    Console.Clear();
-                    battleError = true;
-                    continue;
-            }
-
-            if (enemyHP <= 0)
-            {
-                Console.WriteLine("적을 쓰러뜨렸습니다!");
-                Data.experience += Data.dice20() * Data.floor;
-                Data.Money += Data.dice20() * (Data.floor * Data.floor);
-                //Stats.UpdateStats();                                                                                                        스텟업데이트필요
-                break;
-            }
-
-            Console.WriteLine("\n적의 차례입니다.");
-            int enemyDice = Data.random.Next(Data.floor, Data.floor * 2);
-            float reduction = Data.Def / (100f + Data.Def);
-            int bestEnemyDamage = enemyAttack + enemyDice;
-            int enemyDamage = Math.Max(1, (int)(bestEnemyDamage * (1 - reduction)));
-            int evasion = Math.Min(Data.Dex * 2, 101);
-            int evasionRoll = Data.random.Next(1, 101);
-            if (evasionRoll <= evasion)
-            {
-                Console.WriteLine($"회피 성공! (회피 확률: {evasion}%)");
+                playerTurn = false;
             }
             else
             {
-                Console.WriteLine($"적의 공격! {enemyDamage}의 피해를 입었습니다.");
-                Data.Hp -= enemyDamage;
-            }
+                Console.WriteLine("\n적의 차례입니다.");
+                int enemyDice = Data.random.Next(Data.floor, Data.floor * 2);
+                float reduction = Data.Def / (100f + Data.Def);
+                int bestEnemyDamage = enemyAttack + enemyDice;
+                int enemyDamage = Math.Max(1, (int)(bestEnemyDamage * (1 - reduction)));
+                int evasion = Math.Min(Data.Dex * 2, 101);
+                int evasionRoll = Data.random.Next(1, 101);
+                if (evasionRoll <= evasion)
+                {
+                    Console.WriteLine($"회피 성공! (회피 확률: {evasion}%)");
+                }
+                else
+                {
+                    Console.WriteLine($"적의 공격! {enemyDamage}의 피해를 입었습니다.");
+                    Data.Hp -= enemyDamage;
+                }
 
-            if (Data.Hp <= 0)
-            {
-                Console.WriteLine("당신은 쓰러졌습니다...");
-                break;
+                if (Data.Hp <= 0)
+                {
+                    Console.WriteLine("당신은 쓰러졌습니다...");
+                    break;
+                }
+                playerTurn = true;
             }
         }
     }
