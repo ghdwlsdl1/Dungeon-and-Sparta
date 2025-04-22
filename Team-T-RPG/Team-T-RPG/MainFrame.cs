@@ -156,6 +156,16 @@ namespace Team_T_RPG
 
                 case 6: // 던전 입장
                     {
+                        bool DungeonEntryError = false;
+                        bool DungeonEntryEnd = false;
+
+                        bool DungeonEntryRepeat = DungeonSystem.DungeonEntry(ref DungeonEntryError, ref DungeonEntryEnd);
+                        while (!DungeonEntryRepeat && !DungeonEntryEnd)
+                        {
+                            DungeonEntryRepeat = DungeonSystem.DungeonEntry(ref DungeonEntryError, ref DungeonEntryEnd);
+                        }
+
+                        Console.Clear();
                         break;
                     }
             }
