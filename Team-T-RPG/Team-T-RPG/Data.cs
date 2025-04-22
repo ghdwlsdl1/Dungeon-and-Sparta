@@ -58,24 +58,30 @@ namespace Team_T_RPG
 
 
         //====================주사위====================
-        public static Random random = new Random(); //랜덤
-        public static int dice20() //20면 주사위
+        public static Random random = new Random(); // static으로 변경
+
+        public static int dice20() // 20면 주사위
         {
             return random.Next(1, 21) + Luk;
         }
-        public static int dice6() //6면 주사위
+
+        public static int dice6() // 6면 주사위
         {
             return random.Next(1, 7);
         }
         //====================던전 시스템====================
-        public static int dungeonDay = 3;
-        public static int dungeonHour = 0;
+        public static int dungeonDay = 3;   //날짜
+        public static int dungeonHour = 0;   //시간
         //====================던전 맵====================
-        public static int playerX = -1; //포탈좌표x
-        public static int playerY = -1; //포탈좌표x
-        public static int portalX = -1; //포탈좌표x
-        public static int portalY = -1; //포탈좌표y
+        public static int playerX = -1; //플레이어좌표x
+        public static int playerY = -1;
+        public static int portalX = -1; //포탈좌표
+        public static int portalY = -1; 
+        public static int treasureX = -1; //보물좌표
+        public static int treasureY = -1;
         public static int floor = 1; //층수
-        public static char[,] map; //
+        public static bool floorChange = false; //층변경감지
+        public static char[,] map; //맵
+        public static List<(int x, int y)> monsterPositions = new List<(int x, int y)>();
     }
 }

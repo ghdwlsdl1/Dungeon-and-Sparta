@@ -12,11 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Dungeon.cs" />
     <Compile Include="MainFrame.cs" />
-    <Compile Include="Stats.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="GameStarter.cs" />
-    <Compile Include="Mobs.cs" />
     <Compile Include="Item.cs" />
 	  <Compile Include="Data.cs" />
   </ItemGroup>
