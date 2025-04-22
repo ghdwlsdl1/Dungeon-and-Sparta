@@ -151,15 +151,9 @@ public static class DungeonSystem
 
         public static void MiniMap()
         {
-            if (Data.floor == 1) //첫층 강제실행
-            {
-                Data.floorChange = true;
-            }
+            if (Data.floor == 1) Data.floorChange = true; //첫층 강제실행
 
-            if (!Data.floorChange) // 이미 맵이 있는 상태면 탈출
-            {
-                return;
-            }
+            if (!Data.floorChange) return; // 이미 맵이 있는 상태면 탈출
 
             int size = GetMapSize(Data.floor); // 현재 층의 맵 크기
             Data.map = new char[size, size];
@@ -187,8 +181,8 @@ public static class DungeonSystem
                 Data.portalY = Data.random.Next(0, size);
             }
 
-            // ===== 장애물 랜덤 배치 =====
-            int wallCount = size * size / 10; // 맵 크기의 10%를 장애물로
+            // 벽 랜덤 배치
+            int wallCount = size * size / 10; // 맵 크기의 10%를 벽
             int placed = 0;
 
             while (placed < wallCount && Data.floorChange)
@@ -196,7 +190,7 @@ public static class DungeonSystem
                 int wallX = Data.random.Next(0, size);
                 int wallY = Data.random.Next(0, size);
 
-                // 포탈과 플레이어 위치, 이미 배치된 칸은 제외
+                // 포탈, 플레이어 위치 이미 배치된 칸은 제외
                 if ((wallX == Data.playerX && wallY == Data.playerY) ||
                     (wallX == Data.portalX && wallY == Data.portalY) ||
                     Data.map[wallY, wallX] != ' ')
@@ -206,10 +200,12 @@ public static class DungeonSystem
                 placed++;
             }
 
+            // 보물 랜덤 배치
             while (Data.floorChange)
             {
                 int treasureX = Data.random.Next(0, size);
                 int treasureY = Data.random.Next(0, size);
+                // 포탈, 플레이어 위치, 벽 이미 배치된 칸은 제외
                 if ((treasureX == Data.playerX && treasureY == Data.playerY) ||
                     (treasureX == Data.portalX && treasureY == Data.portalY) ||
                     Data.map[treasureY, treasureX] != ' ')
@@ -344,7 +340,6 @@ public static class DungeonSystem
 
         int enemyHP = Data.random.Next(1 + (Data.floor * Data.floor), (Data.floor * 5) + (Data.floor * Data.floor));
         int enemyAttack = Data.random.Next(1 + Data.floor, 3 + Data.floor * 2);
-        bool defense = false;
         bool battleError = false;
 
         while (Data.Hp > 0 && enemyHP > 0)
@@ -355,37 +350,33 @@ public static class DungeonSystem
             Console.WriteLine($"현재 마나:   {Data.Mp} / {Data.MpMax}");
             Console.WriteLine("\n당신의 차례입니다. 행동을 선택하세요:");
             Console.WriteLine("1. 공격하기");
-            Console.WriteLine("2. 방어하기");
-            Console.WriteLine("3. 마법 사용하기 (MP 2 소모)");
+            Console.WriteLine("2. 마법 사용하기 (MP 2 소모)");
+            Console.WriteLine("3. 장비 사용하기");
 
             if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
             string action = Console.ReadLine();
-            defense = false;
 
             switch (action)
             {
-                case "1":
+                case "1":  // 공격
                     Console.Clear();
                     int damage = 0;
                     int roll = Data.dice20();
                     damage = roll >= 20 ? Data.Atk * 3 :
-                             roll >= 10 ? Data.Atk * 2 : Data.Atk;
+                             roll >= 10 ? Data.Atk * 2 :
+                             Data.Atk;
+
                     Console.WriteLine($"공격! {damage}의 피해");
                     enemyHP -= damage;
                     break;
 
-                case "2":
-                    Console.Clear();
-                    Console.WriteLine("방어 태세! 다음 턴 적의 피해가 체력 비례로 감소합니다.");
-                    defense = true;
-                    break;
-
-                case "3":
+                case "2": // 마법
                     Console.Clear();
                     int magicDamage = 0;
                     int mRoll = Data.dice20();
                     magicDamage = mRoll >= 20 ? Data.Int * 4 :
-                                  mRoll >= 10 ? Data.Int * 3 : Data.Int * 2;
+                                  mRoll >= 10 ? Data.Int * 3 :
+                                  Data.Int * 2;
 
                     if (Data.Mp >= 2)
                     {
@@ -397,6 +388,13 @@ public static class DungeonSystem
                     {
                         Console.WriteLine("마나가 부족합니다.");
                     }
+                    break;
+
+                case "3":  // 장비
+
+
+
+
                     break;
 
                 default:
@@ -416,27 +414,18 @@ public static class DungeonSystem
 
             Console.WriteLine("\n적의 차례입니다.");
             int enemyDice = Data.random.Next(Data.floor, Data.floor * 2);
-            int enemyDamage = enemyAttack + enemyDice;
-
+            float reduction = Data.Def / (100f + Data.Def);
+            int bestEnemyDamage = enemyAttack + enemyDice;
+            int enemyDamage = Math.Max(1, (int)(bestEnemyDamage * (1 - reduction)));
             int evasion = Math.Min(Data.Dex * 2, 101);
             int evasionRoll = Data.random.Next(1, 101);
-
             if (evasionRoll <= evasion)
             {
                 Console.WriteLine($"회피 성공! (회피 확률: {evasion}%)");
             }
             else
             {
-                if (defense)
-                {
-                    enemyDamage = (int)(enemyDamage * 0.5 * (1.0 - Data.Def * 0.05));
-                    if (enemyDamage < 0) enemyDamage = 0;
-                    Console.WriteLine($"방어 중! 피해 감소 → 실제 피해: {enemyDamage}");
-                }
-                else
-                {
-                    Console.WriteLine($"적의 공격! {enemyDamage}의 피해를 입었습니다.");
-                }
+                Console.WriteLine($"적의 공격! {enemyDamage}의 피해를 입었습니다.");
                 Data.Hp -= enemyDamage;
             }
 
@@ -448,5 +437,37 @@ public static class DungeonSystem
         }
     }
 
+    public static void Skill()
+    {
+        while (Data.Hp > 0 && enemyHP > 0)
+        {
+            Console.WriteLine($"\n\n적의 체력:   {enemyHP}");
+            Console.WriteLine($"기본 공격력: {enemyAttack}");
+            Console.WriteLine($"\n\n현재 체력:   {Data.Hp} / {Data.HpMax}");
+            Console.WriteLine($"현재 마나:   {Data.Mp} / {Data.MpMax}");
+            Console.WriteLine("\n행동을 선택하세요:");
 
+
+
+            if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
+            string action = Console.ReadLine();
+
+            switch (action)
+            {
+                case "1":
+                    break;
+
+                case "2":
+
+                    break;
+
+                case "3":
+
+                    break;
+
+                default:
+                    continue;
+            }
+        }
+    }
 }
