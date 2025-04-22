@@ -19,6 +19,7 @@
 		<Compile Include="Mobs.cs" />
 		<Compile Include="Item.cs" />
 		<Compile Include="Data.cs" />
+		<Compile Include="Stats.cs" />
 	</ItemGroup>
 
 </Project>
