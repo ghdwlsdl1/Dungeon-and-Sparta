@@ -6,109 +6,109 @@ namespace Team_T_RPG
     {
         public void UpdateLevel()
         {
-            int experienceMax = 10 * Data.Level * Data.Level;
-            if (Data.experience >= experienceMax)
+            int experienceMax = 10 * Level * Level;
+            if (experience >= experienceMax)
             {
-                Data.Level++;
-                Data.experience -= experienceMax;
+                Level++;
+                experience -= experienceMax;
             }
         }
 
         public void UpdateHpMax()
         {
-            Data.HpMax = Data.Con * 2;
-            if (Data.Hp > Data.HpMax)
+            HpMax = Con * 2;
+            if (Hp > HpMax)
             {
-                Data.Hp = Data.HpMax;
+                Hp = HpMax;
             }
         }
 
         public void UpdateMpMax()
         {
-            Data.MpMax = Data.Wis * 2;
-            if (Data.Mp > Data.MpMax)
+            MpMax = Wis * 2;
+            if (Mp > MpMax)
             {
-                Data.Mp = Data.MpMax;
+                Mp = MpMax;
             }
         }
 
         public void UpdateStr()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[3])
+            if (weaponEquip[3])
             {
-                weaponBonus = Data.weaponStats[3];
+                weaponBonus = weaponStats[3];
             }
 
-            Data.Str = Data.startStr + weaponBonus + Data.Level;
+            Str = startStr + weaponBonus + Level;
         }
 
         public void UpdateDex()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[4])
+            if (weaponEquip[4])
             {
-                weaponBonus += Data.weaponStats[4];
+                weaponBonus += weaponStats[4];
             }
 
-            Data.Dex = Data.startDex + weaponBonus + Data.Level;
+            Dex = startDex + weaponBonus + Level;
         }
 
         public void UpdateInt()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[5])
+            if (weaponEquip[5])
             {
-                weaponBonus += Data.weaponStats[5];
+                weaponBonus += weaponStats[5];
             }
 
-            Data.Int = Data.startInt + weaponBonus + Data.Level;
+            Int = startInt + weaponBonus + Level;
         }
 
         public void UpdateCon()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[5])
+            if (assistEquip[5])
             {
-                assistBonus += Data.assistStats[5];
+                assistBonus += assistStats[5];
             }
 
-            Data.Con = Data.startCon + assistBonus + Data.Level;
+            Con = startCon + assistBonus + Level;
         }
 
         public void UpdateWis()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[4])
+            if (assistEquip[4])
             {
-                assistBonus += Data.assistStats[4];
+                assistBonus += assistStats[4];
             }
-            Data.Wis = Data.startWis + assistBonus + Data.Level;
+            Wis = startWis + assistBonus + Level;
         }
 
         public void UpdateLuk()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[3])
+            if (assistEquip[3])
             {
-                assistBonus += Data.assistStats[3];
+                assistBonus += assistStats[3];
             }
-            Data.Luk = Data.startLuk + assistBonus;
+            Luk = startLuk + assistBonus;
         }
 
         public void UpdateAtk()
         {
             int weaponBonus = 0;
 
-            for (int i = 0; i < Data.weaponEquip.Length; i++)
+            for (int i = 0; i < weaponEquip.Length; i++)
             {
-                if (Data.weaponEquip[i])
+                if (weaponEquip[i])
                 {
-                    weaponBonus += Data.weaponAtk[i];
+                    weaponBonus += weaponAtk[i];
                 }
             }
 
-            Data.Atk = 1 + Data.Str + weaponBonus;
+            Atk = 1 + Str + weaponBonus;
         }
 
         public void UpdateDef()
@@ -116,21 +116,21 @@ namespace Team_T_RPG
             int assistBonus = 0;
             int armorBonus = 0;
 
-            for (int i = 0; i < Data.assistEquip.Length; i++)
+            for (int i = 0; i < assistEquip.Length; i++)
             {
-                if (Data.assistEquip[i])
+                if (assistEquip[i])
                 {
-                    assistBonus += Data.assistDef[i];
+                    assistBonus += assistDef[i];
                 }
             }
-            for (int i = 0; i < Data.armorEquip.Length; i++)
+            for (int i = 0; i < armorEquip.Length; i++)
             {
-                if (Data.armorEquip[i])
+                if (armorEquip[i])
                 {
-                    armorBonus += Data.armorDef[i];
+                    armorBonus += armorDef[i];
                 }
             }
-            Data.Def = Data.Con / 3 + armorBonus + assistBonus;
+            Def = Con / 3 + armorBonus + assistBonus;
         }
 
         public void UpdateStats()
@@ -151,4 +151,3 @@ namespace Team_T_RPG
         }
 
     }
-}
