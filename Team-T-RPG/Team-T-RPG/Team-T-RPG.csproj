@@ -20,7 +20,8 @@
 		<Compile Include="Inventory.cs" />
 		<Compile Include="GameStarter.cs" />
 		<Compile Include="Data.cs" />
-		<Compile Include="User.cs" />
+		<Compile Include="Dungeon.cs" />
+		
 	</ItemGroup>
 
 </Project>

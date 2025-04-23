@@ -582,6 +582,7 @@ public static class DungeonSystem
                         Data.experience += Data.dice20() * Data.floor; // 경험치 지급
                         Data.Money += Data.dice20() * (Data.floor * Data.floor); // 돈 지급
                                                                                  //Stats.UpdateStats(); // 스탯 갱신 필요 시 주석 해제
+                                                                                 //Quest.ReportKill("몹 이름");
                         break;
                     }
 
