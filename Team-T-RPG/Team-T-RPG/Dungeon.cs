@@ -635,20 +635,97 @@ public static class DungeonSystem
                 Console.WriteLine($"기본 공격력: {monsterAttack}");
                 Console.WriteLine($"\n\n현재 체력:   {Data.Hp} / {Data.HpMax}");
                 Console.WriteLine($"현재 마나:   {Data.Mp} / {Data.MpMax}");
+                switch (Data.JobNames)
+                {
+                    case 1:
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        break;
+                    case 2:
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        break;
+                    case 3:
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        break;
+                    case 4:
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        Console.WriteLine("\n1. 휠윈드");
+                        break;
+                }
                 Console.WriteLine("\n행동을 선택하세요:");
-
                 string action = Console.ReadLine();
 
                 switch (action)
                 {
                     case "1":
+
+                        Console.Clear();
+                        int magicDamage = 0;
+                        int mRoll = Data.dice20();
+                        magicDamage = mRoll >= 20 ? Data.Int * 4 :
+                                      mRoll >= 10 ? Data.Int * 3 :
+                                      Data.Int * 2;
+
+                        if (Data.Mp >= 2)
+                        {
+                            Console.WriteLine($"마법 공격! {magicDamage}의 피해");
+                            monsterHP -= magicDamage;
+                            Data.Mp -= 2;
+                        }
+                        else
+                        {
+                            Console.WriteLine("마나가 부족합니다.");
+                        }
+                        break;
                         break;
 
                     case "2":
+                        Console.Clear();
+                        int magicDamage2 = 0;
+                        int mRoll2 = Data.dice20();
+                        magicDamage = mRoll2 >= 20 ? Data.Int * 4 :
+                                      mRoll2 >= 10 ? Data.Int * 3 :
+                                      Data.Int * 2;
+
+                        if (Data.Mp >= 2)
+                        {
+                            Console.WriteLine($"마법 공격! {magicDamage}의 피해");
+                            monsterHP -= magicDamage2;
+                            Data.Mp -= 2;
+                        }
+                        else
+                        {
+                            Console.WriteLine("마나가 부족합니다.");
+                        }
+                        break;
 
                         break;
 
                     case "3":
+                        Console.Clear();
+                        int magicDamage3 = 0;
+                        int mRoll3 = Data.dice20();
+                        magicDamage = mRoll3 >= 20 ? Data.Int * 4 :
+                                      mRoll3 >= 10 ? Data.Int * 3 :
+                                      Data.Int * 2;
+
+                        if (Data.Mp >= 2)
+                        {
+                            Console.WriteLine($"마법 공격! {magicDamage}의 피해");
+                            monsterHP -= magicDamage3;
+                            Data.Mp -= 2;
+                        }
+                        else
+                        {
+                            Console.WriteLine("마나가 부족합니다.");
+                        }
+                        break;
 
                         break;
 
