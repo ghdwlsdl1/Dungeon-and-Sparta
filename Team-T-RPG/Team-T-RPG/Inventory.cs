@@ -14,7 +14,7 @@ namespace Team_T_RPG
             {
                 if (Data.weaponTf[i] >= 0)
                 {
-                    string equippedMark = Data.weaponEquip[i] ? " (장착중)" : "";
+                    string equippedMark = (Data.weaponEquip[i]==1) ? " (장착중)" : "";
                     if (i == 0)
                     {
                         // weapon[0]은 장비 없음이므로 갯수 출력 제외
@@ -37,11 +37,11 @@ namespace Team_T_RPG
                     // 기존 무기 해제
                     for (int i = 0; i < Data.weaponEquip.Length; i++)
                     {
-                        Data.weaponEquip[i] = false;
+                        Data.weaponEquip[i] = 0;
                     }
 
                     // 선택한 무기 장착
-                    Data.weaponEquip[selectedIndex] = true;
+                    Data.weaponEquip[selectedIndex] = 1;
 
                     Console.WriteLine($"\n▶ [{Data.weapon[selectedIndex]}]를 장착했습니다!");
                 }
@@ -49,9 +49,9 @@ namespace Team_T_RPG
                 {
                     for (int i = 0; i < Data.weaponEquip.Length; i++)
                     {
-                        Data.weaponEquip[i] = false;
+                        Data.weaponEquip[i] = 0;
                     }
-                    Data.weaponEquip[0] = true;
+                    Data.weaponEquip[0] = 1;
                     Console.WriteLine($"\n▶ [{Data.weapon[selectedIndex]}]을 선택해 장비가 장착 해제되었습니다!");
 
                 }

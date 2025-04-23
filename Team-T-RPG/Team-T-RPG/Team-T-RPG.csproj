@@ -21,6 +21,7 @@
 		<Compile Include="GameStarter.cs" />
 		<Compile Include="Data.cs" />
 		<Compile Include="Dungeon.cs" />
+		<Compile Include="Item.cs" />
 		
 	</ItemGroup>
 

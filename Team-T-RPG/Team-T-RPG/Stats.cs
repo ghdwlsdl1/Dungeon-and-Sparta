@@ -41,7 +41,7 @@ namespace Team_T_RPG
         public void UpdateStr()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[3])
+            if (Data.weaponEquip[3] == 1)
             {
                 weaponBonus = Data.weaponStats[3];
             }
@@ -59,7 +59,7 @@ namespace Team_T_RPG
         public void UpdateDex()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[4])
+            if (Data.weaponEquip[4] == 1)
             {
                 weaponBonus += Data.weaponStats[4];
             }
@@ -78,7 +78,7 @@ namespace Team_T_RPG
         public void UpdateInt()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[5])
+            if (Data.weaponEquip[5] == 1)
             {
                 weaponBonus += Data.weaponStats[5];
             }
@@ -97,7 +97,7 @@ namespace Team_T_RPG
         public void UpdateCon()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[5])
+            if (Data.assistEquip[5] == 1)
             {
                 assistBonus += Data.assistStats[5];
             }
@@ -116,7 +116,7 @@ namespace Team_T_RPG
         public void UpdateWis()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[4])
+            if (Data.assistEquip[4] == 1)
             {
                 assistBonus += Data.assistStats[4];
             }
@@ -135,7 +135,7 @@ namespace Team_T_RPG
         public void UpdateLuk()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[3])
+            if (Data.assistEquip[3] == 1)
             {
                 assistBonus += Data.assistStats[3];
             }
@@ -149,7 +149,7 @@ namespace Team_T_RPG
 
             for (int i = 0; i < Data.weaponEquip.Length; i++)
             {
-                if (Data.weaponEquip[i])
+                if ((Data.weaponEquip[i] == 1))
                 {
                     weaponBonus += Data.weaponAtk[i];
                 }
@@ -165,7 +165,7 @@ namespace Team_T_RPG
 
             for (int i = 0; i < Data.assistEquip.Length; i++)
             {
-                if (Data.assistEquip[i])
+                if ((Data.assistEquip[i] == 1))
                 {
                     assistBonus += Data.assistDef[i];
                 }
@@ -173,7 +173,7 @@ namespace Team_T_RPG
 
             for (int i = 0; i < Data.armorEquip.Length; i++)
             {
-                if (Data.armorEquip[i])
+                if ((Data.armorEquip[i] == 1))
                 {
                     armorBonus += Data.armorDef[i];
                 }

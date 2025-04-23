@@ -54,7 +54,7 @@ namespace Team_T_RPG
         public static int[] armorDef = { 0, 1, 3, 5, 7, 10 }; // 추가 방어력
         public static int[] armorDeal = { 0, 1000, 2000, 3000, 4000, 5000 }; // 금액
 
-        public static string[] potion = { "없음", "체력 물약", "상처약", "재생의 포션", "칸나의 빵", "파워 엘릭서" }
+        public static string[] potion = { "없음", "체력 물약", "상처약", "재생의 포션", "칸나의 빵", "파워 엘릭서" };
         public static int[] potionTf = { 0, 0, 0, 0, 0, 0 };
         public static int[] potionEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] potionHp = { 0, 10, 30, 50, 70, 100 }; // 추가 체력은 회복이라고 생각했습니다.

@@ -149,6 +149,9 @@ namespace Team_T_RPG
 
                 case 3: // 상점
                     {
+                        Console.Clear();
+                        Item item = new Item();
+                        item.Store();
                         break;
                     }
 
