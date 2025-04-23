@@ -8,14 +8,16 @@ namespace Team_T_RPG
 {
     class Item
     {
-        public bool Store(ref bool StoreError, ref bool MoneyLack)
+        public void Store()
         {
+            bool StoreError = false;
+            bool MoneyLack = false;
             Console.Clear();
             Console.WriteLine("상점");
             Console.WriteLine("장비를 구입하거나 판매하는 상점입니다.");
             Console.WriteLine("\n[아이템 목록]");
             printStore();
-            Console.WriteLine($"\n\nGold   {Money}");
+            Console.WriteLine($"\n\nGold   {Data.Money}");
             Console.WriteLine("\n구입 혹은 판매할 장비를 입력해주세요. (예: W1, A2, R3, P4)");
             Console.WriteLine("판매 시 가격의 절반을 받습니다.");
             Console.WriteLine("\n\n0.나가기");
@@ -35,7 +37,7 @@ namespace Team_T_RPG
             if (text == "0")
             {
                 Console.Clear();
-                return true;
+                return;
             }
 
             if (text.Length >= 2)
@@ -52,21 +54,21 @@ namespace Team_T_RPG
                                 {
                                     if (Data.Money >= Data.weaponDeal[number])
                                     {
-                                        Data.weaponTf[number] =  1;
+                                        Data.weaponTf[number] = 1;
                                         Data.Money -= Data.weaponDeal[number]; // 금액차감
-                                        return true;
+                                        return;
                                     }
                                     else
                                     {
                                         MoneyLack = true;
-                                        return false;
+                                        return;
                                     }
                                 }
                                 else if (Data.weaponTf[number] == 1)
                                 {
                                     Data.weaponTf[number] = 0;
                                     Data.Money += Data.weaponDeal[number] / 2;
-                                    return true;
+                                    return;
                                 }
                             }
                             break;
@@ -79,20 +81,20 @@ namespace Team_T_RPG
                                     if (Data.Money >= Data.assistDeal[number])
                                     {
                                         Data.assistTf[number] = 1;
-                                        Data.Money -= assistDeal[number];
-                                        return true;
+                                        Data.Money -= Data.assistDeal[number];
+                                        return;
                                     }
                                     else
                                     {
                                         MoneyLack = true;
-                                        return false;
+                                        return;
                                     }
                                 }
-                                else if (Data.assistTf[number == 1])
+                                else if (Data.assistTf[number] == 1)
                                 {
                                     Data.assistTf[number] = 0;
                                     Data.Money += Data.assistDeal[number] / 2;
-                                    return true;
+                                    return;
                                 }
                             }
                             break;
@@ -106,83 +108,88 @@ namespace Team_T_RPG
                                     {
                                         Data.armorTf[number] = 1;
                                         Data.Money -= Data.armorDeal[number];
-                                        return true;
+                                        return;
                                     }
                                     else
                                     {
                                         MoneyLack = true;
-                                        return false;
+                                        return;
                                     }
                                 }
-                                else if (Data.armorTf[number]==1)
+                                else if (Data.armorTf[number] == 1)
                                 {
                                     Data.armorTf[number] = 0;
                                     Data.Money += Data.armorDeal[number] / 2;
-                                    return true;
+                                    return;
                                 }
                             }
                             break;
 
-                        case 'P': //포션
-                            if (number > 0 && number < Data.potion.Length)
+                        case 'P': // 포션
                             {
-                                if (Data.potionTf[number] == 0)
-                                { 
-                                    if (Data.Money >= Data.potionDeal[number])
+                                if (number > 0 && number < Data.potion.Length)
+                                {
+                                    if (Data.potionTf[number] == 0)
                                     {
-                                        Data.potionTf[number] = 1;
-                                        Data.Money -= Data.potionDeal[number];
+                                        if (Data.Money >= Data.potionDeal[number])
+                                        {
+                                            Data.potionTf[number] = 1;
+                                            Data.Money -= Data.potionDeal[number];
 
-                                        int healAmount = Data.potionHp[number];
-                                        Data.Hp = Math.Min(Data.Hp + healAmount, Data.HpMax);
+                                            int healAmount = Data.potionHp[number];
+                                            Data.Hp = Math.Min(Data.Hp + healAmount, Data.HpMax);
 
-                                        return true;
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            MoneyLack = true;
+                                            return;
+                                        }
                                     }
-                                    else
+                                    else if (Data.potionTf[number] == 1)
                                     {
-                                        MoneyLack = true;
-                                        return false;
+                                        Data.potionTf[number] = 0;
+                                        Data.Money += Data.potionDeal[number] / 2;
+                                        return;
                                     }
+
+                                }
+                                break;
                             }
-                            else if (Data.potionTf[number])
-                            {
-                                potionTf[number] = 0;
-                                Money += potionDeal[number] / 2;
-                                return true;
-                            }
-                            break;
                     }
+                    StoreError = true;
+                    return;
                 }
             }
-            StoreError = true;
-            return false;
         }
+        
 
         public void printStore()
         {
 
             // 무기 목록
             Console.WriteLine("\n[무기 목록]");
-            for (int i = 1; i < weapon.Length; i++)
+            for (int i = 1; i < Data.weapon.Length; i++)
             {
-                Console.WriteLine($"W{i}.[{(weaponTf[i] ? "소지중" : "없음")}] {weapon[i]} {weaponDeal[i]}Gold");
+                Console.WriteLine($"W{i}.[ {((Data.weaponTf[i] == 1) ? "소지중" : "없음")}] {Data.weapon[i]} {Data.weaponDeal[i]}Gold");
             }
             // 보조 장비 목록
             Console.WriteLine("\n[보조 장비 목록]");
-            for (int i = 1; i < assist.Length; i++)
+            for (int i = 1; i < Data.assist.Length; i++)
             {
-                Console.WriteLine($"A{i}.[{(assistTf[i] ? "소지중" : "없음")}] {assist[i]} {assistDeal[i]}Gold");
+                Console.WriteLine($"A{i}.[  {((Data.assistTf[i] == 1) ? "소지중" : "없음")}] {Data.assist[i]} {Data.assistDeal[i]}Gold");
             }
             // 갑옷 목록
             Console.WriteLine("\n[갑옷 목록]");
-            for (int i = 1; i < armor.Length; i++)
+            for (int i = 1; i < Data.armor.Length; i++)
             {
-                Console.WriteLine($"R{i}.[{(armorTf[i] ? "소지중" : "없음")}] {armor[i]} {armorDeal[i]}Gold");
+                Console.WriteLine($"R{i}.[ {((Data.armorTf[i] == 1) ? "소지중" : "없음")}] {Data.armor[i]} {Data.armorDeal[i]}Gold");
             }
             Console.WriteLine("\n[포션 목록]");
-            for (int i = 1; i < posion.Length; i++)
+            for (int i = 1; i < Data.potion.Length; i++)
             {
-                Console.WriteLine($"P{i}.[{(potionTf[i] ? "소지중" : "없음")}] {potion[i]} {potionDeal[i]}Gold");
+                Console.WriteLine($"P{i}.[ {((Data.potionTf[i] == 1) ? "소지중" : "없음")}] {Data.potion[i]} {Data.potionDeal[i]}Gold");
             }
         }
 
