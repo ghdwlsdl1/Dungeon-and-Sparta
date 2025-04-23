@@ -198,5 +198,47 @@ namespace Team_T_RPG
             UpdateAtk();
             UpdateDef();
         }
+
+        public void ShowStatTable()
+        {
+            UpdateStats();
+            Console.Clear();
+            Console.WriteLine("상태 보기");
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine("");
+            Console.WriteLine($"레벨 : {Data.Level}");
+            Console.WriteLine($"chad ( {Data.Job[Data.JobNames]} )");
+            Console.WriteLine($" 힘   : {Data.Str}");
+            Console.WriteLine($"민첩  : {Data.Dex}");
+            Console.WriteLine($"지능  : {Data.Int}");
+            Console.WriteLine($"체력  : {Data.Con}");
+            Console.WriteLine($"지혜  : {Data.Wis}");
+            Console.WriteLine($"행운  : {Data.Luk}");
+            Console.WriteLine($"공격력: {Data.Atk}");
+            Console.WriteLine($"방어력: {Data.Def}");
+            Console.WriteLine($"HP : {Data.Hp}/{Data.HpMax}");
+            Console.WriteLine($"Gold   : {Data.Money}");
+            Console.WriteLine("");
+            Console.WriteLine("1.장비교체");
+            Console.WriteLine("0.나가기");
+
+            int userinput = MainFrame.UserInputHandler(0, 1);
+
+            switch (userinput)
+            {
+                case 1:
+                    Console.WriteLine("장비 교체");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                    break;
+
+                case 0:
+                    Console.WriteLine("나가겠습니다 테스트용");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                    break;
+            }
+
+        }
     }
 }

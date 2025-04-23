@@ -11,14 +11,17 @@
 	  
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="Stats.cs" />
-    <Compile Include="Dungeon.cs" />
-    <Compile Include="MainFrame.cs" />
-    <Compile Include="Inventory.cs" />
-    <Compile Include="GameStarter.cs" />
-    <Compile Include="Item.cs" />
-	<Compile Include="Data.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="Art.cs" />
+		<Compile Include="GameProgress.cs" />
+		<Compile Include="MainFrame.cs" />
+		<Compile Include="Quest.cs" />
+		<Compile Include="Stats.cs" />
+		<Compile Include="Inventory.cs" />
+		<Compile Include="GameStarter.cs" />
+		<Compile Include="Data.cs" />
+		<Compile Include="Dungeon.cs" />
+		
+	</ItemGroup>
 
 </Project>
