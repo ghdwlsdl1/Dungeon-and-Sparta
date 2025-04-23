@@ -45,8 +45,15 @@ namespace Team_T_RPG
             {
                 weaponBonus = Data.weaponStats[3];
             }
-
-            Data.Str = Data.startStr + weaponBonus + Data.Level;
+            if(Data.tired >= 20)
+            {
+                Data.Str = (Data.startStr + weaponBonus + Data.Level)
+                * Math.Max(5, 100 - Math.Min((Data.tired >= 20 ? (Data.tired - 20) * 5 : 0), 95)) / 100;
+            }
+            else
+            {
+                Data.Str = Data.startStr + weaponBonus + Data.Level;
+            }
         }
 
         public void UpdateDex()
@@ -57,7 +64,15 @@ namespace Team_T_RPG
                 weaponBonus += Data.weaponStats[4];
             }
 
-            Data.Dex = Data.startDex + weaponBonus + Data.Level;
+            if (Data.tired >= 20)
+            {
+                Data.Dex = (Data.startDex + weaponBonus + Data.Level)
+                * Math.Max(5, 100 - Math.Min((Data.tired - 20) * 5, 95)) / 100;
+            }
+            else
+            {
+                Data.Dex = Data.startDex + weaponBonus + Data.Level;
+            }
         }
 
         public void UpdateInt()
@@ -68,7 +83,15 @@ namespace Team_T_RPG
                 weaponBonus += Data.weaponStats[5];
             }
 
-            Data.Int = Data.startInt + weaponBonus + Data.Level;
+            if (Data.tired >= 20)
+            {
+                Data.Int = (Data.startInt + weaponBonus + Data.Level)
+                * Math.Max(5, 100 - Math.Min((Data.tired - 20) * 5, 95)) / 100;
+            }
+            else
+            {
+                Data.Int = Data.startInt + weaponBonus + Data.Level;
+            }
         }
 
         public void UpdateCon()
@@ -79,7 +102,15 @@ namespace Team_T_RPG
                 assistBonus += Data.assistStats[5];
             }
 
-            Data.Con = Data.startCon + assistBonus + Data.Level;
+            if (Data.tired >= 20)
+            {
+                Data.Con = (Data.startCon + assistBonus + Data.Level)
+                * Math.Max(5, 100 - Math.Min((Data.tired - 20) * 5, 95)) / 100;
+            }
+            else
+            {
+                Data.Con = Data.startCon + assistBonus + Data.Level;
+            }
         }
 
         public void UpdateWis()
@@ -90,7 +121,15 @@ namespace Team_T_RPG
                 assistBonus += Data.assistStats[4];
             }
 
-            Data.Wis = Data.startWis + assistBonus + Data.Level;
+            if (Data.tired >= 20)
+            {
+                Data.Wis = (Data.startWis + assistBonus + Data.Level)
+                * Math.Max(5, 100 - Math.Min((Data.tired - 20) * 5, 95)) / 100;
+            }
+            else
+            {
+                Data.Wis = Data.startWis + assistBonus + Data.Level;
+            }
         }
 
         public void UpdateLuk()

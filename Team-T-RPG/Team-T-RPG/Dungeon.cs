@@ -25,7 +25,15 @@ public static class DungeonSystem
     public static bool DungeonEntry(ref bool DungeonEntryError, ref bool DungeonEntryEnd)
     {
         // === 턴 시작 시 몬스터 이동 ===
-        MonstersSystem.MoveMonsters();
+        if (Data.monsterTurn > 0)
+        {
+            for (int i = 0; i < Data.monsterTurn; i++)
+            {
+                MonstersSystem.MoveMonsters(); // 몬스터 움직임
+            }
+
+            Data.monsterTurn = 0; // 다 움직였으면 초기화
+        }
 
         // === 충돌 체크 ===
         for (int i = Data.monsterPositions.Count - 1; i >= 0; i--)
@@ -91,6 +99,14 @@ public static class DungeonSystem
         Console.WriteLine("3. 이동하기");
         Console.WriteLine("4. 휴식하기");
         Console.WriteLine("5. 조사하기");
+        if (Data.tired >= 12)
+        {
+            Console.WriteLine("피곤합니다 휴식을 권장합니다.\n");
+        }
+        else if(Data.tired >= 20)
+        {
+            Console.WriteLine("지나친 피로로 탈진상태에 돌입합니다.\n");
+        }
 
         if (DungeonEntryError)
         {
@@ -103,7 +119,7 @@ public static class DungeonSystem
         switch (text)
         {
             case "1":
-        
+                
                 break;
 
             case "2":
@@ -111,44 +127,24 @@ public static class DungeonSystem
                 break;
 
             case "3":
-                    Data.dungeonHour += 1;
-                    bool moveError = false;
-                    bool moveError2 = false;
-                    bool moveRepeat = Dungeon.Move(ref moveError, ref moveError2);
-                    while (!moveRepeat)
-                    {
-                        moveRepeat = Dungeon.Move(ref moveError, ref moveError2);
-                    }
-                    Console.Clear();
+                Data.monsterTurn += 1; Data.dungeonHour += 1; Data.tired += 1;
+                bool moveError = false;
+                bool moveError2 = false;
+                bool moveRepeat = Dungeon.Move(ref moveError, ref moveError2);
+                while (!moveRepeat)
+                {
+                    moveRepeat = Dungeon.Move(ref moveError, ref moveError2);
+                }
+                Console.Clear();
                 break;
 
             case "4":
-                if (Data.dice20() >= 20)
-                {
-                    Console.Clear();
-                    Console.WriteLine("편하게 쉬었습니다.");
-                    Data.dungeonHour += 12;
-                    Data.Hp += Data.HpMax;
-                    Data.Mp += Data.MpMax;
-                    //Stats.UpdateStats();                                                                                                        스텟업데이트필요
-                }
-                else if (Data.dice20() >= 10)
-                {
-                    Console.Clear();
-                    Console.WriteLine("잠들었습니다.");
-                    Data.dungeonDay -= 1;
-                    Data.Hp += Data.HpMax;
-                    Data.Mp += Data.MpMax;
-                    //Stats.UpdateStats();                                                                                                        스텟업데이트필요
-                }
-                else
-                {
-                    Data.dungeonHour += 2;
-                    BattleSystem.Battle();
-                }
+                Data.monsterTurn += 6; Data.dungeonHour += 6; Data.tired -= 6;
+                Console.WriteLine("6시간동안 휴식을 취합니다.\n");
                 break;
 
             case "5":
+                Data.monsterTurn += 3; Data.dungeonHour += 3; Data.tired += 3;
                 SearchSystem.Search();
                 break;
 
