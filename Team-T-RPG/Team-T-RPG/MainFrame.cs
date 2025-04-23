@@ -156,6 +156,28 @@ namespace Team_T_RPG
 
                 case 6: // 던전 입장
                     {
+                        Console.Clear();
+                        Console.Write("던전 입장 중");
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Thread.Sleep(300);
+                            Console.Write(">");
+                            Thread.Sleep(300);
+                        }
+                        Console.Clear();
+
+                        bool dungeonError = false;
+                        bool dungeonEnd = false;
+
+                        Data.floorChange = true;
+
+                        while (DungeonSystem.DungeonEntry(ref dungeonError, ref dungeonEnd))
+                        {
+                            if (dungeonEnd) break;
+                        }
+                        Console.Clear();
+                        Data.Day++;
+
                         break;
                     }
             }

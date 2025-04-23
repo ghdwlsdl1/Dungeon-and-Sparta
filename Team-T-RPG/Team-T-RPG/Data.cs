@@ -75,8 +75,8 @@ namespace Team_T_RPG
         //====================던전 맵====================
         public static int playerX = -1; //플레이어좌표x
         public static int playerY = -1;
-        public static int portalX = -1; //포탈좌표
-        public static int portalY = -1; 
+        public static int portalX = -2; //포탈좌표
+        public static int portalY = -2; 
         public static int treasureX = -1; //보물좌표
         public static int treasureY = -1;
         public static int floor = 1; //층수
