@@ -30,9 +30,9 @@ namespace Team_T_RPG
             while (true)
             {
                 StartSceneArt();
-                Console.WriteLine("던전 엔 스파르타에 오신 것을 환영합니다.");
+                MainFrame.SerialTextWrite("던전 엔 스파르타에 오신 것을 환영합니다.\n\n");
 
-                Console.WriteLine("1. 새로 시작");
+                Console.WriteLine("1. 새로 하기");
                 Console.WriteLine("2. 이어하기");
 
                 int userinput = MainFrame.UserInputHandler(1, 2);
@@ -40,9 +40,10 @@ namespace Team_T_RPG
                 if (userinput == 1)
                 {
                     Console.Clear();
-                    NameCharacter();
-                    ChooseJob();
+                    
                     EnteringTown();
+                    ChooseJob();
+                    NameCharacter();
                     break;
 
                 }
@@ -61,15 +62,15 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n[캐릭터 생성]\n");
+                Console.WriteLine("\n[모험가 명부]\n");
                 Console.ResetColor();
-                Console.WriteLine("닉네임을 입력하세요. (10자 이하)");
+                Console.WriteLine("당신의 이름을 적어주세요. (10자 이하)");
                 string userinput = Console.ReadLine();
 
                 if ((userinput?.Length ?? 0) > 10 || (userinput?.Length ?? 0) == 0) // ?. 연산자와 ?? 연산자 활용해서 null에러 방지
                 {
                     MainFrame.ClearConsoleLine(4); // 입력한 줄 지워버리고 아래 출력
-                    Console.WriteLine("닉네임이 너무 짧거나 깁니다. 다시 입력하세요.");
+                    Console.WriteLine("이름이 너무 짧거나 깁니다. 다시 입력하세요.");
                 }
                 else
                 {
@@ -82,10 +83,7 @@ namespace Team_T_RPG
         public void ChooseJob()
         {
             Console.Clear();
-            Console.Write("\n당신의 캐릭터 이름 : ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(Data.Name);
-            Console.ResetColor();
+            
             Console.WriteLine("\n당신의 직업을 선택해 주세요.\n직업에 따라 시작 스텟이 다를 수 있으며,\n확률에 따라 보너스 스텟이 추가로 부여됩니다.\n");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 전사 ( + Str )");
@@ -142,15 +140,40 @@ namespace Team_T_RPG
 
         public void EnteringTown()
         {
-            Console.WriteLine($"\n 당신( {Data.Name}, {Data.Job[Data.JobNames]} )은 낯선 마을에서 눈을 뜹니다.\n");
-            Console.Write("정신 차리는 중");
-            for (int i = 0; i < 5; i++)
-            {
-                Thread.Sleep(300);
-                Console.Write(">");
-                Thread.Sleep(300);
-            }
+            Console.WriteLine("\n\n");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            MainFrame.SerialTextWrite("정신 차리는 중", 200);
+            Console.ResetColor();
             Console.Clear();
+            MainFrame.SerialTextWrite("\n뭐지? 기절했던 건가?\n");
+            MainFrame.SerialTextWrite("\n어리둥절해하며 몸을 일으켜 보니, " +
+                "마치 중세 같아 보이는 마을의 광장 한복판이었다.\n" +
+                "어처구니 없는 상황도 상황이지만, 몸 속에서 느껴지는 ", 25);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            MainFrame.SerialTextWrite("이 알 수 없는 힘");
+            Console.ResetColor();
+            MainFrame.SerialTextWrite("은 뭐지?\n\n");
+            Console.WriteLine("0. 전직하기");
+            int userinput = MainFrame.UserInputHandler(0,0);
         }
+
+        public void BriefExplain()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n  [{Data.Job[Data.JobNames]}의 적성이 개화합니다!]\n");
+            Console.ResetColor();
+            MainFrame.SerialTextWrite("지나가는 사람을 붙잡아 물어보니, 이런 일이 처음이 아니라는 듯\n자연스럽게", 25);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            MainFrame.SerialTextWrite("<모험가 연합>",250);
+            Console.ResetColor();
+            MainFrame.SerialTextWrite("이라 써 있는 간판을 가리켰다.\n",25);
+            Console.WriteLine("0. 건물로 들어가기");
+            int userinput = MainFrame.UserInputHandler(0, 0);
+            Console.Clear();
+            MainFrame.SerialTextWrite("건물로 들어가니, 퉁명스러운 표정의 안내원이 귀찮다는 듯 날 맞이했다.\n", 25);
+            MainFrame.SerialTextWrite("저희는 마을 밖의 마물들로부터의 보호는 물론, 여러분들의 식량, 치안 관리 까지 생존을 위한 모든 것을 제공하고 있습니다. 물론 무료는 아니고, 매일 세금을 납부하셔야 합니다. 못 내면 추방이에요!");
+
+        }
+
     }
 }
