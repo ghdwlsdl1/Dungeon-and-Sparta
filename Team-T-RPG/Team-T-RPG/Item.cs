@@ -16,7 +16,7 @@ namespace Team_T_RPG
             Console.WriteLine("\n[아이템 목록]");
             printStore();
             Console.WriteLine($"\n\nGold   {Money}");
-            Console.WriteLine("\n구입 혹은 판매할 장비를 입력해주세요. (예: W1, A2, R3)");
+            Console.WriteLine("\n구입 혹은 판매할 장비를 입력해주세요. (예: W1, A2, R3, P4)");
             Console.WriteLine("판매 시 가격의 절반을 받습니다.");
             Console.WriteLine("\n\n0.나가기");
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
@@ -122,6 +122,29 @@ namespace Team_T_RPG
                                 }
                             }
                             break;
+                        case 'P': //포션
+                            {
+                                if (number > 0 && number < posion.Length)
+                                {
+                                    if (Money >= posionDeal[number])
+                                    {
+                                        potionf[number] = !potionTf[number];
+                                        Money -= potionDeal[number];
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        MoneyLack = true;
+                                        return false;
+                                    }
+                                }
+                                if (potionTf[number])
+                                {
+                                    potionTf[number] = !potionTf[number];
+                                    Money += potionDeal[number] / 2;
+                                    return true;
+                                }
+                            }
                     }
                 }
             }
@@ -149,6 +172,11 @@ namespace Team_T_RPG
             for (int i = 1; i < armor.Length; i++)
             {
                 Console.WriteLine($"R{i}.[{(armorTf[i] ? "소지중" : "없음")}] {armor[i]} {armorDeal[i]}Gold");
+            }
+            Console.WriteLine("\n[포션 목록]");
+            for (int i = 1; i < posion.Length; i++)
+            {
+                Console.WriteLine($"A{i}.[{(potionTf[i] ? "소지중" : "없음")}] {potion[i]} {potionDeal[i]}Gold");
             }
         }
 
