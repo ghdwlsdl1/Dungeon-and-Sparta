@@ -19,7 +19,9 @@ namespace Team_T_RPG
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine("");
-            Console.WriteLine($"힘    : {Data.Str}");
+            Console.WriteLine($"레벨 : {Data.Level}");
+            Console.WriteLine($"chad ( {Data.Job[0]} )");
+            Console.WriteLine($" 힘   : {Data.Str}");
             Console.WriteLine($"민첩  : {Data.Dex}");
             Console.WriteLine($"지능  : {Data.Int}");
             Console.WriteLine($"체력  : {Data.Con}");
@@ -27,11 +29,6 @@ namespace Team_T_RPG
             Console.WriteLine($"행운  : {Data.Luk}");
             Console.WriteLine($"공격력: {Data.Atk}");
             Console.WriteLine($"방어력: {Data.Def}");
-            Console.WriteLine("");
-            Console.WriteLine($"레벨 : {Data.Level}");
-            Console.WriteLine($"chad ( {Data.Job[0]} )");
-            Console.WriteLine($"공격력 : {Data.Atk}");
-            Console.WriteLine($"방어력 : {Data.Def}");
             Console.WriteLine($"HP : {Data.Hp}/{Data.HpMax}");
             Console.WriteLine($"Gold   : {Data.Money}");
             Console.WriteLine("");
