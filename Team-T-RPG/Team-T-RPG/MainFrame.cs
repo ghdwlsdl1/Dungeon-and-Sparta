@@ -12,7 +12,6 @@ namespace Team_T_RPG
         
         static void Main()
         {
-            QuestManager.Initialize();
             GameStarter gameStarter = new GameStarter(); // 게임스타터 인스턴스 생성 : 게임 시작, 캐릭터 생성 및 저장 데이터 불러오기
             gameStarter.StartScene();
 

@@ -224,7 +224,7 @@ namespace Team_T_RPG
         {
             if (!string.IsNullOrEmpty(q.RewardItem))
             {
-                Item reward = ItemDatabase.Items.Find(item => item.Name == q.RewardItem);
+                // Item reward = ItemDatabase.Items.Find(item => item.Name == q.RewardItem);
                 // if (reward != null)
                 //    Inventory.Add(reward);
                 //    ★ 아이템이 존재하면 인벤토리에 추가. 사용자 정의 함수 이므로 별도의 구현 필요
