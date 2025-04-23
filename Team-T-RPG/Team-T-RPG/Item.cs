@@ -46,14 +46,14 @@ namespace Team_T_RPG
                     switch (type)
                     {
                         case 'W': // 무기
-                            if (number > 0 && number < weapon.Length)
+                            if (number > 0 && number < Data.weapon.Length)
                             {
-                                if (!weaponTf[number])
+                                if (Data.weaponTf[number] == 0)
                                 {
-                                    if (Money >= weaponDeal[number])
+                                    if (Data.Money >= Data.weaponDeal[number])
                                     {
-                                        weaponTf[number] = !weaponTf[number]; // ! 보유값 반전
-                                        Money -= weaponDeal[number]; // 금액차감
+                                        Data.weaponTf[number] =  1;
+                                        Data.Money -= Data.weaponDeal[number]; // 금액차감
                                         return true;
                                     }
                                     else
@@ -62,24 +62,24 @@ namespace Team_T_RPG
                                         return false;
                                     }
                                 }
-                                if (weaponTf[number])
+                                else if (Data.weaponTf[number] == 1)
                                 {
-                                    weaponTf[number] = !weaponTf[number];
-                                    Money += weaponDeal[number] / 2;
+                                    Data.weaponTf[number] = 0;
+                                    Data.Money += Data.weaponDeal[number] / 2;
                                     return true;
                                 }
                             }
                             break;
 
                         case 'A': // 보조 장비
-                            if (number > 0 && number < assist.Length)
+                            if (number > 0 && number < Data.assist.Length)
                             {
-                                if (!assistTf[number])
+                                if (Data.assistTf[number] == 0)
                                 {
-                                    if (Money >= assistDeal[number])
+                                    if (Data.Money >= Data.assistDeal[number])
                                     {
-                                        assistTf[number] = !assistTf[number];
-                                        Money -= assistDeal[number];
+                                        Data.assistTf[number] = 1;
+                                        Data.Money -= assistDeal[number];
                                         return true;
                                     }
                                     else
@@ -88,24 +88,24 @@ namespace Team_T_RPG
                                         return false;
                                     }
                                 }
-                                if (assistTf[number])
+                                else if (Data.assistTf[number == 1])
                                 {
-                                    assistTf[number] = !assistTf[number];
-                                    Money += assistDeal[number] / 2;
+                                    Data.assistTf[number] = 0;
+                                    Data.Money += Data.assistDeal[number] / 2;
                                     return true;
                                 }
                             }
                             break;
 
                         case 'R': // 갑옷
-                            if (number > 0 && number < armor.Length)
+                            if (number > 0 && number < Data.armor.Length)
                             {
-                                if (!armorTf[number])
+                                if (Data.armorTf[number] == 0)
                                 {
-                                    if (Money >= armorDeal[number])
+                                    if (Data.Money >= Data.armorDeal[number])
                                     {
-                                        armorTf[number] = !armorTf[number];
-                                        Money -= armorDeal[number];
+                                        Data.armorTf[number] = 1;
+                                        Data.Money -= Data.armorDeal[number];
                                         return true;
                                     }
                                     else
@@ -114,22 +114,28 @@ namespace Team_T_RPG
                                         return false;
                                     }
                                 }
-                                if (armorTf[number])
+                                else if (Data.armorTf[number]==1)
                                 {
-                                    armorTf[number] = !armorTf[number];
-                                    Money += armorDeal[number] / 2;
+                                    Data.armorTf[number] = 0;
+                                    Data.Money += Data.armorDeal[number] / 2;
                                     return true;
                                 }
                             }
                             break;
+
                         case 'P': //포션
+                            if (number > 0 && number < Data.potion.Length)
                             {
-                                if (number > 0 && number < posion.Length)
-                                {
-                                    if (Money >= posionDeal[number])
+                                if (Data.potionTf[number] == 0)
+                                { 
+                                    if (Data.Money >= Data.potionDeal[number])
                                     {
-                                        potionf[number] = !potionTf[number];
-                                        Money -= potionDeal[number];
+                                        Data.potionTf[number] = 1;
+                                        Data.Money -= Data.potionDeal[number];
+
+                                        int healAmount = Data.potionHp[number];
+                                        Data.Hp = Math.Min(Data.Hp + healAmount, Data.HpMax);
+
                                         return true;
                                     }
                                     else
@@ -137,14 +143,14 @@ namespace Team_T_RPG
                                         MoneyLack = true;
                                         return false;
                                     }
-                                }
-                                if (potionTf[number])
-                                {
-                                    potionTf[number] = !potionTf[number];
-                                    Money += potionDeal[number] / 2;
-                                    return true;
-                                }
                             }
+                            else if (Data.potionTf[number])
+                            {
+                                potionTf[number] = 0;
+                                Money += potionDeal[number] / 2;
+                                return true;
+                            }
+                            break;
                     }
                 }
             }
@@ -176,7 +182,7 @@ namespace Team_T_RPG
             Console.WriteLine("\n[포션 목록]");
             for (int i = 1; i < posion.Length; i++)
             {
-                Console.WriteLine($"A{i}.[{(potionTf[i] ? "소지중" : "없음")}] {potion[i]} {potionDeal[i]}Gold");
+                Console.WriteLine($"P{i}.[{(potionTf[i] ? "소지중" : "없음")}] {potion[i]} {potionDeal[i]}Gold");
             }
         }
 
