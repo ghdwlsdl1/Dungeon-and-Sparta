@@ -48,7 +48,7 @@ namespace Team_T_RPG
         public static int[] assistStats = { 0, 0, 0, 3, 5, 5 }; // 추가 스텟
         public static int[] assistDeal = { 0, 1000, 1000, 1000, 1000, 1000 }; // 금액
 
-        public static string[] armor = { "없음", "낡은 갑옷", "가죽 갑옷", "사슬 갑옷", "강철 갑옷", "전사의 판금 갑옷" };
+        public static string[] armor = { "없음", "낡은 갑옷", "가죽 갑옷", "사슬 갑옷", "강철 갑옷", "판금 갑옷" };
         public static int[] armorTf = { 0, 0, 0, 0, 0, 0 };
         public static int[] armorEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] armorDef = { 0, 1, 3, 5, 7, 10 }; // 추가 방어력
