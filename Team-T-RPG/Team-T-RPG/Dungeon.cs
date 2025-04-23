@@ -25,7 +25,7 @@ public static class DungeonSystem
     public static bool DungeonEntry(ref bool DungeonEntryError, ref bool DungeonEntryEnd)
     {
         // === 턴 시작 시 몬스터 이동 ===
-        Dungeon.MoveMonsters();
+        MonstersSystem.MoveMonsters();
 
         // === 충돌 체크 ===
         for (int i = Data.monsterPositions.Count - 1; i >= 0; i--)
@@ -38,10 +38,10 @@ public static class DungeonSystem
 
             if (dx <= 1 && dy <= 1)
             {
-                Battle();
+                BattleSystem.Battle();
                 Data.monsterPositions.RemoveAt(i);
                 Data.map[my, mx] = ' ';
-                Dungeon.PlaceMonsters(Data.floor);
+                MonstersSystem.PlaceMonsters(Data.floor);
                 Data.dungeonHour += 2;
                 return true;
             }
@@ -144,12 +144,12 @@ public static class DungeonSystem
                 else
                 {
                     Data.dungeonHour += 2;
-                    Battle();
+                    BattleSystem.Battle();
                 }
                 break;
 
             case "5":
-                Search();
+                SearchSystem.Search();
                 break;
 
             default:
@@ -161,7 +161,7 @@ public static class DungeonSystem
     }
 
     //던전생성
-    public static class DungeonCreation
+    public static class Dungeon
     {
         //크기
         public static int GetMapSize(int floor)
@@ -252,7 +252,7 @@ public static class DungeonSystem
 
             // 6. 현재 층 수에 비례하여 몬스터 배치
             int monsterCount = Data.floor;
-            PlaceMonsters(monsterCount);
+            MonstersSystem.PlaceMonsters(monsterCount);
 
             // 7. 최종적으로 포탈과 플레이어 위치를 맵에 시각적으로 표시
             Data.map[Data.portalY, Data.portalX] = '◇'; // 포탈
