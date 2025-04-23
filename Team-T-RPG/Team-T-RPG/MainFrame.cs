@@ -129,7 +129,7 @@ namespace Team_T_RPG
 
                 case 4: // 퀘스트 <<
                     {
-                        QuestManager.ShowQuestList();
+
                         break;
                     }
 
