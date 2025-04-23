@@ -20,7 +20,8 @@ public static class DungeonSystem
             Data.dungeonHour -= 24;
         }
     }
-    //던전입장
+
+    //던전UI
     public static bool DungeonEntry(ref bool DungeonEntryError, ref bool DungeonEntryEnd)
     {
         // === 턴 시작 시 몬스터 이동 ===
@@ -158,8 +159,9 @@ public static class DungeonSystem
         }
         return true;
     }
-    //던전
-    public static class Dungeon
+
+    //던전생성
+    public static class DungeonCreation
     {
         //크기
         public static int GetMapSize(int floor)
@@ -270,7 +272,146 @@ public static class DungeonSystem
             }
         }
 
+        // 플레이어 이동
+        public static bool Move(ref bool moveError, ref bool moveError2)
+        {
+            Console.Clear();
 
+            MiniMap();
+            PrintMap();
+
+            Console.WriteLine("이동 방향을 정해주세요.");
+            Console.WriteLine("1. 위");
+            Console.WriteLine("2. 아래");
+            Console.WriteLine("3. 오른쪽");
+            Console.WriteLine("4. 왼쪽");
+
+            if (moveError)
+            {
+                Console.WriteLine("잘못된 입력입니다.\n");
+                moveError = false;
+            }
+            else if (moveError2)
+            {
+                Console.WriteLine("이동할 수 없습니다.\n");
+                moveError2 = false;
+            }
+
+            string text = Console.ReadLine();
+
+            // 현재 위치 기준으로 새 위치 계산
+            int newX = Data.playerX;
+            int newY = Data.playerY;
+
+            // 방향 선택 처리
+            switch (text)
+            {
+                case "1": newY--; break; // 위로 이동
+                case "2": newY++; break; // 아래로 이동
+                case "3": newX++; break; // 오른쪽 이동
+                case "4": newX--; break; // 왼쪽 이동
+                default:
+                    // 잘못된 입력 처리
+                    Console.Clear();
+                    moveError = true;
+                    return false;
+            }
+
+            int size = GetMapSize(Data.floor);
+
+            // 맵 범위 초과 또는 벽이면 이동 불가
+            if (newX < 0 || newX >= size || newY < 0 || newY >= size || Data.map[newY, newX] == '■')
+            {
+                moveError2 = true;
+                return false;
+            }
+
+            // 이동 처리
+            Data.map[Data.playerY, Data.playerX] = ' '; // 이전 위치 지우기
+            Data.playerX = newX;
+            Data.playerY = newY;
+            Data.map[Data.playerY, Data.playerX] = 'P'; // 새 위치 표시
+
+            return true;
+        }
+    }
+
+    //조사 시스템
+    public static class SearchSystem
+    {
+        // 조사방향
+        private static string GetDirection(int dx, int dy)
+        {
+            string vertical = dy < 0 ? "북" : dy > 0 ? "남" : "";
+            string horizontal = dx < 0 ? "서" : dx > 0 ? "동" : "";
+            return vertical + horizontal;
+        }
+        // 조사하기
+        public static void Search()
+        {
+            int px = Data.playerX;
+            int py = Data.playerY;
+
+            // 현재 위치에 보물이 있을 경우 즉시 획득
+            if (px == Data.treasureX && py == Data.treasureY)
+            {
+                Console.Clear();
+                Console.WriteLine("보물을 획득했다");
+                Data.treasureX = -1; // 보물 위치 초기화
+                Data.treasureY = -1;
+                return;
+            }
+
+            int range = 2 + (Data.Wis / 2); // 탐색 범위 (지혜에 비례)
+            bool found = false;
+
+            // 탐색 범위 내 모든 좌표 확인
+            for (int y = py - range; y <= py + range; y++)
+            {
+                for (int x = px - range; x <= px + range; x++)
+                {
+                    // 자기 자신 또는 맵 밖은 제외
+                    if ((x == px && y == py) || x < 0 || y < 0 || x >= Data.map.GetLength(0) || y >= Data.map.GetLength(1))
+                        continue;
+
+                    // 탐색 범위 내에 보물이 있을 경우
+                    if (x == Data.treasureX && y == Data.treasureY)
+                    {
+                        found = true;
+                        int roll = Data.dice20() + (Data.Wis / 2); // 탐색 성공 확률 계산
+
+                        if (roll >= 10)
+                        {
+                            // 성공: 방향 힌트 제공
+                            Console.Clear();
+                            int dx = x - px;
+                            int dy = y - py;
+                            string direction = GetDirection(dx, dy);
+                            Console.WriteLine($"{direction}에서 희미한 기운이 느껴진다…");
+                        }
+                        else
+                        {
+                            // 실패
+                            Console.Clear();
+                            Console.WriteLine("뭔가 있을 것 같지만 확신이 없다.");
+                        }
+                        return; // 보물 찾기 여부에 관계없이 한 번만 시도함
+                    }
+                }
+            }
+
+            // 보물 자체가 탐색 범위에 없는 경우
+            if (!found)
+            {
+                Console.Clear();
+                Console.WriteLine("[아무것도 느껴지지 않는다.]");
+            }
+        }
+    }
+
+    //몬스터 시스템
+    public static class MonstersSystem
+    {
         // 몬스터 배치
         public static void PlaceMonsters(int count)
         {
@@ -368,259 +509,128 @@ public static class DungeonSystem
             // 몬스터 위치 갱신
             Data.monsterPositions = newPositions;
         }
-
-
-        // 플레이어 이동
-        public static bool Move(ref bool moveError, ref bool moveError2)
-        {
-            Console.Clear();
-
-            MiniMap();
-            PrintMap();
-
-            Console.WriteLine("이동 방향을 정해주세요.");
-            Console.WriteLine("1. 위");
-            Console.WriteLine("2. 아래");
-            Console.WriteLine("3. 오른쪽");
-            Console.WriteLine("4. 왼쪽");
-
-            if (moveError)
-            {
-                Console.WriteLine("잘못된 입력입니다.\n");
-                moveError = false;
-            }
-            else if (moveError2)
-            {
-                Console.WriteLine("이동할 수 없습니다.\n");
-                moveError2 = false;
-            }
-
-            string text = Console.ReadLine();
-
-            // 현재 위치 기준으로 새 위치 계산
-            int newX = Data.playerX;
-            int newY = Data.playerY;
-
-            // 방향 선택 처리
-            switch (text)
-            {
-                case "1": newY--; break; // 위로 이동
-                case "2": newY++; break; // 아래로 이동
-                case "3": newX++; break; // 오른쪽 이동
-                case "4": newX--; break; // 왼쪽 이동
-                default:
-                    // 잘못된 입력 처리
-                    Console.Clear();
-                    moveError = true;
-                    return false;
-            }
-
-            int size = GetMapSize(Data.floor);
-
-            // 맵 범위 초과 또는 벽이면 이동 불가
-            if (newX < 0 || newX >= size || newY < 0 || newY >= size || Data.map[newY, newX] == '■')
-            {
-                moveError2 = true;
-                return false;
-            }
-
-            // 이동 처리
-            Data.map[Data.playerY, Data.playerX] = ' '; // 이전 위치 지우기
-            Data.playerX = newX;
-            Data.playerY = newY;
-            Data.map[Data.playerY, Data.playerX] = 'P'; // 새 위치 표시
-
-            return true;
-        }
-
-
-        // 조사방향
-        private static string GetDirection(int dx, int dy)
-        {
-            string vertical = dy < 0 ? "북" : dy > 0 ? "남" : "";
-            string horizontal = dx < 0 ? "서" : dx > 0 ? "동" : "";
-            return vertical + horizontal;
-        }
-        // 조사하기
-        public static void Search()
-        {
-            int px = Data.playerX;
-            int py = Data.playerY;
-
-            // 현재 위치에 보물이 있을 경우 즉시 획득
-            if (px == Data.treasureX && py == Data.treasureY)
-            {
-                Console.Clear();
-                Console.WriteLine("보물을 획득했다");
-                Data.treasureX = -1; // 보물 위치 초기화
-                Data.treasureY = -1;
-                return;
-            }
-
-            int range = 2 + (Data.Wis / 2); // 탐색 범위 (지혜에 비례)
-            bool found = false;
-
-            // 탐색 범위 내 모든 좌표 확인
-            for (int y = py - range; y <= py + range; y++)
-            {
-                for (int x = px - range; x <= px + range; x++)
-                {
-                    // 자기 자신 또는 맵 밖은 제외
-                    if ((x == px && y == py) || x < 0 || y < 0 || x >= Data.map.GetLength(0) || y >= Data.map.GetLength(1))
-                        continue;
-
-                    // 탐색 범위 내에 보물이 있을 경우
-                    if (x == Data.treasureX && y == Data.treasureY)
-                    {
-                        found = true;
-                        int roll = Data.dice20() + (Data.Wis / 2); // 탐색 성공 확률 계산
-
-                        if (roll >= 10)
-                        {
-                            // 성공: 방향 힌트 제공
-                            Console.Clear();
-                            int dx = x - px;
-                            int dy = y - py;
-                            string direction = GetDirection(dx, dy);
-                            Console.WriteLine($"{direction}에서 희미한 기운이 느껴진다…");
-                        }
-                        else
-                        {
-                            // 실패
-                            Console.Clear();
-                            Console.WriteLine("뭔가 있을 것 같지만 확신이 없다.");
-                        }
-                        return; // 보물 찾기 여부에 관계없이 한 번만 시도함
-                    }
-                }
-            }
-
-            // 보물 자체가 탐색 범위에 없는 경우
-            if (!found)
-            {
-                Console.Clear();
-                Console.WriteLine("[아무것도 느껴지지 않는다.]");
-            }
-        }
     }
 
-    // 전투 시스템
-    public static void Battle()
+    //전투 시스탬
+    public static class BattleSystem
     {
-        // 콘솔 초기화 및 전투 시작 메시지
-        Console.Clear();
-        Console.WriteLine("적을 만났습니다! 전투를 시작합니다.\n\n\n");
-
-        // 몬스터 능력치 설정 (층 수에 비례하여 HP, 공격력 생성)
-        int monsterHP = Data.random.Next(1 + (Data.floor * Data.floor), (Data.floor * 5) + (Data.floor * Data.floor));
-        int monsterAttack = Data.random.Next(1 + Data.floor, 3 + Data.floor * 2);
-        bool battleError = false; // 잘못된 입력 여부
-
-        // 속도값 설정
-        int monsterSpeed = Data.random.Next(Data.floor, Data.floor * 2);
-        int playerSpeed = Data.Dex;
-        bool playerTurn = playerSpeed >= monsterSpeed;
-        while (Data.Hp > 0 && monsterHP > 0)
+        // 전투 시스템
+        public static void Battle()
         {
+            // 콘솔 초기화 및 전투 시작 메시지
+            Console.Clear();
+            Console.WriteLine("적을 만났습니다! 전투를 시작합니다.\n\n\n");
 
-            // ----------------- 플레이어 턴 -----------------
-            if (playerTurn)
+            // 몬스터 능력치 설정 (층 수에 비례하여 HP, 공격력 생성)
+            int monsterHP = Data.random.Next(1 + (Data.floor * Data.floor), (Data.floor * 5) + (Data.floor * Data.floor));
+            int monsterAttack = Data.random.Next(1 + Data.floor, 3 + Data.floor * 2);
+            bool battleError = false; // 잘못된 입력 여부
+
+            // 속도값 설정
+            int monsterSpeed = Data.random.Next(Data.floor, Data.floor * 2);
+            int playerSpeed = Data.Dex;
+            bool playerTurn = playerSpeed >= monsterSpeed;
+            while (Data.Hp > 0 && monsterHP > 0)
             {
-                // 현재 상태 출력
-                Console.WriteLine($"\n[적 체력: {monsterHP}]  [플레이어 체력: {Data.Hp} / {Data.HpMax}]  [마나: {Data.Mp} / {Data.MpMax}]");
-                Console.WriteLine("플레이어 턴입니다.\n1. 공격하기\n2. 마법 사용하기 (MP 2 소모)\n3. 장비 사용하기");
 
-                // 이전 턴에 잘못된 입력이 있었는지 표시
-                if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
-
-                string input = Console.ReadLine();
-
-                switch (input)
+                // ----------------- 플레이어 턴 -----------------
+                if (playerTurn)
                 {
-                    case "1": // 일반 공격
-                        Console.Clear();
-                        int roll = Data.dice20(); // d20 주사위 굴림
-                                                  // 주사위 결과에 따라 데미지 배율 적용
-                        int damage = roll >= 20 ? Data.Atk * 3 :
-                                     roll >= 10 ? Data.Atk * 2 :
-                                     Data.Atk;
+                    // 현재 상태 출력
+                    Console.WriteLine($"\n[적 체력: {monsterHP}]  [플레이어 체력: {Data.Hp} / {Data.HpMax}]  [마나: {Data.Mp} / {Data.MpMax}]");
+                    Console.WriteLine("플레이어 턴입니다.\n1. 공격하기\n2. 마법 사용하기 (MP 2 소모)\n3. 장비 사용하기");
 
-                        Console.WriteLine($"공격! {damage}의 피해");
-                        monsterHP -= damage;
+                    // 이전 턴에 잘못된 입력이 있었는지 표시
+                    if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
+
+                    string input = Console.ReadLine();
+
+                    switch (input)
+                    {
+                        case "1": // 일반 공격
+                            Console.Clear();
+                            int roll = Data.dice20(); // d20 주사위 굴림
+                                                      // 주사위 결과에 따라 데미지 배율 적용
+                            int damage = roll >= 20 ? Data.Atk * 3 :
+                                         roll >= 10 ? Data.Atk * 2 :
+                                         Data.Atk;
+
+                            Console.WriteLine($"공격! {damage}의 피해");
+                            monsterHP -= damage;
+                            break;
+
+                        case "2": // 마법 사용 (아직 구현 안 됨)
+                            Console.Clear();
+                            Console.WriteLine("마법 사용은 아직 구현되지 않았습니다.");
+                            break;
+
+                        case "3": // 장비 사용 (아직 구현 안 됨)
+                            Console.Clear();
+                            Console.WriteLine("장비 사용은 아직 구현되지 않았습니다.");
+                            break;
+
+                        default: // 잘못된 입력
+                            Console.Clear();
+                            battleError = true;
+                            continue; // 이 턴은 무효 처리
+                    }
+
+                    // 몬스터가 쓰러진 경우
+                    if (monsterHP <= 0)
+                    {
+                        Console.WriteLine("적을 쓰러뜨렸습니다!");
+                        Data.experience += Data.dice20() * Data.floor; // 경험치 지급
+                        Data.Money += Data.dice20() * (Data.floor * Data.floor); // 돈 지급
+                                                                                 //Stats.UpdateStats(); // 스탯 갱신 필요 시 주석 해제
                         break;
+                    }
 
-                    case "2": // 마법 사용 (아직 구현 안 됨)
-                        Console.Clear();
-                        Console.WriteLine("마법 사용은 아직 구현되지 않았습니다.");
-                        break;
-
-                    case "3": // 장비 사용 (아직 구현 안 됨)
-                        Console.Clear();
-                        Console.WriteLine("장비 사용은 아직 구현되지 않았습니다.");
-                        break;
-
-                    default: // 잘못된 입력
-                        Console.Clear();
-                        battleError = true;
-                        continue; // 이 턴은 무효 처리
+                    playerTurn = false; // 다음은 몬스터 턴
                 }
 
-                // 몬스터가 쓰러진 경우
-                if (monsterHP <= 0)
+                // ----------------- 몬스터 턴 -----------------
+                if (!playerTurn)
                 {
-                    Console.WriteLine("적을 쓰러뜨렸습니다!");
-                    Data.experience += Data.dice20() * Data.floor; // 경험치 지급
-                    Data.Money += Data.dice20() * (Data.floor * Data.floor); // 돈 지급
-                                                                             //Stats.UpdateStats(); // 스탯 갱신 필요 시 주석 해제
-                    break;
+                    Console.WriteLine("\n적의 차례입니다.");
+
+                    int enemyDice = Data.random.Next(Data.floor, Data.floor * 2);
+                    float reduction = Data.Def / (100f + Data.Def); // 데미지 감소율 (방어력 기반)
+                    int bestEnemyDamage = monsterAttack + enemyDice;
+                    int enemyDamage = Math.Max(1, (int)(bestEnemyDamage * (1 - reduction))); // 최소 피해 1
+
+                    // 회피 확률 계산
+                    int evasion = Math.Min(Data.Dex * 2, 101); //민첩에 비례
+                    int evasionRoll = Data.random.Next(1, 101);
+
+                    if (evasionRoll <= evasion)
+                    {
+                        Console.WriteLine($"회피 성공! (회피 확률: {evasion}%)");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"적의 공격! {enemyDamage}의 피해를 입었습니다.");
+                        Data.Hp -= enemyDamage;
+                    }
+
+                    // 플레이어 사망 시 전투 종료
+                    if (Data.Hp <= 0)
+                    {
+                        Console.WriteLine("당신은 쓰러졌습니다...");
+                        break;
+                    }
+                    playerTurn = true; // 다음은 몬스터 턴
                 }
 
-                playerTurn = false; // 다음은 몬스터 턴
+                // 턴 종료 시 현재 상태 출력
+                Console.WriteLine($"\n[플레이어 HP: {Data.Hp}]  [몬스터 HP: {monsterHP}]\n");
             }
 
-            // ----------------- 몬스터 턴 -----------------
-            if (!playerTurn)
-            {
-                Console.WriteLine("\n적의 차례입니다.");
-
-                int enemyDice = Data.random.Next(Data.floor, Data.floor * 2);
-                float reduction = Data.Def / (100f + Data.Def); // 데미지 감소율 (방어력 기반)
-                int bestEnemyDamage = monsterAttack + enemyDice;
-                int enemyDamage = Math.Max(1, (int)(bestEnemyDamage * (1 - reduction))); // 최소 피해 1
-
-                // 회피 확률 계산
-                int evasion = Math.Min(Data.Dex * 2, 101); //민첩에 비례
-                int evasionRoll = Data.random.Next(1, 101);
-
-                if (evasionRoll <= evasion)
-                {
-                    Console.WriteLine($"회피 성공! (회피 확률: {evasion}%)");
-                }
-                else
-                {
-                    Console.WriteLine($"적의 공격! {enemyDamage}의 피해를 입었습니다.");
-                    Data.Hp -= enemyDamage;
-                }
-
-                // 플레이어 사망 시 전투 종료
-                if (Data.Hp <= 0)
-                {
-                    Console.WriteLine("당신은 쓰러졌습니다...");
-                    break;
-                }
-                playerTurn = true; // 다음은 몬스터 턴
-            }
-
-            // 턴 종료 시 현재 상태 출력
-            Console.WriteLine($"\n[플레이어 HP: {Data.Hp}]  [몬스터 HP: {monsterHP}]\n");
+            // 전투 종료 대기
+            Console.ReadKey();
         }
 
-        // 전투 종료 대기
-        Console.ReadKey();
-    }
-
-    //스킬
-    public static void Skill(ref int monsterHP, int monsterAttack)
+        //스킬
+        public static void Skill(ref int monsterHP, int monsterAttack)
         {
             while (Data.Hp > 0 && monsterHP > 0)
             {
