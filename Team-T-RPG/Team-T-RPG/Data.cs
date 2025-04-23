@@ -36,8 +36,8 @@ namespace Team_T_RPG
         //====================아이탬====================
         public static string[] weapon = { "없음", "무딘 검", "강철 검", "전투용 망치", "단검", "지팡이" };// 아이탬 이름
         //public static bool[] weaponTf = { false, false, false, false, false, false }; // 소지 여부
-        public static bool[] weaponEquip = { false, false, true, false, false, false }; // 장착 여부
         public static int[] weaponTf = { 0, 2, 1, 1, 1, 1 }; // 탬 갯수
+        public static bool[] weaponEquip = { false, false, true, false, false, false }; // 장착 여부
         //public static int[] weaponEquip = { 0, 0, 0, 0, 0, 0 }; // 0없음 1있음 2착용
         public static int[] weaponAtk = { 0, 2, 5, 7, 3, 2 }; // 추가 공격력
         public static int[] weaponStats = { 0, 0, 0, 5, 5, 7 }; // 추가 스텟
