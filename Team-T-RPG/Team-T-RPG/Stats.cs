@@ -43,9 +43,10 @@ namespace Team_T_RPG
             int weaponBonus = 0;
             if (Data.weaponEquip[3] == 1)
             {
-                weaponBonus = Data.weaponStats[3];
+                weaponBonus += Data.weaponStats[3];
             }
-            if(Data.tired >= 20)
+
+            if (Data.tired >= 20)
             {
                 Data.Str = (Data.startStr + weaponBonus + Data.Level)
                 * Math.Max(5, 100 - Math.Min((Data.tired >= 20 ? (Data.tired - 20) * 5 : 0), 95)) / 100;
