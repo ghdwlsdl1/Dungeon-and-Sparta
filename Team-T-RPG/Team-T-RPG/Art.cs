@@ -1,8 +1,10 @@
 using System;
 
-class Art
+//class Art
+
+    /*
     {
-        static void Main() // 임시 제목
+        // static void Main() // 임시 제목
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8; // 한글과 특수문자 출력용
             Console.Clear();
@@ -130,3 +132,4 @@ $$$$$$$$$$$$==========$##@@@@@##################=;:;::;;!=@@########$$=;!$$$$$$$
 
 }
 }
+*/
