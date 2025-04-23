@@ -199,11 +199,24 @@ namespace Team_T_RPG
             }
 
             Console.Write("\n>> ");
-            string input = Console.ReadLine();
-            if (q.State == QuestState.NotAccepted && input == "1")
+            int userinput = MainFrame.UserInputHandler(1, 2);
+            if (q.State == QuestState.NotAccepted && userinput == 1)
+            {
                 q.State = QuestState.InProgress;
-            else if (q.State == QuestState.Completed && input == "1")
+                Console.Clear();
+                ShowQuestList();
+            }
+            else if (q.State == QuestState.Completed && userinput == 1)
+            {
                 GrantReward(q);
+                Console.Clear();
+                ShowQuestList();
+            }
+            else if (userinput == 2)
+            {
+                Console.Clear();
+                ShowQuestList();
+            }
         }
 
         // 보상 지급
