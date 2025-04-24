@@ -35,7 +35,7 @@ namespace Team_T_RPG
         public static int Day = 1;
         //====================아이탬====================
         public static string[] weapon = { "없음", "롱소드", "단검", "지팡이", "도끼", "천상의 검", "밤의 송곳니", "빛의 지팡이", "파멸의 도끼" };// 아이탬 이름
-        public static int[] weaponTf = { 1, 0, 0, 0, 0, 1, 0, 0, 0 }; // 소지 여부
+        public static int[] weaponTf = { 1, 0, 0, 0, 0, 0, 0, 0, 0 }; // 소지 여부
         public static int[] weaponEquip = { 1, 0, 0, 0, 0, 0, 0, 0, 0 }; // 장착 여부
         public static int[] weaponAtk = { 0, 5, 5, 7, 3, 2, 0, 0, 0 }; // 추가 공격력
         //public static int[] weaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
@@ -79,20 +79,10 @@ namespace Team_T_RPG
         public static int[] armorDeal = { 0, 1000, 2000, 3000, 4000, 5000 }; // 금액
 
         public static string[] potion = { "없음", "체력 물약", "상처약", "재생의 포션", "칸나의 빵", "파워 엘릭서" };
-        public static int[] potionTf = { 0, 0, 0, 0, 0, 1 };
+        public static int[] potionTf = { 0, 0, 0, 0, 0, 0 };
         public static int[] potionEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] potionHp = { 0, 10, 30, 50, 70, 100 }; // 추가 체력은 회복이라고 생각했습니다.
         public static int[] potionMP = { 0, 10, 30, 50, 70, 100 }; // 추가 체력은 회복이라고 생각했습니다.
-        //public static int[][] potionHpAndMP = new int[][]
-        //{
-        //    new int[] { 0, 0 },
-        //    new int[] { 10, 10 },
-        //    new int[] { 30, 30 },
-        //    new int[] { 50, 50 },
-        //    new int[] { 50, 50 },
-        //    new int[] { 70,  70 },
-        //    new int[] { 100,  100 }
-        //};
 
         public static int[] potionDeal = { 0, 10, 20, 30, 40, 50 }; // 금액 
 
