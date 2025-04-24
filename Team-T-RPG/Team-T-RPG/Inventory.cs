@@ -46,22 +46,17 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                for (int i = 0; i < Data.weapon.Length; i++)
+                Console.WriteLine($"0. 장비해제 ");
+                for (int i = 1; i < Data.weapon.Length; i++)
                 {
                     if (Data.weaponTf[i] > 0)
                     {
                         string equippedMark = (Data.weaponEquip[i] == 1) ? " (장착중)" : "";
                         string statText = $"힘:{Data.weaponStats[i][0]} 민첩:{Data.weaponStats[i][1]} 지능:{Data.weaponStats[i][2]} ";
-                        if (i == 0)
-                        {
-                            // weapon[0]은 장비 없음이므로 갯수 출력 제외
-                            Console.WriteLine($"{i}. 장비해제 ");
-                        }
-                        else
-                        {
-                            // 나머지 무기는 상세 정보 출력
-                            Console.WriteLine($"{i}. {Data.weapon[i]} 소지 갯수: {Data.weaponTf[i]}  공격력: {Data.weaponAtk[i]}  스탯: {statText}{equippedMark}");
-                        }
+
+                        // 나머지 무기는 상세 정보 출력
+                        Console.WriteLine($"{i}. {Data.weapon[i]} 소지 갯수: {Data.weaponTf[i]}  공격력: {Data.weaponAtk[i]}  스탯: {statText}{equippedMark}");
+
                     }
                     else
                     {
@@ -98,7 +93,7 @@ namespace Team_T_RPG
                         Data.weaponEquip[i] = 0;
                     }
                     Data.weaponEquip[0] = 1;
-                    Console.WriteLine($"\n▶ [{Data.weapon[userinput]}]를 선택해 장비가 장착 해제되었습니다!");
+                    Console.WriteLine($"\n▶ 장비가 장착 해제되었습니다!");
 
                     Thread.Sleep(1000);
                 }
@@ -114,20 +109,15 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                for (int i = 0; i < Data.assist.Length; i++)
+                Console.WriteLine($"0. 장비해제 ");
+                for (int i = 1; i < Data.assist.Length; i++)
                 {
                     if (Data.assistTf[i] > 0)
                     {
                         string equippedMark = (Data.assistEquip[i] == 1) ? " (장착중)" : "";
                         string statText = $"건강:{Data.assistStats[i][0]} 지혜:{Data.assistStats[i][1]} 운:{Data.assistStats[i][2]} ";
-                        if (i == 0)
-                        {
-                            Console.WriteLine($"{i}. {Data.assist[i]} 방어력: {Data.assistDef[i]}  스탯: {statText}{equippedMark}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{i}. {Data.assist[i]} 소지 갯수: {Data.assistTf[i]}  방어력: {Data.assistDef[i]}  스탯: {statText}{equippedMark}");
-                        }
+                        Console.WriteLine($"{i}. {Data.assist[i]} 소지 갯수: {Data.assistTf[i]}  방어력: {Data.assistDef[i]}  스탯: {statText}{equippedMark}");
+
 
                     }
                     else
@@ -162,7 +152,7 @@ namespace Team_T_RPG
                         Data.assistEquip[i] = 0;
                     }
                     Data.assistEquip[0] = 1;
-                    Console.WriteLine($"\n▶ [{Data.assist[userinput]}]을 선택해 장비가 장착 해제되었습니다!");
+                    Console.WriteLine($"\n▶ 장비가 장착 해제되었습니다!");
 
                     Thread.Sleep(1000);
                 }
@@ -179,24 +169,15 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                for (int i = 0; i < Data.armor.Length; i++)
+                Console.WriteLine($"0. 장비해제 ");
+                for (int i = 1; i < Data.armor.Length; i++)
                 {
                     if (Data.armorTf[i] > 0)
                     {
                         string equippedMark = (Data.armorEquip[i] == 1) ? " (장착중)" : "";
                         string statText = $"방어력:{Data.armorDef[i]} ";
-                        if (i == 0)
-                        {
-                            Console.WriteLine($"{i} {Data.armor[i]} 방어력 : {Data.armorDef[i]} {equippedMark}");
-
-                            Thread.Sleep(1000);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{i}. {Data.armor[i]} 소지 갯수: {Data.armorTf[i]}  방어력: {Data.armorDef[i]} {equippedMark}");
-
-                            Thread.Sleep(1000);
-                        }
+                        Console.WriteLine($"{i}. {Data.armor[i]} 소지 갯수: {Data.armorTf[i]}  방어력: {Data.armorDef[i]} {equippedMark}");
+                        Thread.Sleep(1000);
                     }
                     else
                     {
@@ -232,7 +213,7 @@ namespace Team_T_RPG
                         Data.armorEquip[i] = 0;
                     }
                     Data.armorEquip[0] = 1;
-                    Console.WriteLine($"\n▶ [{Data.armor[userinput]}]을 선택해 장비가 장착 해제되었습니다!");
+                    Console.WriteLine($"\n▶ 장비가 장착 해제되었습니다!");
                     Thread.Sleep(1000);
 
                 }
@@ -259,7 +240,7 @@ namespace Team_T_RPG
                     else
                     {
                         //string potionText = $"{i} {Data.potion[i]} 소지 갯수 :{Data.potionTf[i]} HP회복량 : {Data.potionHpAndMP[i][0]} MP회복량 : {Data.potionHpAndMP[i][1]}";
-                        string potionText = $"{i} {Data.potion[i]} 소지 갯수 :{Data.potionTf[i]} HP회복량 : {Data.potionHp[i]} MP회복량 : {Data.potionMP[i]}";
+                        string potionText = $"{i} {Data.potion[i]} 소지 갯수 :{Data.potionTf[i]} HP회복량 : {Data.potionHp[i]} MP회복량 : {Data.potionMp[i]}";
                         Console.WriteLine(potionText);
                     }
                 }
@@ -294,7 +275,7 @@ namespace Team_T_RPG
                         if (Data.Mp < Data.MpMax)
                         {
                             //Data.Mp += Data.potionHpAndMP[userinput][1];
-                            Data.Mp += Data.potionMP[userinput];
+                            Data.Mp += Data.potionMp[userinput];
                             if (Data.Mp > Data.MpMax)
                             {
                                 Data.Mp = Data.MpMax;
