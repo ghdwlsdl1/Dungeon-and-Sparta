@@ -39,7 +39,7 @@ namespace Team_T_RPG
                     PayTax();
                 }
 
-                if (Data.Money <= 0) // 납부할 골드 부족 시 사망 : 엔딩 조건 2
+                if (Data.Money < 0) // 납부할 골드 부족 시 사망 : 엔딩 조건 2
                 {
                     Console.WriteLine("\n납부할 세금이 부족한 당신은, 형장의 이슬이 되고 맙니다!\n");
                     Console.ForegroundColor = ConsoleColor.DarkRed;

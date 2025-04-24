@@ -29,7 +29,7 @@ namespace Team_T_RPG
         public static int Atk = 0; //공격력
         public static int Def = 0; // 방어력
 
-        public static int Money = 2000;
+        public static int Money = 2000000000;
         //====================마을 시스템====================
         public static bool duty = false;
         public static int Day = 1;
