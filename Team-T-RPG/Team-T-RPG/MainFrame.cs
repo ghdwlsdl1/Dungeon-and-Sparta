@@ -9,14 +9,18 @@ namespace Team_T_RPG
 {
     class MainFrame
     {
-        
+        // 필드 선언 : 지금 스테틱이 좀 많아서, 여기서 인스턴스 만들고 가려고 합니다.
+        static Stats stats = new Stats();
+        static Inventory inventory = new Inventory();
+        static Item item = new Item();
+        static GameStarter gameStarter = new GameStarter();
         static void Main()
         {
-            GameStarter gameStarter = new GameStarter(); // 게임스타터 인스턴스 생성 : 게임 시작, 캐릭터 생성 및 저장 데이터 불러오기
+            
             QuestManager.Initialize();
             
             gameStarter.StartScene();
-
+            
             while (true) // 게임오버 조건 미달성 시 무한 반복
             {
                 int daychangecheck = Data.Day;
@@ -60,17 +64,24 @@ namespace Team_T_RPG
         
         public static void TownScene() // 가장 중심 씬이 될 마을. 각 선택지에 따라 기능 구현 (업무 여기서 나누는 느낌으로)
         {
-            Console.WriteLine("--------------------------------");
-            Console.WriteLine("마을은 살기엔 좋지만, 매일 세금을 납부하지 못하면 위험합니다."); // 추후 꾸밀 것 (시나리오 및 아트 담당?)
-            Console.WriteLine("준비를 단단히 하고, 던전에 들어가야 합니다.");
-            Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n");
-            int userinput = UserInputHandler(1,6);
+            Console.WriteLine("--------------------------------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"[스파르탄 마을] : Day {Data.Day}");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"♥ {Data.Hp} / {Data.HpMax}  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write($"♠ {Data.Mp} / {Data.MpMax}  ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($" $ {Data.Money} G  \n");
+            Console.ResetColor();
+            Console.WriteLine("--------------------------------------------------------------------------------------\n");
+            Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n\n0. 가이드북");
+            int userinput = UserInputHandler(0,6);
             switch (userinput)
             {
                 case 1: // 스탯창
                     {
                         Console.Clear();
-                        Stats stats = new Stats();
                         stats.ShowStatTable();
                         break;
                     }
@@ -78,16 +89,16 @@ namespace Team_T_RPG
                 case 2: // 인벤토리
                     {
                         Console.Clear();
-                        Inventory inventory = new Inventory();
                         inventory.testInven();
+                        Console.Clear();
                         break;
                     }
 
                 case 3: // 상점
                     {
                         Console.Clear();
-                        Item item = new Item();
                         item.Store();
+                        Console.Clear();
                         break;
                     }
 
@@ -99,6 +110,8 @@ namespace Team_T_RPG
 
                 case 5: // 휴식 <<
                     {
+                        Console.Clear();
+                        Rest();
                         break;
                     }
 
@@ -128,6 +141,12 @@ namespace Team_T_RPG
 
                         break;
                     }
+                    case 0:
+                    {
+                        Console.Clear();
+                        gameStarter.GuideBook();
+                        break;
+                    }
             }
 
 
@@ -137,7 +156,7 @@ namespace Team_T_RPG
         {
             if (Data.Day <= 7)
             {
-                Console.WriteLine("\n7일 간은 세금이 면제됩니다.\n");
+                Console.WriteLine("\n ※7일 간은 세금이 면제됩니다. \n");
                 return; // 7일이 지날 때까진 바로 리턴
             }
 
@@ -151,10 +170,11 @@ namespace Team_T_RPG
                 for (int i = 0; i < 10; i++)
                 {
                     Thread.Sleep(150);
-                    Console.Write(" > ");
+                    if (i%2 == 0) Console.Write(" ▶ ");
+                    else Console.Write(" ▷ ");
                     Thread.Sleep(150);
                 }
-                Console.WriteLine();
+                Console.Clear();
                 /*
                 세금 계산식에 대해서 논의 요망 : 인던하면 3일씩 보내는 거 같은데, 밀린 세금 한번에 받는 건지
                 아니면 그냥 돌아온 날에만 해당하는 일자의 세금을 걷는 건지 알아야 할 듯.
@@ -165,8 +185,8 @@ namespace Team_T_RPG
 
         public static int UserInputHandler(int min, int max, int failcount = 0)
         {
-            Console.WriteLine("--------------------------------");
-            Console.WriteLine("원하는 번호를 선택하세요.");
+            Console.WriteLine("--------------------------------------------------------------------------------------");
+            Console.Write("▶ ");
 
             string userInput = Console.ReadLine();
             bool isVaildInput = Int32.TryParse(userInput, out int result);
@@ -178,7 +198,7 @@ namespace Team_T_RPG
             else
             {
                 int isFailAgain = (failcount == 0) ? 0 : 1; // 첫 실행 때만 0이고 다음 루프부터는 1
-                ClearConsoleLine(3 + isFailAgain);
+                ClearConsoleLine(2 + isFailAgain);
                 failcount++;
                 Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
                 return UserInputHandler(min, max, failcount);
@@ -218,5 +238,60 @@ namespace Team_T_RPG
         }
         // 텍스트 하나씩 출력하는 메서드. Console.Write이라고 생각하면 됨. 엔터 직접 \n 넣어서 치셔야 함!
         // 속도 조절을 원하면 뒤에 숫자 적어넣어 주세요(밀리초)
+        public static void Rest()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("[휴식]\n");
+            Console.ResetColor();
+            Console.WriteLine("당신은 지친 몸을 눕히기 위해 여관으로 향했습니다.");
+
+            Console.WriteLine("여관주인 : ");
+            SerialTextWrite("『 마침 좋은 방이 남았다네.\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            SerialTextWrite("  500 G");
+            Console.ResetColor();
+            SerialTextWrite("만 내고 잠시 쉬고 가는 건 어떤가?』\n\n");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"♥ {Data.Hp} / {Data.HpMax}  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write($"♠ {Data.Mp} / {Data.MpMax}  ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($" $ {Data.Money} G  \n\n");
+            Console.ResetColor();
+
+            Console.WriteLine("1. 휴식하기 (+ Hp,Mp 100 % / - 500 G )");
+            Console.WriteLine("0. 돌아가기\n");
+
+            int userinput = UserInputHandler(0,1);
+            switch (userinput)
+            {
+                case 0:
+                    break;
+                case 1:
+                    {
+                        if (Data.Money >= 500)
+                        {
+                            Data.Money -= 500;
+                            Data.Hp += Data.HpMax;
+                            Data.Mp += Data.MpMax;
+                            stats.UpdateMpMax();
+                            stats.UpdateHpMax();
+
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            SerialTextWrite("휴식 취하는 중 ▶▷▶▷▶");
+                            Console.ResetColor();
+                            Console.Clear();
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine(" 골드가 부족합니다!\n 쫒겨났습니다.");
+                            Thread.Sleep(1500);
+                            break;
+                        }
+                    }
+            }
+        }
     }
 }
