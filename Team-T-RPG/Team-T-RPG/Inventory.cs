@@ -55,7 +55,7 @@ namespace Team_T_RPG
                         if (i == 0)
                         {
                             // weapon[0]은 장비 없음이므로 갯수 출력 제외
-                            Console.WriteLine($"{i}. {Data.weapon[i]} 공격력: {Data.weaponAtk[i]}  스탯: {statText}{equippedMark}");
+                            Console.WriteLine($"{i}. 장비해제 ");
                         }
                         else
                         {
@@ -89,6 +89,7 @@ namespace Team_T_RPG
                     Data.weaponEquip[userinput] = 1;
 
                     Console.WriteLine($"\n▶ [{Data.weapon[userinput]}]를 장착했습니다!");
+                    Thread.Sleep(1000);
                 }
                 else if (userinput == 0)
                 {
@@ -97,12 +98,14 @@ namespace Team_T_RPG
                         Data.weaponEquip[i] = 0;
                     }
                     Data.weaponEquip[0] = 1;
-                    Console.WriteLine($"\n▶ [{Data.weapon[userinput]}]을 선택해 장비가 장착 해제되었습니다!");
+                    Console.WriteLine($"\n▶ [{Data.weapon[userinput]}]를 선택해 장비가 장착 해제되었습니다!");
 
+                    Thread.Sleep(1000);
                 }
                 else
                 {
                     Console.WriteLine("※ 잘못된 선택이거나 해당 무기를 소지하고 있지 않습니다.");
+                    Thread.Sleep(1000);
                 }
             }
         }
@@ -150,6 +153,7 @@ namespace Team_T_RPG
                     Data.assistEquip[userinput] = 1;
 
                     Console.WriteLine($"\n▶ [{Data.assist[userinput]}]를 장착했습니다!");
+                    Thread.Sleep(1000);
                 }
                 else if (userinput == 0)
                 {
@@ -160,10 +164,12 @@ namespace Team_T_RPG
                     Data.assistEquip[0] = 1;
                     Console.WriteLine($"\n▶ [{Data.assist[userinput]}]을 선택해 장비가 장착 해제되었습니다!");
 
+                    Thread.Sleep(1000);
                 }
                 else
                 {
                     Console.WriteLine("※ 잘못된 선택이거나 해당 무기를 소지하고 있지 않습니다.");
+                    Thread.Sleep(1000);
                 }
 
             }
@@ -183,11 +189,13 @@ namespace Team_T_RPG
                         {
                             Console.WriteLine($"{i} {Data.armor[i]} 방어력 : {Data.armorDef[i]} {equippedMark}");
 
+                            Thread.Sleep(1000);
                         }
                         else
                         {
                             Console.WriteLine($"{i}. {Data.armor[i]} 소지 갯수: {Data.armorTf[i]}  방어력: {Data.armorDef[i]} {equippedMark}");
 
+                            Thread.Sleep(1000);
                         }
                     }
                     else
@@ -215,6 +223,7 @@ namespace Team_T_RPG
                     Data.armorEquip[userinput] = 1;
 
                     Console.WriteLine($"\n▶ [{Data.armor[userinput]}]를 장착했습니다!");
+                    Thread.Sleep(1000);
                 }
                 else if (userinput == 0)
                 {
@@ -224,11 +233,13 @@ namespace Team_T_RPG
                     }
                     Data.armorEquip[0] = 1;
                     Console.WriteLine($"\n▶ [{Data.armor[userinput]}]을 선택해 장비가 장착 해제되었습니다!");
+                    Thread.Sleep(1000);
 
                 }
                 else
                 {
                     Console.WriteLine("※ 잘못된 선택이거나 해당 무기를 소지하고 있지 않습니다.");
+                    Thread.Sleep(1000);
                 }
 
             }
@@ -247,18 +258,58 @@ namespace Team_T_RPG
                     }
                     else
                     {
+                        //string potionText = $"{i} {Data.potion[i]} 소지 갯수 :{Data.potionTf[i]} HP회복량 : {Data.potionHpAndMP[i][0]} MP회복량 : {Data.potionHpAndMP[i][1]}";
                         string potionText = $"{i} {Data.potion[i]} 소지 갯수 :{Data.potionTf[i]} HP회복량 : {Data.potionHp[i]} MP회복량 : {Data.potionMP[i]}";
                         Console.WriteLine(potionText);
                     }
                 }
                 Console.WriteLine("-1.뒤로가기");
-                int userinput = MainFrame.UserInputHandler(-1, 0);
-                switch (userinput)
+                Console.WriteLine("사용하실 포션의 번호를 입력하세요.");
+                int userinput = MainFrame.UserInputHandler(-1, Data.potion.Length);
+                if (userinput == -1)
                 {
-                    case -1:
-                        return;
+                    break;
                 }
+                else if (userinput == 0)
+                {
+                    Console.WriteLine("아무일도 없었다.");
+                    Thread.Sleep(1000);
+                }
+                else if (userinput > 0)
+                {
+                    if (Data.potionTf[userinput] > 0)
+                    {
+                        Console.WriteLine($"({Data.potion[userinput]})포션을 사용했습니다");
+                        Data.potionTf[userinput] -= 1;
+                        Thread.Sleep(1000);
+                        if (Data.Hp < Data.HpMax)
+                        {
+                            //Data.Hp += Data.potionHpAndMP[userinput][0];
+                            Data.Hp += Data.potionHp[userinput];
+                            if (Data.Hp > Data.HpMax)
+                            {
+                                Data.Hp = Data.HpMax;
+                            }
+                        }
+                        if (Data.Mp < Data.MpMax)
+                        {
+                            //Data.Mp += Data.potionHpAndMP[userinput][1];
+                            Data.Mp += Data.potionMP[userinput];
+                            if (Data.Mp > Data.MpMax)
+                            {
+                                Data.Mp = Data.MpMax;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("포션이 부족합니다");
+                        Thread.Sleep(1000);
+                    }
 
+
+
+                }
             }
         }
     }

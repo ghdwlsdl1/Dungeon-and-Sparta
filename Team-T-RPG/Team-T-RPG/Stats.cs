@@ -240,7 +240,8 @@ namespace Team_T_RPG
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine("");
             Console.WriteLine($"레벨 : {Data.Level}");
-            Console.WriteLine($"chad ( {Data.Job[Data.JobNames]} )");
+            Console.WriteLine($"캐릭터명 : {Data.Name} ");
+            Console.WriteLine($"직업  : {Data.Job[Data.JobNames]}");
             Console.WriteLine($" 힘   : {Data.Str}");
             Console.WriteLine($"민첩  : {Data.Dex}");
             Console.WriteLine($"지능  : {Data.Int}");
@@ -250,6 +251,7 @@ namespace Team_T_RPG
             Console.WriteLine($"공격력: {Data.Atk}");
             Console.WriteLine($"방어력: {Data.Def}");
             Console.WriteLine($"HP : {Data.Hp}/{Data.HpMax}");
+            Console.WriteLine($"MP : {Data.Mp}/{Data.MpMax}");
             Console.WriteLine($"Gold   : {Data.Money}");
             Console.WriteLine("");
             Console.WriteLine("0.나가기");

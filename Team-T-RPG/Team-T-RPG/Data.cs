@@ -79,10 +79,21 @@ namespace Team_T_RPG
         public static int[] armorDeal = { 0, 1000, 2000, 3000, 4000, 5000 }; // 금액
 
         public static string[] potion = { "없음", "체력 물약", "상처약", "재생의 포션", "칸나의 빵", "파워 엘릭서" };
-        public static int[] potionTf = { 0, 0, 0, 0, 0, 0 };
+        public static int[] potionTf = { 0, 0, 0, 0, 0, 1 };
         public static int[] potionEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] potionHp = { 0, 10, 30, 50, 70, 100 }; // 추가 체력은 회복이라고 생각했습니다.
         public static int[] potionMP = { 0, 10, 30, 50, 70, 100 }; // 추가 체력은 회복이라고 생각했습니다.
+        //public static int[][] potionHpAndMP = new int[][]
+        //{
+        //    new int[] { 0, 0 },
+        //    new int[] { 10, 10 },
+        //    new int[] { 30, 30 },
+        //    new int[] { 50, 50 },
+        //    new int[] { 50, 50 },
+        //    new int[] { 70,  70 },
+        //    new int[] { 100,  100 }
+        //};
+
         public static int[] potionDeal = { 0, 10, 20, 30, 40, 50 }; // 금액 
 
         //====================주사위====================
