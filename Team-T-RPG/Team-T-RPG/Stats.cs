@@ -10,6 +10,33 @@ namespace Team_T_RPG
 {
     public class Stats
     {
+        public int weaponNumFind()
+        {
+            for (int i = 0; i < Data.weaponEquip.Length; i++)
+            {
+                if (Data.weaponEquip[i] == 1)
+                    return i;
+            }
+            return -1;
+        }
+        public int assistNumFind()
+        {
+            for (int i = 0; i < Data.assistEquip.Length; i++)
+            {
+                if (Data.assistEquip[i] == 1)
+                    return i;
+            }
+            return -1;
+        }
+        public int armorNumFind()
+        {
+            for (int i = 0; i < Data.armorEquip.Length; i++)
+            {
+                if (Data.armorEquip[i] == 1)
+                    return i;
+            }
+            return -1;
+        }
         public void UpdateLevel()
         {
             int experienceMax = 10 * Data.Level * Data.Level;
@@ -40,10 +67,12 @@ namespace Team_T_RPG
 
         public void UpdateStr()
         {
+
             int weaponBonus = 0;
-            if (Data.weaponEquip[3] == 1)
+            int weaponIndex = weaponNumFind();
+            if (weaponIndex != -1 &&Data.weaponEquip[weaponNumFind()] == 1)
             {
-                weaponBonus += Data.weaponStats[3];
+                weaponBonus += Data.weaponStats[weaponNumFind()][0];
             }
 
             if (Data.tired >= 20)
@@ -60,9 +89,10 @@ namespace Team_T_RPG
         public void UpdateDex()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[4] == 1)
+            int weaponIndex = weaponNumFind();
+            if (weaponIndex != -1 && Data.weaponEquip[weaponNumFind()] == 1)
             {
-                weaponBonus += Data.weaponStats[4];
+                weaponBonus += Data.weaponStats[weaponNumFind()][1];
             }
 
             if (Data.tired >= 20)
@@ -79,9 +109,10 @@ namespace Team_T_RPG
         public void UpdateInt()
         {
             int weaponBonus = 0;
-            if (Data.weaponEquip[5] == 1)
+            int weaponIndex = weaponNumFind();
+            if (weaponIndex != -1 && Data.weaponEquip[weaponNumFind()] == 1)
             {
-                weaponBonus += Data.weaponStats[5];
+                weaponBonus += Data.weaponStats[weaponNumFind()][2];
             }
 
             if (Data.tired >= 20)
@@ -98,9 +129,10 @@ namespace Team_T_RPG
         public void UpdateCon()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[5] == 1)
+            int assistIndex = assistNumFind();
+            if (assistIndex != -1&& Data.assistEquip[assistNumFind()] == 1)
             {
-                assistBonus += Data.assistStats[5];
+                assistBonus += Data.assistStats[assistNumFind()][0];
             }
 
             if (Data.tired >= 20)
@@ -117,9 +149,10 @@ namespace Team_T_RPG
         public void UpdateWis()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[4] == 1)
+            int assistIndex = assistNumFind();
+            if (assistIndex != -1 && Data.assistEquip[assistNumFind()] == 1)
             {
-                assistBonus += Data.assistStats[4];
+                assistBonus += Data.assistStats[assistNumFind()][1];
             }
 
             if (Data.tired >= 20)
@@ -136,9 +169,10 @@ namespace Team_T_RPG
         public void UpdateLuk()
         {
             int assistBonus = 0;
-            if (Data.assistEquip[3] == 1)
+            int assistIndex = assistNumFind();
+            if (assistIndex != -1 && Data.assistEquip[assistNumFind()] == 1)
             {
-                assistBonus += Data.assistStats[3];
+                assistBonus += Data.assistStats[assistNumFind()][2];
             }
 
             Data.Luk = Data.startLuk + assistBonus;
@@ -148,13 +182,12 @@ namespace Team_T_RPG
         {
             int weaponBonus = 0;
 
-            for (int i = 0; i < Data.weaponEquip.Length; i++)
+            int weaponIndex = assistNumFind();
+            if (weaponIndex != -1 && Data.weaponEquip[weaponNumFind()] == 1)
             {
-                if ((Data.weaponEquip[i] == 1))
-                {
-                    weaponBonus += Data.weaponAtk[i];
-                }
+                weaponBonus += Data.weaponAtk[weaponNumFind()];
             }
+
 
             Data.Atk = 1 + Data.Str + weaponBonus;
         }
@@ -164,21 +197,20 @@ namespace Team_T_RPG
             int assistBonus = 0;
             int armorBonus = 0;
 
-            for (int i = 0; i < Data.assistEquip.Length; i++)
+
+            int assistIndex = assistNumFind();
+            if (assistIndex != -1 && Data.assistEquip[assistNumFind()] == 1)
             {
-                if ((Data.assistEquip[i] == 1))
-                {
-                    assistBonus += Data.assistDef[i];
-                }
+                assistBonus += Data.assistDef[assistNumFind()];
             }
 
-            for (int i = 0; i < Data.armorEquip.Length; i++)
+
+            int armorIndex = armorNumFind();
+            if (armorIndex != -1 && Data.armorEquip[armorNumFind()] == 1)
             {
-                if ((Data.armorEquip[i] == 1))
-                {
-                    armorBonus += Data.armorDef[i];
-                }
+                armorBonus += Data.armorDef[armorNumFind()];
             }
+
 
             Data.Def = Data.Con / 3 + armorBonus + assistBonus;
         }
@@ -220,18 +252,17 @@ namespace Team_T_RPG
             Console.WriteLine($"HP : {Data.Hp}/{Data.HpMax}");
             Console.WriteLine($"Gold   : {Data.Money}");
             Console.WriteLine("");
-            Console.WriteLine("1.장비교체");
             Console.WriteLine("0.나가기");
 
-            int userinput = MainFrame.UserInputHandler(0, 1);
+            int userinput = MainFrame.UserInputHandler(0, 0);
 
             switch (userinput)
             {
-                case 1:
-                    Console.WriteLine("장비 교체");
-                    Thread.Sleep(1000);
-                    Console.Clear();
-                    break;
+                //case 1:
+                //    Console.WriteLine("장비 교체");
+                //    Thread.Sleep(1000);
+                //    Console.Clear();
+                //    break;
 
                 case 0:
                     Console.WriteLine("나가겠습니다 테스트용");

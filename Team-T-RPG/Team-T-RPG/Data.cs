@@ -34,18 +34,42 @@ namespace Team_T_RPG
         public static bool duty = false;
         public static int Day = 1;
         //====================아이탬====================
-        public static string[] weapon = { "없음", "롱소드", "단검", "지팡이", "도끼", "당근 칼리버", "내 딛은자의 단검", "나이트브링어 엘리멘토", "앱솔랩스 브로드엑스" };// 아이탬 이름
-        public static int[] weaponTf = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 소지 여부
-        public static int[] weaponEquip = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 장착 여부
+        public static string[] weapon = { "없음", "롱소드", "단검", "지팡이", "도끼", "천상의 검", "밤의 송곳니", "빛의 지팡이", "파멸의 도끼" };// 아이탬 이름
+        public static int[] weaponTf = { 1, 0, 0, 0, 0, 1, 0, 0, 0 }; // 소지 여부
+        public static int[] weaponEquip = { 1, 0, 0, 0, 0, 0, 0, 0, 0 }; // 장착 여부
         public static int[] weaponAtk = { 0, 5, 5, 7, 3, 2, 0, 0, 0 }; // 추가 공격력
-        public static int[] weaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
+        //public static int[] weaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
+        public static int[][] weaponStats = new int[][] {
+                    //힘 ,민첩, 지능
+            new int[] { 0,  0,  0},//없음
+            new int[] { 0,  0,  0},//롱소드
+            new int[] { 0,  0,  0},//단검
+            new int[] { 0,  0,  5},//지팡이
+            new int[] { 5,  0,  0},//도끼
+            new int[] { 0,  5,  0},//천상의 검
+            new int[] { 0,  7,  0},//밤의 송곳니
+            new int[] { 0,  0,  7},//빛의 지팡이
+            new int[] { 7,  0,  0}//파멸의 도끼
+
+        };
+        // 추가 스텟
         public static int[] weaponDeal = { 0, 1000, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000 }; // 금액
 
-        public static string[] assist = { "없음", "철제 장화", "철제 투구", "행운의 부적", "빛나는 반지", "태양 목걸이" };
+        public static string[] assist = { "없음", "히터 실드", "철제 투구", "행운의 부적", "빛나는 반지", "태양 목걸이" };
         public static int[] assistTf = { 0, 0, 0, 0, 0, 0 };
         public static int[] assistEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] assistDef = { 0, 1, 2, 0, 0, 0, }; // 추가 방어력
-        public static int[] assistStats = { 0, 0, 0, 3, 5, 5 }; // 추가 스텟
+        //public static int[] assistStats = { 0, 0, 0, 3, 5, 5 }; // 추가 스텟
+        public static int[][] assistStats = new int[][] {
+                    //건강,지혜,운
+            new int[] { 0,  0,  0},//없음
+            new int[] { 0,  3,  0},//히터 실드
+            new int[] { 3,  0,  0},//철제 투구
+            new int[] { 0,  0,  5},//행운의 부적
+            new int[] { 0,  5,  0},//빛나는 반지
+            new int[] { 5,  0,  0},//태양 목걸이
+
+        };
         public static int[] assistDeal = { 0, 1000, 1000, 1000, 1000, 1000 }; // 금액
 
         public static string[] armor = { "없음", "낡은 갑옷", "가죽 갑옷", "사슬 갑옷", "강철 갑옷", "판금 갑옷" };
@@ -58,6 +82,7 @@ namespace Team_T_RPG
         public static int[] potionTf = { 0, 0, 0, 0, 0, 0 };
         public static int[] potionEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] potionHp = { 0, 10, 30, 50, 70, 100 }; // 추가 체력은 회복이라고 생각했습니다.
+        public static int[] potionMP = { 0, 10, 30, 50, 70, 100 }; // 추가 체력은 회복이라고 생각했습니다.
         public static int[] potionDeal = { 0, 10, 20, 30, 40, 50 }; // 금액 
 
         //====================주사위====================
@@ -79,7 +104,7 @@ namespace Team_T_RPG
         public static int playerX = -1; //플레이어좌표x
         public static int playerY = -1;
         public static int portalX = -2; //포탈좌표
-        public static int portalY = -2; 
+        public static int portalY = -2;
         public static int treasureX = -1; //보물좌표
         public static int treasureY = -1;
         public static int floor = 1; //층수
