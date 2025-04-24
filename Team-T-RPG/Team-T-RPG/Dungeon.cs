@@ -122,12 +122,12 @@ public static class DungeonSystem
         {
             case "1":
                 Console.Clear();
-                stats.ShowStatTable();
+                
                 break;
 
             case "2":
                 Console.Clear();
-                inventory.testInven();
+                
                 Console.Clear();
                 break;
 
@@ -607,7 +607,7 @@ public static class DungeonSystem
 
                         case "3": // 아이템 사용
                             Console.Clear();
-                            inventory.testInven();
+                            
                             Console.Clear();
                             break;
 
