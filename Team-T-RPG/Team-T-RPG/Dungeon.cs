@@ -121,11 +121,14 @@ public static class DungeonSystem
         switch (text)
         {
             case "1":
-                
+                Console.Clear();
+                stats.ShowStatTable();
                 break;
 
             case "2":
-                
+                Console.Clear();
+                inventory.testInven();
+                Console.Clear();
                 break;
 
             case "3":
@@ -566,7 +569,7 @@ public static class DungeonSystem
                     Console.WriteLine($"적공격력{monsterAttack}.");
                     Console.WriteLine($"\n체력: {Data.Hp} / {Data.HpMax}\n마나: {Data.Mp} / {Data.MpMax}");
                     Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}");
-                    Console.WriteLine("플레이어 턴입니다.\n1. 공격하기\n2. 마법 사용하기");
+                    Console.WriteLine("플레이어 턴입니다.\n1. 공격\n2. 마법\n3. 아이템");
 
                     // 이전 턴에 잘못된 입력이 있었는지 표시
                     if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
@@ -597,9 +600,15 @@ public static class DungeonSystem
                             }
                             break;
 
-                        case "2": // 마법 사용 (아직 구현 안 됨)
+                        case "2": // 마법 사용
                             Console.Clear();
                             Skill(ref monsterHp, monsterAttack, monsterHpMX);
+                            break;
+
+                        case "3": // 아이템 사용
+                            Console.Clear();
+                            inventory.testInven();
+                            Console.Clear();
                             break;
 
                         default: // 잘못된 입력
