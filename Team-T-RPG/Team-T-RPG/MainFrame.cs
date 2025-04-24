@@ -89,7 +89,7 @@ namespace Team_T_RPG
                 case 2: // 인벤토리
                     {
                         Console.Clear();
-                        inventory.testInven();
+                        inventory.showInventory();
                         Console.Clear();
                         break;
                     }
