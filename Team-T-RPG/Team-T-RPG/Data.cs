@@ -55,7 +55,7 @@ namespace Team_T_RPG
         // 추가 스텟
         public static int[] weaponDeal = { 0, 1000, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000 }; // 금액
 
-        public static string[] assist = { "없음", "히터 실드", "철제 투구", "행운의 부적", "빛나는 반지", "태양 목걸이" };
+        public static string[] assist = { "없음", "히터 실드", "행운의 부적", "빛나는 반지", "도바킨 투구", "태양 목걸이" };
         public static int[] assistTf = { 0, 0, 0, 0, 0, 0 };
         public static int[] assistEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] assistDef = { 0, 1, 2, 0, 0, 0, }; // 추가 방어력
@@ -64,9 +64,9 @@ namespace Team_T_RPG
                     //건강,지혜,운
             new int[] { 0,  0,  0},//없음
             new int[] { 0,  3,  0},//히터 실드
-            new int[] { 3,  0,  0},//철제 투구
-            new int[] { 0,  0,  5},//행운의 부적
-            new int[] { 0,  5,  0},//빛나는 반지
+            new int[] { 3,  0,  0},//행운의 부적
+            new int[] { 0,  0,  5},//빛나는 반지
+            new int[] { 0,  5,  0},//도바킨 투구
             new int[] { 5,  0,  0},//태양 목걸이
 
         };
