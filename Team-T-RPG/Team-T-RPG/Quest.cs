@@ -107,9 +107,9 @@ namespace Team_T_RPG
         {
             Quests.Add(new Quest
             {
-                Title = "박쥐 처치",
-                Description = "던전에 있는 박쥐를 처치하자!",
-                Goal = new KillGoal { TargetMob = "박쥐", Required = 3 },
+                Title = "고블린 처치",
+                Description = "던전에 있는 고블린을 처치하자!",
+                Goal = new KillGoal { TargetMob = "고블린", Required = 3 },
                 // ★ RewardItem = "박쥐모피",
                 RewardGold = 10,
                 State = QuestState.NotAccepted

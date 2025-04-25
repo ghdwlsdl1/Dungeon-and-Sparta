@@ -128,9 +128,12 @@ public static class DungeonSystem
         {
             case "1":
                 Console.Clear();
+                stats.ShowStatTable();
                 break;
 
             case "2":
+                Console.Clear();
+                inventory.showInventory();
                 Console.Clear();
                 break;
 
@@ -543,7 +546,7 @@ public static class DungeonSystem
         {
             Stats stats = new Stats();
             // 콘솔 초기화 및 전투 시작 메시지
-            
+
             Console.WriteLine("\n\n\n");
             MainFrame.SerialTextWrite("적을 만났습니다! 전투를 시작합니다.",70);
             Console.Clear();
@@ -638,7 +641,8 @@ public static class DungeonSystem
 
                         case "3": // 아이템 사용
                             Console.Clear();
-          
+                            inventory.showInventory();
+                            Console.Clear();
                             break;
 
                         default: // 잘못된 입력
@@ -651,6 +655,8 @@ public static class DungeonSystem
                     if (monsterHp <= 0)
                     {
                         Console.WriteLine("적을 쓰러뜨렸습니다!");
+                        QuestManager.ReportKill(monsterName);
+
                         int dropRoll = Data.dice20(); // Luk 반영 주사위
                         if (dropRoll >= 15) // 조건: 주사위 결과가 15 이상일 경우 드랍
                         {
