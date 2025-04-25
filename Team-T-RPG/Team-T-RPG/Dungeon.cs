@@ -158,6 +158,9 @@ public static class DungeonSystem
                 Console.WriteLine("당신은 지친 몸을 눕히고 휴식하기로 했습니다.\n");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 MainFrame.SerialTextWrite("휴식 취하는 중 ▶▷▶▷▶");
+                Data.Hp += Data.HpMax / 10;
+                Data.Mp += Data.MpMax / 10;
+                stats.UpdateStats();
                 Console.ResetColor();
                 Console.Clear();
                 break;
@@ -639,7 +642,18 @@ public static class DungeonSystem
 
                         case "2": // 마법 사용
                             Console.Clear();
-                            Skill(ref monsterHp, monsterAttack, monsterHpMX);
+                            bool useSkill = false;
+                            bool skillBook = Skill(ref monsterHp, monsterAttack, monsterHpMX, ref useSkill);
+                            if (!skillBook)
+                            {
+                                if (!useSkill)
+                                {
+                                    Console.Clear();
+                                    battleError = true;
+                                    continue;
+                                }
+                            }
+                            Console.Clear();
                             break;
 
                         case "3": // 아이템 사용
@@ -741,277 +755,281 @@ public static class DungeonSystem
         }
 
         //스킬
-        public static void Skill(ref int monsterHp, int monsterAttack, int monsterHpMX)
+        public static bool Skill(ref int monsterHp, int monsterAttack, int monsterHpMX , ref bool useSkill)
         {
-            Stats stats = new Stats();
-
-            Console.WriteLine($"\n적 체력: {monsterHp} / {monsterHpMX}");
-            Console.WriteLine($"적공격력{monsterAttack}.");
-            Console.WriteLine($"\n체력: {Data.Hp} / {Data.HpMax}");
-            Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}");
-            switch (Data.JobNames)
+            while (true)
             {
-                case 1: // 전사
-                    Console.WriteLine("\n1. 강타(Mp2)"); //힘비례 대미지
-                    Console.WriteLine("\n2. 붕대감기(Mp5)"); //피 채움
-                    if (Data.ultimate >= 20) Console.WriteLine("\n3. 처형"); //궁극기 dungeonDay 쿨타임  처형
-                    break;
-                case 2: //도적
-                    Console.WriteLine("\n1. 표창 투척(Mp2)"); // 민첩비례 대미지
-                    Console.WriteLine("\n2. 연막탄 투척(Mp5)"); //도망치기
-                    if (Data.ultimate >= 20) Console.WriteLine("\n3. 그림자 분신"); //궁극기 dungeonDay 쿨타임 민첩 도핑
-                    break;
-                case 3: //마법사
-                    Console.WriteLine("\n1. 파이어 볼(Mp1)"); //지능비레 대미지
-                    Console.WriteLine("\n2. 익스플로전(Mp3)"); //지능비례 중간 대미지
-                    if (Data.ultimate >= 20) Console.WriteLine("\n3. 메테오"); //궁극기 dungeonDay 쿨타임 지능비례 대량 대미지
-                    break;
-                case 4: //야만인
-                    Console.WriteLine("\n1. 몸통 박치기(Mp2)"); //채력비례 대미지
-                    Console.WriteLine("\n2. 분노(Mp5)"); // 채력을 깎아서 흡혈추가
-                    if (Data.ultimate >= 20) Console.WriteLine("\n3. 마지막 발악"); //궁극기 dungeonDay 좀비화
-                    break;
-            }
-            Console.WriteLine("\n행동을 선택하세요:");
-            string action = Console.ReadLine();
+                Stats stats = new Stats();
 
-            switch (action)
-            {
-                case "1":
-                    switch (Data.JobNames)
-                    {
-                        case 1: // 전사
-                                // Console.WriteLine("\n1. 강타(Mp2)"); //힘비례 대미지
-                            Console.Clear();
-                            int warriorDamage = 0;
-                            int wRoll = Data.dice20();
-                            warriorDamage = wRoll >= 20 ? Data.Atk + Data.Str * 2 :
-                                          wRoll >= 10 ? Data.Atk + Data.Str :
-                                          Data.Atk + Data.Str / 2;
+                Console.WriteLine($"\n적 체력: {monsterHp} / {monsterHpMX}");
+                Console.WriteLine($"적공격력{monsterAttack}.");
+                Console.WriteLine($"\n체력: {Data.Hp} / {Data.HpMax}");
+                Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}");
+                switch (Data.JobNames)
+                {
+                    case 1: // 전사
+                        Console.WriteLine("\n1. 강타(Mp2)"); //힘비례 대미지
+                        Console.WriteLine("\n2. 붕대감기(Mp5)"); //피 채움
+                        if (Data.ultimate >= 20) Console.WriteLine("\n3. 처형"); //궁극기 dungeonDay 쿨타임  처형
+                        break;
+                    case 2: //도적
+                        Console.WriteLine("\n1. 표창 투척(Mp2)"); // 민첩비례 대미지
+                        Console.WriteLine("\n2. 연막탄 투척(Mp5)"); //도망치기
+                        if (Data.ultimate >= 20) Console.WriteLine("\n3. 그림자 분신"); //궁극기 dungeonDay 쿨타임 민첩 도핑
+                        break;
+                    case 3: //마법사
+                        Console.WriteLine("\n1. 파이어 볼(Mp1)"); //지능비레 대미지
+                        Console.WriteLine("\n2. 익스플로전(Mp3)"); //지능비례 중간 대미지
+                        if (Data.ultimate >= 20) Console.WriteLine("\n3. 메테오"); //궁극기 dungeonDay 쿨타임 지능비례 대량 대미지
+                        break;
+                    case 4: //야만인
+                        Console.WriteLine("\n1. 몸통 박치기(Mp2)"); //채력비례 대미지
+                        Console.WriteLine("\n2. 분노(Mp5)"); // 채력을 깎아서 흡혈추가
+                        if (Data.ultimate >= 20) Console.WriteLine("\n3. 마지막 발악"); //궁극기 dungeonDay 좀비화
+                        break;
+                }
+                Console.WriteLine("\n행동을 선택하세요:");
+                string action = Console.ReadLine();
 
-                            if (Data.Mp >= 2)
-                            {
-                                Console.WriteLine($"강타! {warriorDamage}의 피해");
-                                monsterHp -= warriorDamage;
-                                Data.Mp -= 2;
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
+                switch (action)
+                {
+                    case "1":
+                        switch (Data.JobNames)
+                        {
+                            case 1: // 전사
+                                    // Console.WriteLine("\n1. 강타(Mp2)"); //힘비례 대미지
+                                Console.Clear();
+                                int warriorDamage = 0;
+                                int wRoll = Data.dice20();
+                                warriorDamage = wRoll >= 20 ? Data.Atk + Data.Str * 2 :
+                                              wRoll >= 10 ? Data.Atk + Data.Str :
+                                              Data.Atk + Data.Str / 2;
 
-                            break;
-                        case 2: //도적
-                                // Console.WriteLine("\n1. 표창 투척(Mp2)"); // 민첩비례 대미지
-                            Console.Clear();
-                            int rogueDamage = 0;
-                            int rRoll1 = Data.dice20();
-                            rogueDamage = rRoll1 >= 20 ? Data.Atk + Data.Dex * 2 :
-                                          rRoll1 >= 10 ? Data.Atk + Data.Dex :
-                                          Data.Atk + Data.Dex / 2;
+                                if (Data.Mp >= 2)
+                                {
+                                    Console.WriteLine($"강타! {warriorDamage}의 피해");
+                                    monsterHp -= warriorDamage;
+                                    Data.Mp -= 2;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
 
-                            if (Data.Mp >= 2)
-                            {
-                                Console.WriteLine($"표창 투척! {rogueDamage}의 피해");
-                                monsterHp -= rogueDamage;
-                                Data.Mp -= 2;
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
+                                break;
+                            case 2: //도적
+                                    // Console.WriteLine("\n1. 표창 투척(Mp2)"); // 민첩비례 대미지
+                                Console.Clear();
+                                int rogueDamage = 0;
+                                int rRoll1 = Data.dice20();
+                                rogueDamage = rRoll1 >= 20 ? Data.Atk + Data.Dex * 2 :
+                                              rRoll1 >= 10 ? Data.Atk + Data.Dex :
+                                              Data.Atk + Data.Dex / 2;
 
-                            break;
-                        case 3: //마법사
-                                // Console.WriteLine("\n1. 파이어 볼(Mp1)"); //지능비레 대미지
-                            Console.Clear();
-                            int magicianDamage = 0;
-                            int mRoll = Data.dice20();
-                            magicianDamage = mRoll >= 20 ? Data.Atk / 2 + Data.Int * 3 :
-                                          mRoll >= 10 ? Data.Atk / 2 + Data.Int * 2 :
-                                          Data.Atk / 2 + Data.Int;
+                                if (Data.Mp >= 2)
+                                {
+                                    Console.WriteLine($"표창 투척! {rogueDamage}의 피해");
+                                    monsterHp -= rogueDamage;
+                                    Data.Mp -= 2;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
 
-                            if (Data.Mp >= 1)
-                            {
-                                Console.WriteLine($"파이어 볼! {magicianDamage}의 피해");
-                                monsterHp -= magicianDamage;
-                                Data.Mp -= 1;
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
+                                break;
+                            case 3: //마법사
+                                    // Console.WriteLine("\n1. 파이어 볼(Mp1)"); //지능비레 대미지
+                                Console.Clear();
+                                int magicianDamage = 0;
+                                int mRoll = Data.dice20();
+                                magicianDamage = mRoll >= 20 ? Data.Atk / 2 + Data.Int * 3 :
+                                              mRoll >= 10 ? Data.Atk / 2 + Data.Int * 2 :
+                                              Data.Atk / 2 + Data.Int;
 
-                            break;
-                        case 4: //야만인
-                                // Console.WriteLine("\n1. 몸통 박치기(Mp2)"); //채력비례 대미지
-                            Console.Clear();
-                            int barbarianDamage = 0;
-                            int bRoll = Data.dice20();
-                            barbarianDamage = bRoll >= 20 ? Data.Atk + Data.Con * 2 :
-                                          bRoll >= 10 ? Data.Atk + Data.Con :
-                                          Data.Atk + Data.Con / 2;
+                                if (Data.Mp >= 1)
+                                {
+                                    Console.WriteLine($"파이어 볼! {magicianDamage}의 피해");
+                                    monsterHp -= magicianDamage;
+                                    Data.Mp -= 1;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
 
-                            if (Data.Mp >= 2)
-                            {
-                                Console.WriteLine($"몸통 박치기! {barbarianDamage}의 피해");
-                                monsterHp -= barbarianDamage;
-                                Data.Mp -= 2;
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
+                                break;
+                            case 4: //야만인
+                                    // Console.WriteLine("\n1. 몸통 박치기(Mp2)"); //채력비례 대미지
+                                Console.Clear();
+                                int barbarianDamage = 0;
+                                int bRoll = Data.dice20();
+                                barbarianDamage = bRoll >= 20 ? Data.Atk + Data.Con * 2 :
+                                              bRoll >= 10 ? Data.Atk + Data.Con :
+                                              Data.Atk + Data.Con / 2;
 
-                            break;
-                    }
+                                if (Data.Mp >= 2)
+                                {
+                                    Console.WriteLine($"몸통 박치기! {barbarianDamage}의 피해");
+                                    monsterHp -= barbarianDamage;
+                                    Data.Mp -= 2;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
 
-                    break;
+                                break;
+                        }
+                        useSkill = true;
+                        return false;
 
-                case "2":
-                    switch (Data.JobNames)
-                    {
-                        case 1: // 전사
-                                // Console.WriteLine("\n2. 붕대감기(Mp5)"); //피 채움
-                            if (Data.Mp >= 5)
-                            {
-                                Console.WriteLine($"회복합니다.");
-                                Data.Mp -= 5;
-                                Data.Hp += Data.HpMax /2 ;
-                                stats.UpdateStats();
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
+                    case "2":
+                        switch (Data.JobNames)
+                        {
+                            case 1: // 전사
+                                    // Console.WriteLine("\n2. 붕대감기(Mp5)"); //피 채움
+                                if (Data.Mp >= 5)
+                                {
+                                    Console.WriteLine($"회복합니다.");
+                                    Data.Mp -= 5;
+                                    Data.Hp += Data.HpMax / 2;
+                                    stats.UpdateStats();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
 
-                            break;
-                        case 2: //도적
-                                // Console.WriteLine("\n2. 연막탄 투척"); //도망치기
-                            if (Data.Mp >= 5)
-                            {
-                                Console.WriteLine($"연막탄을 던집니다.");
-                                Data.Mp -= 5;
-                                BattleSystem.smokeShell = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
-                            break;
-                        case 3: //마법사
-                                // Console.WriteLine("\n2. 익스플로전"); //지능비례 대미지
-                            Console.Clear();
-                            int warriorDamage = 0;
-                            int wRoll = Data.dice20();
-                            warriorDamage = wRoll >= 20 ? Data.Atk + Data.Str * 2 :
-                                          wRoll >= 10 ? Data.Atk + Data.Str :
-                                          Data.Atk + Data.Str / 2;
+                                break;
+                            case 2: //도적
+                                    // Console.WriteLine("\n2. 연막탄 투척"); //도망치기
+                                if (Data.Mp >= 5)
+                                {
+                                    Console.WriteLine($"연막탄을 던집니다.");
+                                    Data.Mp -= 5;
+                                    BattleSystem.smokeShell = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
+                                break;
+                            case 3: //마법사
+                                    // Console.WriteLine("\n2. 익스플로전"); //지능비례 대미지
+                                Console.Clear();
+                                int warriorDamage = 0;
+                                int wRoll = Data.dice20();
+                                warriorDamage = wRoll >= 20 ? Data.Atk + Data.Str * 2 :
+                                              wRoll >= 10 ? Data.Atk + Data.Str :
+                                              Data.Atk + Data.Str / 2;
 
-                            if (Data.Mp >= 3)
-                            {
-                                Console.WriteLine($"익스플로전! {warriorDamage}의 피해");
-                                monsterHp -= warriorDamage;
-                                Data.Mp -= 3;
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
-                            break;
-                        case 4: //야만인
-                                // Console.WriteLine("\n2. 분노"); // 채력을 깎아서 흡혈추가
-                            if (Data.Mp >= 5)
-                            {
-                                Console.WriteLine($"분노합니다.");
-                                BattleSystem.anger = true;
-                                Data.Mp -= 5;
-                                Data.Hp = Data.Hp / 2;
-                            }
-                            else
-                            {
-                                Console.WriteLine("마나가 부족합니다.");
-                            }
-                            break;
-                    }
+                                if (Data.Mp >= 3)
+                                {
+                                    Console.WriteLine($"익스플로전! {warriorDamage}의 피해");
+                                    monsterHp -= warriorDamage;
+                                    Data.Mp -= 3;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
+                                break;
+                            case 4: //야만인
+                                    // Console.WriteLine("\n2. 분노"); // 채력을 깎아서 흡혈추가
+                                if (Data.Mp >= 5)
+                                {
+                                    Console.WriteLine($"분노합니다.");
+                                    BattleSystem.anger = true;
+                                    Data.Mp -= 5;
+                                    Data.Hp = Data.Hp / 2;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("마나가 부족합니다.");
+                                }
+                                break;
+                        }
+                        useSkill = true;
+                        return false;
 
-                    break;
+                    case "3":
+                        switch (Data.JobNames)
+                        {
+                            case 1: // 전사
+                                    // Console.WriteLine("\n3. 처형"); //궁극기 dungeonDay 쿨타임  처형
+                                Console.Clear();
+                                int warriorDamage = 0;
+                                warriorDamage = monsterHpMX / 2;
 
-                case "3":
-                    switch (Data.JobNames)
-                    {
-                        case 1: // 전사
-                                // Console.WriteLine("\n3. 처형"); //궁극기 dungeonDay 쿨타임  처형
-                            Console.Clear();
-                            int warriorDamage = 0;
-                            warriorDamage = monsterHpMX / 2;
+                                if (Data.ultimate >= 20)
+                                {
+                                    Console.WriteLine($"처형! {warriorDamage}의 피해");
+                                    monsterHp -= warriorDamage;
+                                    Data.ultimate = 0;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("사용할 수 없습니다.");
+                                }
 
-                            if (Data.ultimate >= 20)
-                            {
-                                Console.WriteLine($"처형! {warriorDamage}의 피해");
-                                monsterHp -= warriorDamage;
-                                Data.ultimate = 0;
-                            }
-                            else
-                            {
-                                Console.WriteLine("사용할 수 없습니다.");
-                            }
+                                break;
+                            case 2: //도적
+                                    // Console.WriteLine("\n3. 그림자 분신"); //궁극기 dungeonDay 쿨타임 민첩 도핑
+                                doping = Data.Dex;
+                                if (Data.ultimate >= 20)
+                                {
+                                    Console.WriteLine($"그림자 분신을 사용합니다.");
+                                    Data.Dex += doping;
+                                    Data.ultimate = 0;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("사용할 수 없습니다.");
+                                }
 
-                            break;
-                        case 2: //도적
-                                // Console.WriteLine("\n3. 그림자 분신"); //궁극기 dungeonDay 쿨타임 민첩 도핑
-                            doping = Data.Dex;
-                            if (Data.ultimate >= 20)
-                            {
-                                Console.WriteLine($"그림자 분신을 사용합니다.");
-                                Data.Dex += doping;
-                                Data.ultimate = 0;
-                            }
-                            else
-                            {
-                                Console.WriteLine("사용할 수 없습니다.");
-                            }
+                                break;
+                            case 3: //마법사
+                                    // Console.WriteLine("\n3. 메테오"); //궁극기 dungeonDay 쿨타임 지능비례 짱샌대미지
+                                Console.Clear();
+                                int magicianDamage = 0;
+                                int mRoll = Data.dice20();
+                                magicianDamage = mRoll >= 20 ? Data.Int * 15 : Data.Int * 10;
 
-                            break;
-                        case 3: //마법사
-                                // Console.WriteLine("\n3. 메테오"); //궁극기 dungeonDay 쿨타임 지능비례 짱샌대미지
-                            Console.Clear();
-                            int magicianDamage = 0;
-                            int mRoll = Data.dice20();
-                            magicianDamage = mRoll >= 20 ? Data.Int * 15 : Data.Int * 10;
+                                if (Data.ultimate >= 20)
+                                {
+                                    Console.WriteLine($"메테오! {magicianDamage}의 피해");
+                                    monsterHp -= magicianDamage;
+                                    Data.ultimate = 0;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("사용할 수 없습니다.");
+                                }
 
-                            if (Data.ultimate >= 20)
-                            {
-                                Console.WriteLine($"메테오! {magicianDamage}의 피해");
-                                monsterHp -= magicianDamage;
-                                Data.ultimate = 0;
-                            }
-                            else
-                            {
-                                Console.WriteLine("사용할 수 없습니다.");
-                            }
+                                break;
+                            case 4: //야만인
+                                    // Console.WriteLine("\n3. 마지막 발악"); //궁극기 dungeonDay 좀비화
+                                if (Data.ultimate >= 20)
+                                {
+                                    Console.WriteLine($"마지막 발악을 시작합니다.");
+                                    BattleSystem.immortality = true;
+                                    Data.ultimate = 0;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("사용할 수 없습니다.");
+                                }
+                                break;
+                        }
+                        useSkill = true;
+                        return false;
 
-                            break;
-                        case 4: //야만인
-                                // Console.WriteLine("\n3. 마지막 발악"); //궁극기 dungeonDay 좀비화
-                            if (Data.ultimate >= 20)
-                            {
-                                Console.WriteLine($"마지막 발악을 시작합니다.");
-                                BattleSystem.immortality = true;
-                                Data.ultimate = 0;
-                            }
-                            else
-                            {
-                                Console.WriteLine("사용할 수 없습니다.");
-                            }
-
-                            break;
-                    }
-
-                    break;
+                    default: // 잘못된 입력
+                        useSkill = false;
+                        return false;
+                }
             }
         }
-    }
-    
-        
+    }    
 }
