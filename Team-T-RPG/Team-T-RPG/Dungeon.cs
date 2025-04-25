@@ -123,14 +123,19 @@ public static class DungeonSystem
         Console.WriteLine("4. 휴식하기");
         Console.WriteLine("5. 조사하기");
         string text = Console.ReadLine();
-        
+        Inventory inven = new Inventory();
+        Stats myStats = new Stats();
         switch (text)
         {
             case "1":
                 Console.Clear();
+                myStats.ShowStatTable();
+                Console.Clear();
                 break;
 
             case "2":
+                Console.Clear();
+                inven.showInventory();
                 Console.Clear();
                 break;
 

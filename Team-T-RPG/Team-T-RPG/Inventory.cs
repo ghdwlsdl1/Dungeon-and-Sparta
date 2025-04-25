@@ -46,7 +46,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"0. 장비해제 ");
+                Console.WriteLine($"-1. 장비해제 ");
                 for (int i = 1; i < Data.weapon.Length; i++)
                 {
                     if (Data.weaponTf[i] > 0)
@@ -65,9 +65,9 @@ namespace Team_T_RPG
                 }
                 Console.Write("\n장착할 무기 번호를 입력하세요: ");
 
-                Console.WriteLine("-1.뒤로가기");
+                Console.WriteLine("0.뒤로가기");
                 int userinput = MainFrame.UserInputHandler(-1, Data.weapon.Length);
-                if (userinput == -1)
+                if (userinput == 0)
                 {
                     break; // 메뉴 종료
                 }
@@ -86,7 +86,7 @@ namespace Team_T_RPG
                     Console.WriteLine($"\n▶ [{Data.weapon[userinput]}]를 장착했습니다!");
                     Thread.Sleep(1000);
                 }
-                else if (userinput == 0)
+                else if (userinput == -1)
                 {
                     for (int i = 0; i < Data.weaponEquip.Length; i++)
                     {
