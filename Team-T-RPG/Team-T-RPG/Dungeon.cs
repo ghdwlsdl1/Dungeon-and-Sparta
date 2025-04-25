@@ -694,7 +694,7 @@ public static class DungeonSystem
                         }
                         int drop_exp = Data.dice20() * Data.floor;
                         int drop_money = Data.dice20() * (Data.floor * Data.floor);
-                        Console.WriteLine($"경험치({drop_exp})와 골드({drop_money}를 획득했다!)");
+                        Console.WriteLine($"경험치({drop_exp})와 골드({drop_money})를 획득했다!");
                         Data.experience += drop_exp;
                         Data.Money += drop_money;
                         Data.Dex -= doping;
