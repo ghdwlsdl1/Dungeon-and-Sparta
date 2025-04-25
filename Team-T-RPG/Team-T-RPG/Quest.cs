@@ -111,12 +111,13 @@ namespace Team_T_RPG
             {
                 Title = "고블린 처치",
                 Description = "던전에 있는 고블린을 처치하자!",
-                Goal = new KillGoal { TargetMob = "고블린", Required = 3 },
+                Goal = new KillGoal { TargetMob = "고블린", Required = 1 },
                 // ★ RewardItem = "박쥐모피",
-                RewardGold = 10,
+                RewardGold = 100,
                 State = QuestState.NotAccepted
             });
 
+            /*
             Quests.Add(new Quest
             {
                 Title = "포션 납품",
@@ -126,14 +127,14 @@ namespace Team_T_RPG
                 RewardGold = 5,
                 State = QuestState.NotAccepted
             });
-
+            */
             Quests.Add(new Quest
             {
-                Title = "던전 3층 도달",
-                Description = "던전 3층까지 가보자!",
-                Goal = new ReachFloorGoal { RequiredFloor = 3 },
+                Title = "던전 1층 도달",
+                Description = "던전 1층까지 가보자!",
+                Goal = new ReachFloorGoal { RequiredFloor = 1 },
                 // ★ RewardItem = "탐험가의 반지",
-                RewardGold = 20,
+                RewardGold = 100,
                 State = QuestState.NotAccepted
             });
         }
@@ -182,7 +183,7 @@ namespace Team_T_RPG
             Console.WriteLine($"제목: {q.Title}");
             Console.WriteLine($"설명: {q.Description}");
             Console.WriteLine($"목표: {q.Goal.Description} {q.Goal.ProgressText}");
-            Console.WriteLine($"\n보상: {q.RewardItem}, {q.RewardGold}G");
+            Console.WriteLine($"\n보상: {q.RewardGold}G"); // 보상 종류 늘리고 싶으면 여기다가 넣기
 
             switch (q.State)
             {
@@ -241,6 +242,48 @@ namespace Team_T_RPG
             /*
             Item.Add(q.RewardItem);
             */
+            // ReachFloorGoal일 경우 다음 층 퀘스트 생성
+            if (q.Goal is ReachFloorGoal reachGoal)
+            {
+                int nextFloor = reachGoal.RequiredFloor + 1;
+
+                Quest newFloorQuest = new Quest
+                {
+                    Title = $"던전 {nextFloor}층 도달",
+                    Description = $"던전 {nextFloor}층까지 가보자!",
+                    Goal = new ReachFloorGoal { RequiredFloor = nextFloor },
+                    RewardItem = "", // 혹은 보상 지정
+                    RewardGold = 10 + nextFloor * 5, // 층수당 보상 증가 예시
+                    State = QuestState.NotAccepted
+                };
+
+                Quests.Add(newFloorQuest);
+                Console.WriteLine($"\n새 퀘스트가 추가되었습니다: {newFloorQuest.Title}");
+                Console.ReadKey();
+            }
+            // KillGoal일 경우 다음 층 퀘스트 생성
+            if (q.Goal is KillGoal killGoal)
+            {
+                int nextKillCount = killGoal.Required + 1;
+
+                // 가중치 없이 랜덤 몬스터 선택
+                Random rand = new Random();
+                string nextTarget = Data.monster[rand.Next(Data.monster.Length)];
+
+                Quest newKillQuest = new Quest
+                {
+                    Title = $"{nextTarget} {nextKillCount}마리 처치",
+                    Description = $"던전에 있는 {nextTarget}을(를) 처치하자!",
+                    Goal = new KillGoal { TargetMob = nextTarget, Required = nextKillCount },
+                    RewardItem = "", // 아이템 보상 필요 시 추가
+                    RewardGold = 10 + nextKillCount * 2, // 보상 점진 증가
+                    State = QuestState.NotAccepted
+                };
+
+                Quests.Add(newKillQuest);
+                Console.WriteLine($"\n새 퀘스트가 추가되었습니다: {newKillQuest.Title}");
+                Console.ReadKey();
+            }
         }
 
         // 퀘스트 조건 체크용 함수들

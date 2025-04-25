@@ -19,7 +19,7 @@ namespace Team_T_RPG
         {
             while (true)
             {
-                Sound.PlayBgm("mainBgm", 0.1f);
+                Sound.PlayBgm("mainBgm", 0.0f);
                 Art.MakeImage("Image/dungeon.png", width: 40);
                 MainFrame.SerialTextWrite("던전 엔 스파르타에 오신 것을 환영합니다.\n\n");
 
@@ -150,7 +150,7 @@ namespace Team_T_RPG
         {
             Console.WriteLine("\n\n");
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            MainFrame.SerialTextWrite(". . 정신 차리는 중 . .  ", 150);
+            Art.ShowLoadingBar("던전 입장 중...", 5, 100);
             Console.ResetColor();
             Console.Clear();
             MainFrame.SerialTextWrite("\n뭐지? 기절했던 건가?\n");

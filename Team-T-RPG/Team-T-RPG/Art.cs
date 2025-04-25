@@ -12,6 +12,7 @@ namespace Team_T_RPG
         // 너비 기준 출력: Art.MakeImage("Image/이름", width: 40);
         // 높이 기준 출력: Art.MakeImage("Image/이름", height: 20);
         // 강제로 비율 무시하고 출력: Art.MakeImage("Image/이름", width: 40, height: 20);
+        // 반드시!! 아트를 파일에 추가한 후 속성에서 "출력 디렉토리에 복사"를 "새로 고칠 때만 복사"로 설정해야 함
         public static void MakeImage(string imagePath, int? width = null, int? height = null)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -99,6 +100,21 @@ namespace Team_T_RPG
             Console.WriteLine("                                                           \r\n      _________                        __                  \r\n     /   _____/______ _____  _______ _/  |_ _____          \r\n     \\_____  \\ \\____ \\\\__  \\ \\_  __ \\\\   __\\\\__  \\         \r\n     /        \\|  |_> >/ __ \\_|  | \\/ |  |   / __ \\_       \r\n    /_______  /|   __/(____  /|__|    |__|  (____  /       \r\n            \\/ |__|        \\/                    \\/        \r\n                                                           ");
             Console.ResetColor();
         }
+
+        public static void ShowLoadingBar(string message = "로딩 중...", int increment = 5, int delay = 100)
+        {
+            AnsiConsole.Progress()
+                .Start(ctx =>
+                {
+                    var task = ctx.AddTask($"[green]{message}[/]");
+                    while (!task.IsFinished)
+                    {
+                        task.Increment(increment);
+                        Thread.Sleep(delay);
+                    }
+                });
+        }
+
 
         // 마을 아스키 아트
         public static void TownImaget()
