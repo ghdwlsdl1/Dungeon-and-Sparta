@@ -23,6 +23,7 @@
 		<Compile Include="Data.cs" />
 		<Compile Include="Dungeon.cs" />
 		<Compile Include="Item.cs" />
+		<Compile Include="Sound.cs" />
 		
 	</ItemGroup>
 
