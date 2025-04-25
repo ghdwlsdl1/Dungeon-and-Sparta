@@ -27,6 +27,8 @@ namespace Team_T_RPG
 
                 if (Data.Hp <= 0) // 우선 체력 체크 : 엔딩 조건 1
                 {
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
+                    File.Delete(path);
                     Console.WriteLine("\n당신의 체력이 끝내 고갈되고 말았습니다!\n");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     SerialTextWrite("사망하셨습니다!", 150);
@@ -41,6 +43,8 @@ namespace Team_T_RPG
 
                 if (Data.Money < 0) // 납부할 골드 부족 시 사망 : 엔딩 조건 2
                 {
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
+                    File.Delete(path);
                     Console.WriteLine("\n납부할 세금이 부족한 당신은, 형장의 이슬이 되고 맙니다!\n");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     SerialTextWrite("사망하셨습니다!", 150);
@@ -75,7 +79,8 @@ namespace Team_T_RPG
             Console.Write($" $ {Data.Money} G  \n");
             Console.ResetColor();
             Console.WriteLine("--------------------------------------------------------------------------------------\n");
-            Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n\n0. 가이드북");
+            Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n\n0. 저장하기");
+            
             int userinput = UserInputHandler(0,6);
             switch (userinput)
             {
@@ -138,13 +143,14 @@ namespace Team_T_RPG
                         }
                         Console.Clear();
                         Data.Day++;
-
                         break;
                     }
                     case 0:
                     {
                         Console.Clear();
-                        gameStarter.GuideBook();
+                        SaveSystem.Save();
+                        Console.Write("저장이 완료되었습니다.");
+                        Thread.Sleep(2000);
                         break;
                     }
             }

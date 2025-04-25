@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 		<Compile Include="Art.cs" />
+		<Compile Include="Save.cs" />
 		<Compile Include="GameProgress.cs" />
 		<Compile Include="MainFrame.cs" />
 		<Compile Include="Quest.cs" />
