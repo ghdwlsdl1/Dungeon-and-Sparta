@@ -63,18 +63,14 @@ public static class DungeonSystem
 
         if (Data.dungeonDay == 0)
         {
-            Data.dungeonDay = 3;
-            Data.dungeonHour = 0;
-            Data.floor = 1;
-            Data.playerX = -1; Data.playerY = -1;
-            Data.portalX = -2; Data.portalY = -2;
-            Data.floorChange = true;
+            DungeonReset.Datareset();
             DungeonEntryEnd = true;
             return false;
         }
 
         if (Data.Hp <= 0)
         {
+            DungeonReset.Datareset();
             DungeonEntryEnd = true;
             return false;
         }
@@ -577,6 +573,7 @@ public static class DungeonSystem
                     {
                         Console.WriteLine("불사의 힘이 빠져나가는 것이 느껴집니다.");
                         Data.Hp = 0;
+                        DungeonReset.Datareset();
                         return;
                     }
                 }
@@ -724,6 +721,7 @@ public static class DungeonSystem
                     // 플레이어 사망 시 전투 종료
                     if (Data.Hp <= 0)
                     {
+                        DungeonReset.Datareset();
                         Console.WriteLine("당신은 쓰러졌습니다...");
                         break;
                     }
@@ -1005,6 +1003,26 @@ public static class DungeonSystem
 
                     break;
             }
+        }
+    }
+    public static class DungeonReset()
+    {
+        public static void Datareset()
+        {
+            Data.dungeonDay = 3;   //날짜
+            Data.dungeonHour = 0;   //시간
+            Data.playerX = -1; //플레이어좌표x
+            Data.playerY = -1;
+            Data.portalX = -2; //포탈좌표
+            Data.portalY = -2;
+            Data.treasureX = -1; //보물좌표
+            Data.treasureY = -1;
+            Data.floor = 1; //층수
+            Data.floorChange = false; //층변경감지
+            Data.map; //맵
+            Data.monsterTurn = 0; //몬스터 행동
+            Data.tired = 0;
+            Data.ultimate = 0;
         }
     }
 }
