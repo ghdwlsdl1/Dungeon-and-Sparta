@@ -53,7 +53,12 @@ public static class DungeonSystem
                 BattleSystem.Battle();
                 Data.monsterPositions.RemoveAt(i);
                 Data.map[my, mx] = ' ';
-                MonstersSystem.PlaceMonsters(Data.floor);
+                int targetMonsterCount = Data.floor * 2;
+                int currentMonsterCount = Data.monsterPositions.Count;
+                int toSpawn = targetMonsterCount - currentMonsterCount;
+
+                if (toSpawn > 0)
+                    MonstersSystem.PlaceMonsters(toSpawn);
                 Data.dungeonHour += 2;
                 return true;
             }
