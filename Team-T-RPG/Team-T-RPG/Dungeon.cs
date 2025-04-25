@@ -128,19 +128,10 @@ public static class DungeonSystem
         {
             case "1":
                 Console.Clear();
-<<<<<<< HEAD
-                
-=======
->>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             case "2":
                 Console.Clear();
-<<<<<<< HEAD
-                
-                Console.Clear();
-=======
->>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             case "3":
@@ -157,25 +148,17 @@ public static class DungeonSystem
 
             case "4":
                 Data.monsterTurn += 6; Data.dungeonHour += 6; Data.tired -= 6; Data.ultimate += 6;
-<<<<<<< HEAD
-                Console.WriteLine("6시간동안 휴식을 취합니다.\n");
-=======
                 Console.Clear();
                 Console.WriteLine("당신은 지친 몸을 눕히고 휴식하기로 했습니다.\n");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 MainFrame.SerialTextWrite("휴식 취하는 중 ▶▷▶▷▶");
                 Console.ResetColor();
                 Console.Clear();
->>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             case "5":
                 Data.monsterTurn += 3; Data.dungeonHour += 3; Data.tired += 3; Data.ultimate += 3;
-<<<<<<< HEAD
-                SearchSystem.Search();
-=======
                 search_result_print = SearchSystem.Search();
->>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             default:
@@ -583,11 +566,7 @@ public static class DungeonSystem
                     TimetoDie++;
                     if (TimetoDie >= 5)
                     {
-<<<<<<< HEAD
-                        Console.WriteLine("당신의 시간이 끝났습니다.");
-=======
                         Console.WriteLine("불사의 힘이 빠져나가는 것이 느껴집니다.");
->>>>>>> parent of 6f50b74 (Merge branch '승우')
                         Data.Hp = 0;
                         return;
                     }
@@ -595,11 +574,7 @@ public static class DungeonSystem
 
                 if (smokeShell)
                 {
-<<<<<<< HEAD
-                    Console.WriteLine("전투가 강제로 종료되었습니다.");
-=======
                     Console.WriteLine("자욱한 연기 사이로 몰래 도망쳤습니다!");
->>>>>>> parent of 6f50b74 (Merge branch '승우')
                     Data.Dex -= doping;
                     doping = 0;
                     stats.UpdateStats();
@@ -610,13 +585,6 @@ public static class DungeonSystem
                 if (playerTurn)
                 {
                     // 현재 상태 출력
-<<<<<<< HEAD
-                    Console.WriteLine($"\n적 체력: {monsterHp} / {monsterHpMX}");
-                    Console.WriteLine($"적공격력{monsterAttack}.");
-                    Console.WriteLine($"\n체력: {Data.Hp} / {Data.HpMax}\n마나: {Data.Mp} / {Data.MpMax}");
-                    Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}");
-                    Console.WriteLine("플레이어 턴입니다.\n1. 공격\n2. 마법\n3. 아이템");
-=======
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("[나의 차례]\n");
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -630,8 +598,6 @@ public static class DungeonSystem
                     Console.ResetColor();
                     Console.WriteLine("---------------------");
                     Console.WriteLine("당신의 선택은…\n1. 공격하기\n2. 마법 사용하기");
->>>>>>> parent of 6f50b74 (Merge branch '승우')
-
                     // 이전 턴에 잘못된 입력이 있었는지 표시
                     if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
 
@@ -664,15 +630,11 @@ public static class DungeonSystem
                         case "2": // 마법 사용
                             Console.Clear();
                             Skill(ref monsterHp, monsterAttack, monsterHpMX);
-<<<<<<< HEAD
                             break;
 
                         case "3": // 아이템 사용
                             Console.Clear();
-                            
-                            Console.Clear();
-=======
->>>>>>> parent of 6f50b74 (Merge branch '승우')
+          
                             break;
 
                         default: // 잘못된 입력
