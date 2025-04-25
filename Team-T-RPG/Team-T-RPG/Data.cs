@@ -29,7 +29,7 @@ namespace Team_T_RPG
         public static int Atk = 0; //공격력
         public static int Def = 0; // 방어력
 
-        public static int Money = 2000000000;
+        public static int Money = 2000;
         //====================마을 시스템====================
         public static bool duty = false;
         public static int Day = 1;
@@ -77,12 +77,12 @@ namespace Team_T_RPG
 
         public static string[] potion = { "없음", "체력 물약", "상처약", "고급 상처약", "마나 물약", "파워 엘릭서" };
         public static int[] potionTf = { 0, 0, 0, 0, 0, 0 };
-        public static int[] potionMp = { 0, 0, 0, 0, 50, 20 };//MP
-        public static int[] potionHp = { 0, 10, 30, 50, 0, 40 }; // 추가 체력은 회복이라고 생각했습니다.
-        public static int[] potionDeal = { 0, 10, 20, 30, 40, 50 }; // 금액 
+        public static int[] potionMp = { 0, 0, 10, 0, 30, 50 };//MP
+        public static int[] potionHp = { 0, 10, 0, 30, 0, 50 }; // 추가 체력은 회복이라고 생각했습니다.
+        public static int[] potionDeal = { 0, 200, 200, 500, 500, 1000 }; // 금액 
         //====================몬스터====================
 
-        public static string[] monster = { "고블린", "오크", "골램", "리치" };
+        public static string[] monster = { "고블린", "오크", "골렘", "리치" };
         public static int[] monster_drop_weapon_index = { 2, 1, 3, 4 };
         public static int[] msAtk = { 0, 3, 3, 10 }; // 기본 공격력
         public static int[] msHp = { 5, 10, 15, 5 }; // 기본 체력
