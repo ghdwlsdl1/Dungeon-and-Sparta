@@ -645,9 +645,10 @@ public static class DungeonSystem
                         case "3": // 아이템 사용
                             Console.Clear();
                             bool usedPotion = inventory.showInventoryPotion();
-                            if (usedPotion)
+                            if (!usedPotion)
                             {
-                                Data.monsterTurn += 1; Data.dungeonHour += 1; Data.tired += 1; Data.ultimate += 1;
+                                Console.Clear();
+                                continue;
                             }
                             Console.Clear();
                             break;
@@ -876,6 +877,7 @@ public static class DungeonSystem
                             {
                                 Console.WriteLine($"회복합니다.");
                                 Data.Mp -= 5;
+                                Data.Hp += Data.HpMax /2 ;
                                 stats.UpdateStats();
                             }
                             else
