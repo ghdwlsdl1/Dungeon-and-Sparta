@@ -135,7 +135,11 @@ public static class DungeonSystem
 
             case "2":
                 Console.Clear();
-                inven.showInventory();
+               bool usedPotion= inven.showInventoryPotion();
+                if (usedPotion)
+                {
+                Data.monsterTurn += 1; Data.dungeonHour += 1; Data.tired += 1; Data.ultimate += 1;
+                }
                 Console.Clear();
                 break;
 
