@@ -78,9 +78,11 @@ namespace Team_T_RPG
 
         public void UpdateProgress(params object[] args)
         {
-            int currentFloor = (int)args[0];
-            if (currentFloor >= RequiredFloor)
-                Reached = true;
+            if (args.Length > 0 && args[0] is int currentFloor)
+            {
+                if (currentFloor >= RequiredFloor)
+                    Reached = true;
+            }
         }
     }
 

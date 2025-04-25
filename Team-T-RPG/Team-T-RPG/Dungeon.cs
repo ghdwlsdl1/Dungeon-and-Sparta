@@ -13,6 +13,8 @@ using static System.Formats.Asn1.AsnWriter;
 
 public static class DungeonSystem
 {
+    static Stats stats = new Stats();
+    static Inventory inventory = new Inventory();
     //던전타임
     public static void dungeonTime()
     {
@@ -265,7 +267,7 @@ public static class DungeonSystem
             Data.floorChange = false;
 
             // 6. 현재 층 수에 비례하여 몬스터 배치
-            int monsterCount = Data.floor;
+            int monsterCount = Data.floor*2;
             MonstersSystem.PlaceMonsters(monsterCount);
 
             // 7. 최종적으로 포탈과 플레이어 위치를 맵에 시각적으로 표시
