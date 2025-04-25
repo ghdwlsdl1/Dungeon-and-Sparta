@@ -548,13 +548,15 @@ public static class DungeonSystem
             MainFrame.SerialTextWrite("적을 만났습니다! 전투를 시작합니다.",70);
             Console.Clear();
             // 몬스터 능력치 설정 (층 수에 비례하여 HP, 공격력 생성)
-            int monsterHp = Data.random.Next(1 + (Data.floor * Data.floor), (Data.floor * 5) + (Data.floor * Data.floor));
+            int monsterIndex = Data.random.Next(Data.monster.Length); // 배열 기반 몬스터 랜덤 선택
+            string monsterName = Data.monster[monsterIndex]; // 몬스터 이름
+            int monsterHp = Data.msHp[monsterIndex] + Data.random.Next(1 + (Data.floor * Data.floor), (Data.floor * 5) + (Data.floor * Data.floor));
             int monsterHpMX = monsterHp;
-            int monsterAttack = Data.random.Next(1 + Data.floor, 3 + Data.floor * 2);
+            int monsterAttack = Data.msAtk[monsterIndex] + Data.random.Next(1 + Data.floor, 3 + Data.floor * 2);
             bool battleError = false; // 잘못된 입력 여부
 
             // 속도값 설정
-            int monsterSpeed = Data.random.Next(Data.floor, Data.floor * 2);
+            int monsterSpeed = Data.msDex[monsterIndex] + Data.random.Next(Data.floor, Data.floor * 2);
             int playerSpeed = Data.Dex;
             bool playerTurn = playerSpeed >= monsterSpeed;
 
@@ -588,13 +590,15 @@ public static class DungeonSystem
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("[나의 차례]\n");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"적 체력: {monsterHp} / {monsterHpMX}");
-                    Console.WriteLine($"적 공격력 : {monsterAttack}");
+                    Console.WriteLine($"[{monsterName}]");
+                    Console.WriteLine($"체력: {monsterHp} / {monsterHpMX}");
+                    Console.WriteLine($"공격력 : {monsterAttack}");
                     Console.Write("---------V");
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("S---------\n");
-                    Console.WriteLine($"나의 체력: {Data.Hp} / {Data.HpMax}");
-                    Console.WriteLine($"나의 마나: {Data.Mp} / {Data.MpMax}\n");
+                    Console.WriteLine($"[{Data.Name} / {Data.Job[Data.JobNames]}]");
+                    Console.WriteLine($"체력: {Data.Hp} / {Data.HpMax}");
+                    Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}\n");
                     Console.ResetColor();
                     Console.WriteLine("---------------------");
                     Console.WriteLine("당신의 선택은…\n1. 공격하기\n2. 마법 사용하기");
@@ -647,8 +651,21 @@ public static class DungeonSystem
                     if (monsterHp <= 0)
                     {
                         Console.WriteLine("적을 쓰러뜨렸습니다!");
-                        Data.experience += Data.dice20() * Data.floor; // 경험치 지급
-                        Data.Money += Data.dice20() * (Data.floor * Data.floor); // 돈 지급
+                        int dropRoll = Data.dice20(); // Luk 반영 주사위
+                        if (dropRoll >= 15) // 조건: 주사위 결과가 15 이상일 경우 드랍
+                        {
+                            Console.WriteLine($"[아이템 드랍] {Data.weapon[Data.monster_drop_weapon_index[monsterIndex]]}을(를) 획득했다!");
+                            Data.weaponTf[Data.monster_drop_weapon_index[monsterIndex]]++;
+                        }
+                        else
+                        {
+                            Console.WriteLine("[아이템 드랍 실패] 이 녀석은 아무것도 가지고 있지 않았다...");
+                        }
+                        int drop_exp = Data.dice20() * Data.floor;
+                        int drop_money = Data.dice20() * (Data.floor * Data.floor);
+                        Console.WriteLine($"경험치({drop_exp})와 골드({drop_money}를 획득했다!)");
+                        Data.experience += drop_exp;
+                        Data.Money += drop_money;
                         Data.Dex -= doping;
                         doping = 0;
                         stats.UpdateStats();

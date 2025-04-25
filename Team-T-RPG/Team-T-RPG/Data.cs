@@ -81,13 +81,13 @@ namespace Team_T_RPG
         public static int[] potionHp = { 0, 10, 30, 50, 0, 40 }; // 추가 체력은 회복이라고 생각했습니다.
         public static int[] potionDeal = { 0, 10, 20, 30, 40, 50 }; // 금액 
         //====================몬스터====================
-        public static string[] monster = { "고블린", "오크", "오우거", "리치", "데스나이트", "악마 어릿광대", "야수의 후예", "흑마법사" };
-        public static string[] msweapon = { "", "", "", "", "", "", "", "" };
-        public static int[] msweaponEquip = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 장착 여부
-        public static int[] msweaponAtk = { 0, 5, 5, 7, 3, 2, 0, 0, 0 }; // 추가 공격력
-        public static int[] msweaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
-        public static int[] msweaponDeal = { 0, 1000, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000 }; // 금액
 
+        public static string[] monster = { "고블린", "오크", "오우거", "리치" };
+        public static int[] monster_drop_weapon_index = { 2, 1, 3, 4 };
+        public static int[] msAtk = { 10, 10, 10, 15 }; // 기본 공격력
+        public static int[] msHp = { 30, 50, 70, 30 }; // 기본 체력
+        public static int[] msDex = { 15, 10, 5, 10 }; // 기본 이속
+        
         //====================주사위====================
         public static Random random = new Random(); // static으로 변경
 
