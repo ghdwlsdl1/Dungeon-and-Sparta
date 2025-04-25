@@ -78,25 +78,6 @@ namespace Team_T_RPG
         public int[] msHp { get; set; }
         public int[] msDex { get; set; }
 
-        //====================주사위====================
-       
-            //====================던전 시스템====================
-            public int dungeonDay { get; set; }
-        public int dungeonHour { get; set; }
-        //====================던전 맵====================
-        public int playerX { get; set; }
-        public int playerY { get; set; }
-        public int portalX { get; set; }
-        public int portalY { get; set; }
-        public int treasureX { get; set; }
-        public int treasureY { get; set; }
-        public int floor { get; set; }
-        public bool floorChange { get; set; }
-        public char[,] map { get; set; }
-        public List<(int x, int y)> monsterPositions { get; set; }
-        public int monsterTurn { get; set; }
-        public int tired { get; set; }
-        public int ultimate { get; set; }
     }
 
 

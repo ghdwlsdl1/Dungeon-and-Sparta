@@ -27,6 +27,8 @@ namespace Team_T_RPG
 
                 if (Data.Hp <= 0) // 우선 체력 체크 : 엔딩 조건 1
                 {
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
+                    File.Delete(path);
                     Console.WriteLine("\n당신의 체력이 끝내 고갈되고 말았습니다!\n");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     SerialTextWrite("사망하셨습니다!", 150);
@@ -41,6 +43,8 @@ namespace Team_T_RPG
 
                 if (Data.Money < 0) // 납부할 골드 부족 시 사망 : 엔딩 조건 2
                 {
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
+                    File.Delete(path);
                     Console.WriteLine("\n납부할 세금이 부족한 당신은, 형장의 이슬이 되고 맙니다!\n");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     SerialTextWrite("사망하셨습니다!", 150);
@@ -139,8 +143,6 @@ namespace Team_T_RPG
                         }
                         Console.Clear();
                         Data.Day++;
-                        Data.map = null;
-
                         break;
                     }
                     case 0:
