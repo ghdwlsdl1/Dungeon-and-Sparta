@@ -76,7 +76,7 @@ public static class DungeonSystem
             DungeonEntryEnd = true;
             return false;
         }
-
+        //포탈통과
         if (Data.portalY == Data.playerY && Data.portalX == Data.playerX)
         {
             Data.playerX = -1; Data.playerY = -1;
@@ -87,7 +87,9 @@ public static class DungeonSystem
 
             Data.Money += 200 * Data.floor * Data.floor;
         }
-       
+        // 퀘스트
+        QuestManager.ReportFloorReached(Data.floor);
+
         Console.WriteLine($"현재 층 수 : {Data.floor}");
         Console.WriteLine($"{Data.floor}층 붕괴까지 : {Data.dungeonDay} 일 {24 - Data.dungeonHour}시간 남음");
         Console.WriteLine("--------------------------------------------------------------------------------------");
