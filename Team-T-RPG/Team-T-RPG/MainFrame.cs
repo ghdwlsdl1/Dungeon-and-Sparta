@@ -142,6 +142,7 @@ namespace Team_T_RPG
                             if (dungeonEnd) break;
                         }
                         Console.Clear();
+                        Datareset();
                         Data.Day++;
                         break;
                     }
@@ -299,5 +300,26 @@ namespace Team_T_RPG
                     }
             }
         }
+
+        public static void Datareset()
+        {
+            Data.dungeonDay = 3;   //날짜
+            Data.dungeonHour = 0;   //시간
+            Data.playerX = -1; //플레이어좌표x
+            Data.playerY = -1;
+            Data.portalX = -2; //포탈좌표
+            Data.portalY = -2;
+            Data.treasureX = -1; //보물좌표
+            Data.treasureY = -1;
+            Data.floor = 1; //층수
+            Data.floorChange = false; //층변경감지
+            Data.monsterPositions = new List<(int x, int y)>();
+            Data.map = null; //맵
+            Data.monsterTurn = 0; //몬스터 행동
+            Data.tired = 0;
+            Data.ultimate = 0;
+        }
+
+
     }
 }
