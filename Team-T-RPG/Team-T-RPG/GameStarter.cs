@@ -19,6 +19,7 @@ namespace Team_T_RPG
         {
             while (true)
             {
+                Console.Title = "Dungeon & Sparta";
                 Sound.PlayBgm("mainBgm", 0.1f);
                 Art.StartSceneImage();
                 MainFrame.SerialTextWrite("던전 엔 스파르타에 오신 것을 환영합니다.\n\n");
@@ -200,6 +201,7 @@ namespace Team_T_RPG
             userinput = MainFrame.UserInputHandler(0, 0);
             NameCharacter();
             Console.Clear();
+            Art.MakeImage("Image/guidebook.png", width: 60);
             Console.WriteLine($"\n(명부에 내 이름을 ({Data.Name}) 적고 가이드북을 살펴보았다.)\n");
             MainFrame.SerialTextWrite("가이드북의 첫 장에는, 나처럼 맨몸으로 갑자기 떨어진 사람들은 \n",25);
             Console.ForegroundColor = ConsoleColor.DarkRed;

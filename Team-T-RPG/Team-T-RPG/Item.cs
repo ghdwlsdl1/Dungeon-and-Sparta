@@ -13,7 +13,10 @@ namespace Team_T_RPG
             while (true) // 상점 루프 시작
             {
                 Console.Clear();
-                Console.WriteLine("상점");
+                Art.MakeImage("Image/store.png", width: 60);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("[상점]");
+                Console.ResetColor();
                 Console.WriteLine("장비를 구입하거나 판매하는 상점입니다.\n");
 
                 Console.WriteLine("카테고리를 선택해주세요:");
@@ -59,7 +62,8 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("[무기 목록]");
+                Art.MakeImage("Image/store.png", width: 60);
+                Console.WriteLine("[무기 목록]\n");
                 for (int i = 1; i < Data.weapon.Length; i++)
                 {
                     int[] stats = Data.weaponStats[i];
@@ -111,7 +115,8 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("[보조 장비 목록]");
+                Art.MakeImage("Image/store.png", width: 60);
+                Console.WriteLine("[보조 장비 목록]\n");
                 for (int i = 1; i < Data.assist.Length; i++)
                 {
                     int[] stats = Data.assistStats[i];
@@ -163,7 +168,8 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("[갑옷 목록]");
+                Art.MakeImage("Image/store.png", width: 60);
+                Console.WriteLine("[갑옷 목록]\n");
                 for (int i = 1; i < Data.armor.Length; i++)
                 {
                     Console.WriteLine($"{i}. {Data.armor[i]} (방어력 +{Data.armorDef[i]}) {(Data.armorTf[i] == 1 ? "(보유 중)" : "")} - {Data.armorDeal[i]} Gold");
@@ -212,6 +218,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
+                Art.MakeImage("Image/store.png", width: 60);
                 Console.WriteLine("[포션 목록]");
                 for (int i = 1; i < Data.potion.Length; i++)
                 {
