@@ -123,13 +123,10 @@ namespace Team_T_RPG
                 case 6: // 던전 입장
                     {
                         Console.Clear();
-                        Console.Write("던전 입장 중");
-                        for (int i = 0; i < 5; i++)
-                        {
-                            Thread.Sleep(300);
-                            Console.Write(">");
-                            Thread.Sleep(300);
-                        }
+                        Art.MakeImage("Image/dungeonentry.png", width: 60);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        SerialTextWrite("던전으로 들어가는 중 ▶▷▶▷▶",150);
+                        Console.ResetColor();
                         Console.Clear();
 
                         bool dungeonError = false;
@@ -247,6 +244,8 @@ namespace Team_T_RPG
         // 속도 조절을 원하면 뒤에 숫자 적어넣어 주세요(밀리초)
         public static void Rest()
         {
+
+            Art.MakeImage("Image/hotel.png", width: 60);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("[휴식]\n");
             Console.ResetColor();

@@ -20,7 +20,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Sound.PlayBgm("mainBgm", 0.1f);
-                Art.MakeImage("Image/dungeon.png", width: 60);
+                Art.StartSceneImage();
                 MainFrame.SerialTextWrite("던전 엔 스파르타에 오신 것을 환영합니다.\n\n");
 
                 Console.WriteLine("1. 새로 하기");
@@ -67,6 +67,7 @@ namespace Team_T_RPG
             Console.Clear();
             while (true)
             {
+                Art.MakeImage("Image/writename.png", width: 60);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\n[모험가 명부]\n");
                 Console.ResetColor();
@@ -178,6 +179,7 @@ namespace Team_T_RPG
             Console.WriteLine("0. 건물로 들어가기");
             int userinput = MainFrame.UserInputHandler(0, 0);
             Console.Clear();
+            Art.MakeImage("Image/receptionist.png", width: 60);
             MainFrame.SerialTextWrite("건물로 들어가니, 퉁명스러운 표정의 안내원이 귀찮다는 듯 날 맞이했다.\n\n", 25);
             MainFrame.SerialTextWrite("『저희는 마을 밖의 마물들로부터의 보호는 물론,\n 여러분들의 식량, 치안 관리까지 생존을 위한 모든 것을 제공하고 있습니다.\n물론 무료는 아니고 ");
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -221,5 +223,7 @@ namespace Team_T_RPG
             MainFrame.UserInputHandler(0, 0);
             Console.Clear();
         }
+
+       
     }
 }
