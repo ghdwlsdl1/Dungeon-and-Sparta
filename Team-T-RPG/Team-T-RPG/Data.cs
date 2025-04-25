@@ -29,28 +29,27 @@ namespace Team_T_RPG
         public static int Atk = 0; //공격력
         public static int Def = 0; // 방어력
 
-        public static int Money = 2000;
+        public static int Money = 2000000000;
         //====================마을 시스템====================
         public static bool duty = false;
         public static int Day = 1;
         //====================아이탬====================
         public static string[] weapon = { "없음", "롱소드", "단검", "지팡이", "도끼", "천상의 검", "밤의 송곳니", "빛의 지팡이", "파멸의 도끼" };// 아이탬 이름
-        public static int[] weaponTf = { 0, 0, 0, 0, 0, 0, 0, 1, 0 }; // 소지 여부
+        public static int[] weaponTf = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 소지 여부
         public static int[] weaponEquip = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 장착 여부
         public static int[] weaponAtk = { 0, 5, 5, 7, 3, 2, 0, 0, 0 }; // 추가 공격력
         //public static int[] weaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
         public static int[][] weaponStats = new int[][] {
                     //힘 ,민첩, 지능
-            new int[] { 0,  0,  0},//없음
-            new int[] { 0,  0,  0},//롱소드
-            new int[] { 0,  0,  0},//단검
-            new int[] { 0,  0,  5},//지팡이
-            new int[] { 5,  0,  0},//도끼
-            new int[] { 0,  5,  0},//천상의 검
-            new int[] { 0,  7,  0},//밤의 송곳니
-            new int[] { 0,  0,  7},//빛의 지팡이
-            new int[] { 7,  0,  0}//파멸의 도끼
-
+            new int[] { 0,  0,  0 },//없음
+            new int[] { 0,  0,  0 },//롱소드
+            new int[] { 0,  0,  0 },//단검
+            new int[] { 0,  0,  5 },//지팡이
+            new int[] { 5,  0,  0 },//도끼
+            new int[] { 0,  5,  0 },//천상의 검
+            new int[] { 0,  7,  0 },//밤의 송곳니
+            new int[] { 0,  0,  7 },//빛의 지팡이
+            new int[] { 7,  0,  0 }//파멸의 도끼
         };
         public static int[] weaponDeal = { 0, 1000, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000 }; // 금액
 
@@ -61,13 +60,12 @@ namespace Team_T_RPG
         //public static int[] assistStats = { 0, 0, 0, 3, 5, 5 }; // 추가 스텟
         public static int[][] assistStats = new int[][] {
                     //건강,지혜,운
-            new int[] { 0,  0,  0},//없음
-            new int[] { 0,  3,  0},//히터 실드
-            new int[] { 3,  0,  0},//행운의 부적
-            new int[] { 0,  0,  5},//빛나는 반지
-            new int[] { 0,  5,  0},//도바킨 투구
-            new int[] { 5,  0,  0},//태양 목걸이
-
+            new int[] { 0,  0,  0 },//없음
+            new int[] { 0,  2,  0 },//히터 실드
+            new int[] { 0,  0,  5 },//행운의 부적
+            new int[] { 0,  3,  0 },//빛나는 반지
+            new int[] { 2,  0,  0 },//도바킨 투구
+            new int[] { 5,  0,  0 },//태양 목걸이
         };
         public static int[] assistDeal = { 0, 1000, 1000, 1000, 1000, 1000 }; // 금액
 
