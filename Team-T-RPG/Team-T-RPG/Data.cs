@@ -29,7 +29,7 @@ namespace Team_T_RPG
         public static int Atk = 0; //공격력
         public static int Def = 0; // 방어력
 
-        public static int Money = 2000000000;
+        public static int Money = 20000;
         //====================마을 시스템====================
         public static bool duty = false;
         public static int Day = 1;
@@ -38,35 +38,14 @@ namespace Team_T_RPG
         public static int[] weaponTf = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 소지 여부
         public static int[] weaponEquip = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 장착 여부
         public static int[] weaponAtk = { 0, 5, 5, 7, 3, 2, 0, 0, 0 }; // 추가 공격력
-        //public static int[] weaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
-        public static int[][] weaponStats = new int[][] {
-                    //힘 ,민첩, 지능
-            new int[] { 0,  0,  0 },//없음
-            new int[] { 0,  0,  0 },//롱소드
-            new int[] { 0,  0,  0 },//단검
-            new int[] { 0,  0,  5 },//지팡이
-            new int[] { 5,  0,  0 },//도끼
-            new int[] { 0,  5,  0 },//천상의 검
-            new int[] { 0,  7,  0 },//밤의 송곳니
-            new int[] { 0,  0,  7 },//빛의 지팡이
-            new int[] { 7,  0,  0 }//파멸의 도끼
-        };
-        public static int[] weaponDeal = { 0, 1000, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000 }; // 금액
+        public static int[] weaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
+        public static int[] weaponDeal = { 0, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000 }; // 금액
 
-        public static string[] assist = { "없음", "히터 실드", "행운의 부적", "빛나는 반지", "도바킨 투구", "태양 목걸이" };
+        public static string[] assist = { "없음", "히터 실드", "행운의 부적", "빛나는 반지", "도바킨 투구" };
         public static int[] assistTf = { 0, 0, 0, 0, 0, 0 };
         public static int[] assistEquip = { 0, 0, 0, 0, 0, 0 };
         public static int[] assistDef = { 0, 1, 2, 0, 0, 0, }; // 추가 방어력
-        //public static int[] assistStats = { 0, 0, 0, 3, 5, 5 }; // 추가 스텟
-        public static int[][] assistStats = new int[][] {
-                    //건강,지혜,운
-            new int[] { 0,  0,  0 },//없음
-            new int[] { 0,  2,  0 },//히터 실드
-            new int[] { 0,  0,  5 },//행운의 부적
-            new int[] { 0,  3,  0 },//빛나는 반지
-            new int[] { 2,  0,  0 },//도바킨 투구
-            new int[] { 5,  0,  0 },//태양 목걸이
-        };
+        public static int[] assistStats = { 0, 0, 0, 3, 5, 5 }; // 추가 스텟
         public static int[] assistDeal = { 0, 1000, 1000, 1000, 1000, 1000 }; // 금액
 
         public static string[] armor = { "없음", "낡은 갑옷", "가죽 갑옷", "사슬 갑옷", "강철 갑옷", "판금 갑옷" };
@@ -75,18 +54,32 @@ namespace Team_T_RPG
         public static int[] armorDef = { 0, 1, 3, 5, 7, 10 }; // 추가 방어력
         public static int[] armorDeal = { 0, 1000, 2000, 3000, 4000, 5000 }; // 금액
 
-        public static string[] potion = { "없음", "체력 물약", "상처약", "고급 상처약", "마나 물약", "파워 엘릭서" };
+        public static string[] potion = { "없음", "체력 물약", "마나 물약", "체력 포션", "마나 포션", "파워 엘릭서" };
         public static int[] potionTf = { 0, 0, 0, 0, 0, 0 };
-        public static int[] potionMp = { 0, 0, 0, 0, 50, 20 };//MP
-        public static int[] potionHp = { 0, 10, 30, 50, 0, 40 }; // 추가 체력은 회복이라고 생각했습니다.
-        public static int[] potionDeal = { 0, 10, 20, 30, 40, 50 }; // 금액 
+        public static int[] potionMp = { 0, 0, 10, 0, 50, 50 };//MP
+        public static int[] potionHp = { 0, 10, 0, 50, 0, 50 }; // HP
+        public static int[] potionDeal = { 0, 20, 20 , 60, 60, 100 }; // 금액 
         //====================몬스터====================
-        public static string[] monster = { "고블린", "오크", "오우거", "리치", "데스나이트", "악마 어릿광대", "야수의 후예", "흑마법사" };
-        public static string[] msweapon = { "", "", "", "", "", "", "", "" };
-        public static int[] msweaponEquip = { 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // 장착 여부
-        public static int[] msweaponAtk = { 0, 5, 5, 7, 3, 2, 0, 0, 0 }; // 추가 공격력
-        public static int[] msweaponStats = { 0, 0, 0, 5, 5, 7, 0, 0, 0 }; // 추가 스텟
-        public static int[] msweaponDeal = { 0, 1000, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000 }; // 금액
+        public static string[] monster = {"고블린", "오크", "오우거", "리치"};
+       
+        public static int[] msAtk = {10, 10, 10, 15}; // 기본 공격력
+        public static int[] msHp = {30, 50, 70, 30}; // 기본 체력
+        public static int[] msDex = {15, 10, 5, 10}; // 기본 이속
+        public static int[][] monsterWeaponOptions = new int[][]
+        {
+        new int[] { 2 },            // 고블린 → 단검
+        new int[] { 1 },            // 오크 → 롱소드
+        new int[] { 4 },            // 오우거 → 도끼
+        new int[] { 3 }             // 리치 → 지팡이
+        };
+
+        public static string[] weaponNames =
+        {
+        "롱소드",  // 0
+        "단검",    // 1
+        "지팡이",  // 2
+        "도끼"     // 3
+        };
 
         //====================주사위====================
         public static Random random = new Random(); // static으로 변경
@@ -116,6 +109,5 @@ namespace Team_T_RPG
         public static List<(int x, int y)> monsterPositions = new List<(int x, int y)>();
         public static int monsterTurn = 0; //몬스터 행동
         public static int tired = 0;
-        public static int ultimate = 0;
     }
 }
