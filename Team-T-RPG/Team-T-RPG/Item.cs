@@ -62,7 +62,10 @@ namespace Team_T_RPG
                 Console.WriteLine("[무기 목록]");
                 for (int i = 1; i < Data.weapon.Length; i++)
                 {
-                    Console.WriteLine($"{i}. {Data.weapon[i]} (공격력 +{Data.weaponAtk[i]}) {(Data.weaponTf[i] == 1 ? "(보유 중)" : "")} - {Data.weaponDeal[i]} Gold");
+                    int[] stats = Data.weaponStats[i];
+                    string statText = $"(힘 +{stats[0]} / 민첩 +{stats[1]} / 지능 +{stats[2]})";
+                    string ownText = Data.weaponTf[i] == 1 ? "(보유 중)" : "";
+                    Console.WriteLine($"{i}. {Data.weapon[i]} (공격력 +{Data.weaponAtk[i]}) - {statText} {ownText} - {Data.weaponDeal[i]} Gold");
                 }
                 Console.WriteLine("0. 뒤로가기");
                 Console.WriteLine($"\nGold: {Data.Money}");
@@ -111,7 +114,10 @@ namespace Team_T_RPG
                 Console.WriteLine("[보조 장비 목록]");
                 for (int i = 1; i < Data.assist.Length; i++)
                 {
-                    Console.WriteLine($"{i}. {Data.assist[i]} (민첩 +{Data.assistDef[i]}) {(Data.assistTf[i] == 1 ? "(보유 중)" : "")} - {Data.assistDeal[i]} Gold");
+                    int[] stats = Data.assistStats[i];
+                    string statText = $"(힘 +{stats[0]} / 민첩 +{stats[1]} / 지능 +{stats[2]})";
+                    string ownText = Data.assistTf[i] == 1 ? "(보유 중)" : "";
+                    Console.WriteLine($"{i}. {Data.assist[i]} (방어력 +{Data.assistDef[i]}) - {statText} {ownText} - {Data.assistDeal[i]} Gold");
                 }
                 Console.WriteLine("0. 뒤로가기");
                 Console.WriteLine($"\nGold: {Data.Money}");
