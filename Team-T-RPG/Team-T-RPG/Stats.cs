@@ -236,8 +236,9 @@ namespace Team_T_RPG
         {
             UpdateStats();
             Console.Clear();
-            Console.WriteLine("상태 보기");
-            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("[상태 보기]");
+            Console.ResetColor();
             Console.WriteLine("");
             Console.WriteLine($"레벨 : {Data.Level}");
             Console.WriteLine($"캐릭터명 : {Data.Name} ");
@@ -267,8 +268,6 @@ namespace Team_T_RPG
                 //    break;
 
                 case 0:
-                    Console.WriteLine("나가겠습니다 테스트용");
-                    Thread.Sleep(1000);
                     Console.Clear();
                     break;
             }

@@ -45,7 +45,7 @@ namespace Team_T_RPG
                 {
                     string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
                     File.Delete(path);
-                    Console.WriteLine("\n납부할 세금이 부족한 당신은, 형장의 이슬이 되고 맙니다!\n");
+                    Console.WriteLine("\n납부할 세금이 부족한 당신은, 마을 밖으로 쫒겨났습니다.\n 마을 밖의 마물들은 너무 강했습니다.");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     SerialTextWrite("사망하셨습니다!", 150);
                     Console.ResetColor();
@@ -69,6 +69,8 @@ namespace Team_T_RPG
         public static void TownScene() // 가장 중심 씬이 될 마을. 각 선택지에 따라 기능 구현 (업무 여기서 나누는 느낌으로)
         {
             Console.WriteLine("--------------------------------------------------------------------------------------");
+            Console.Title = $"Dungeon & Sparta : {Data.Name} / {Data.Day}일차";
+            Art.MakeImage("Image/village.png", width: 60);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"[스파르탄 마을] : Day {Data.Day}");
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -117,6 +119,7 @@ namespace Team_T_RPG
                     {
                         Console.Clear();
                         Rest();
+                        Console.Clear();
                         break;
                     }
 
@@ -158,7 +161,7 @@ namespace Team_T_RPG
 
         public static void PayTax() // 세금 계속 루프돌때마다 세금내면 곤란하니 bool값 써서 Day 변동이 있을 시만 걷기
         {
-            if (Data.Day <= 7)
+            if (Data.Day <= 2)
             {
                 Console.WriteLine("\n ※7일 간은 세금이 면제됩니다. \n");
                 return; // 7일이 지날 때까진 바로 리턴
@@ -193,6 +196,7 @@ namespace Team_T_RPG
             Console.Write("▶ ");
 
             string userInput = Console.ReadLine();
+            
             bool isVaildInput = Int32.TryParse(userInput, out int result);
 
             if (isVaildInput && result >= min && result <= max)

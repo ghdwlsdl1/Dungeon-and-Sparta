@@ -14,11 +14,14 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("0.뒤로가기");
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+
                 Console.WriteLine("1.무기");
                 Console.WriteLine("2.보조장비");
                 Console.WriteLine("3.아머");
                 Console.WriteLine("4.포션");
+
+                Console.WriteLine("\n0.뒤로가기");
                 int userinput = MainFrame.UserInputHandler(0, 4);
                 switch (userinput)
                 {
@@ -46,7 +49,8 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"-1. 장비해제 ");
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+
                 for (int i = 1; i < Data.weapon.Length; i++)
                 {
                     if (Data.weaponTf[i] > 0)
@@ -63,9 +67,11 @@ namespace Team_T_RPG
                         Console.WriteLine($"{i}.미획득");
                     }
                 }
-                Console.Write("\n장착할 무기 번호를 입력하세요: ");
-
+                Console.WriteLine($"\n-1. 장비해제 ");
                 Console.WriteLine("0.뒤로가기");
+                Console.WriteLine("\n장착할 무기 번호를 입력하세요: ");
+
+                
                 int userinput = MainFrame.UserInputHandler(-1, Data.weapon.Length - 1);
                 if (userinput == 0)
                 {
@@ -109,7 +115,8 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"-1. 장비해제 ");
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+
                 for (int i = 1; i < Data.assist.Length; i++)
                 {
                     if (Data.assistTf[i] > 0)
@@ -125,8 +132,10 @@ namespace Team_T_RPG
                         Console.WriteLine($"{i}.미획득");
                     }
                 }
-                Console.Write("\n장착할 보조장비 번호를 입력하세요: ");
+                Console.WriteLine($"-1. 장비해제 ");
                 Console.WriteLine("0.뒤로가기");
+                Console.WriteLine("\n장착할 보조장비 번호를 입력하세요: ");
+                
                 int userinput = MainFrame.UserInputHandler(-1, Data.assist.Length - 1);
                 if (userinput == 0)
                 {
@@ -169,7 +178,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"-1. 장비해제 ");
+                Console.WriteLine("--------------------------------------------------------------------------------------");
                 for (int i = 1; i < Data.armor.Length; i++)
                 {
                     if (Data.armorTf[i] > 0)
@@ -184,8 +193,10 @@ namespace Team_T_RPG
                         Console.WriteLine($"{i}.미획득");
                     }
                 }
-                Console.Write("\n장착할 무기 번호를 입력하세요: ");
-                Console.WriteLine("-1.뒤로가기");
+                Console.WriteLine($"\n-1. 장비해제 ");
+                Console.WriteLine("0. 뒤로가기");
+                Console.WriteLine("\n장착할 무기 번호를 입력하세요: ");
+                
                 int userinput = MainFrame.UserInputHandler(-1, Data.armor.Length-1);
                 if (userinput == 0)
                 {
@@ -230,6 +241,8 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+
                 for (int i = 1; i < Data.potion.Length; i++)
                 {
 
@@ -244,7 +257,7 @@ namespace Team_T_RPG
                         Console.WriteLine(potionText);
                     }
                 }
-                Console.WriteLine("0.뒤로가기");
+                Console.WriteLine("\n0.뒤로가기");
                 Console.WriteLine("사용하실 포션의 번호를 입력하세요.");
                 int userinput = MainFrame.UserInputHandler(0, Data.potion.Length-1);
                 if (userinput == 0)

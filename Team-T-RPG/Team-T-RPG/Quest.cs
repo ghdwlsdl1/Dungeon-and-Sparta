@@ -1,3 +1,4 @@
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 
@@ -158,15 +159,14 @@ namespace Team_T_RPG
                 };
                 Console.WriteLine($"{i + 1}. {q.Title} {status}");
             }
-            Console.WriteLine($"\n{Quests.Count + 1}. 마을로 돌아가기");
+            Console.WriteLine($"\n0. 마을로 돌아가기");
 
             Console.WriteLine("\n퀘스트를 선택하세요.\n");
-            int userinput = MainFrame.UserInputHandler(1, Quests.Count+1);
+            int userinput = MainFrame.UserInputHandler(0, Quests.Count);
 
-            if (userinput == Quests.Count + 1)
+            if (userinput == 0)
             {
                 Console.Clear();
-                MainFrame.TownScene();
             }
             else
             {
@@ -188,21 +188,21 @@ namespace Team_T_RPG
             switch (q.State)
             {
                 case QuestState.NotAccepted:
-                    Console.WriteLine("\n1. 수락\n2. 돌아가기");
+                    Console.WriteLine("\n1. 수락\n0. 돌아가기");
                     break;
                 case QuestState.InProgress:
-                    Console.WriteLine("\n(진행 중)\n2. 돌아가기");
+                    Console.WriteLine("\n(진행 중)\n0. 돌아가기");
                     break;
                 case QuestState.Completed:
-                    Console.WriteLine("\n1. 보상 받기\n2. 돌아가기");
+                    Console.WriteLine("\n1. 보상 받기\n0. 돌아가기");
                     break;
                 case QuestState.Rewarded:
-                    Console.WriteLine("\n(완료된 퀘스트입니다)\n2. 돌아가기");
+                    Console.WriteLine("\n(완료된 퀘스트입니다)\n0. 돌아가기");
                     break;
             }
 
             Console.Write("\n>> ");
-            int userinput = MainFrame.UserInputHandler(1, 2);
+            int userinput = MainFrame.UserInputHandler(0, 1);
             if (q.State == QuestState.NotAccepted && userinput == 1)
             {
                 q.State = QuestState.InProgress;
@@ -215,7 +215,7 @@ namespace Team_T_RPG
                 Console.Clear();
                 ShowQuestList();
             }
-            else if (userinput == 2)
+            else if (userinput == 0)
             {
                 Console.Clear();
                 ShowQuestList();
@@ -276,7 +276,7 @@ namespace Team_T_RPG
                     Description = $"던전에 있는 {nextTarget}을(를) 처치하자!",
                     Goal = new KillGoal { TargetMob = nextTarget, Required = nextKillCount },
                     RewardItem = "", // 아이템 보상 필요 시 추가
-                    RewardGold = 10 + nextKillCount * 2, // 보상 점진 증가
+                    RewardGold = 100 + nextKillCount * 100, // 보상 점진 증가
                     State = QuestState.NotAccepted
                 };
 
