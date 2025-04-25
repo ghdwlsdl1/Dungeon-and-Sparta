@@ -11,11 +11,20 @@
 	  
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Image\shiroko.png" />
+    <None Remove="Sound\Nameless Tavern.mp3" />
+  </ItemGroup>
+
 	<ItemGroup>
-		<Compile Include="Art.cs" />
+		<Compile Include="Image\Art.cs" />
 		<Compile Include="GameProgress.cs" />
+		<Content Include="Image\shiroko.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Compile Include="MainFrame.cs" />
 		<Compile Include="Quest.cs" />
+		<Compile Include="Sound\Sound.cs" />
 		<Compile Include="Stats.cs" />
 		<Compile Include="Inventory.cs" />
 		<Compile Include="GameStarter.cs" />
@@ -23,6 +32,25 @@
 		<Compile Include="Dungeon.cs" />
 		<Compile Include="Item.cs" />
 		
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Sound\Nameless Tavern.mp3">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="NAudio" Version="2.2.1" />
+	  <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
+	  <PackageReference Include="Spectre.Console" Version="0.50.0" />
+	  <PackageReference Include="System.Windows.Extensions" Version="9.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Image\dungeon.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

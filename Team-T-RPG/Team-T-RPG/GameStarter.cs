@@ -8,16 +8,6 @@ namespace Team_T_RPG
 {
     public class GameStarter // 저장 데이터 불러오기 및 캐릭터 생성하는 파트
     {
-        public void StartSceneArt()
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("________                     ____                          \r\n\\______ \\   __ __   ____    / ___\\   ____   ____    ____   \r\n |    |  \\ |  |  \\ /    \\  / /_/  >_/ __ \\ /  _ \\  /    \\  \r\n |    `   \\|  |  /|   |  \\ \\___  / \\  ___/(  <_> )|   |  \\ \r\n/_______  /|____/ |___|  //_____/   \\___  >\\____/ |___|  / \r\n        \\/             \\/               \\/             \\/  \r\n                                                           \r\n");
-            Console.ForegroundColor= ConsoleColor.Cyan;
-            Console.Write("                          ____                             \r\n                         /  _ \\                            \r\n                         >  _ </\\                          \r\n                        /  <_\\ \\/                          \r\n                        \\_____\\ \\                          \r\n                               \\/                          \r\n");
-            Console.ForegroundColor= ConsoleColor.DarkRed;
-            Console.WriteLine("                                                           \r\n      _________                        __                  \r\n     /   _____/______ _____  _______ _/  |_ _____          \r\n     \\_____  \\ \\____ \\\\__  \\ \\_  __ \\\\   __\\\\__  \\         \r\n     /        \\|  |_> >/ __ \\_|  | \\/ |  |   / __ \\_       \r\n    /_______  /|   __/(____  /|__|    |__|  (____  /       \r\n            \\/ |__|        \\/                    \\/        \r\n                                                           ");
-            Console.ResetColor();
-        }
 
         /*
             이어하기는 나중에 만들고 ("추후 구현 예정입니다") 안내 띄우기
@@ -29,7 +19,8 @@ namespace Team_T_RPG
         {
             while (true)
             {
-                StartSceneArt();
+                Sound.PlayBgm("mainBgm", 0.1f);
+                Art.MakeImage("Image/dungeon.png", width: 40);
                 MainFrame.SerialTextWrite("던전 엔 스파르타에 오신 것을 환영합니다.\n\n");
 
                 Console.WriteLine("1. 새로 하기");
