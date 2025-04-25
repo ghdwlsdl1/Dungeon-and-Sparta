@@ -90,9 +90,9 @@ public static class DungeonSystem
         }
         // 퀘스트
         QuestManager.ReportFloorReached(Data.floor);
-
+        Art.MakeImage("Image/dungeon.png", width: 60);
         Console.WriteLine($"현재 층 수 : {Data.floor}");
-        Console.WriteLine($"{Data.floor}층 붕괴까지 : {Data.dungeonDay} 일 {24 - Data.dungeonHour}시간 남음");
+        Console.WriteLine($"{Data.floor}층 붕괴까지 : {Data.dungeonDay-1} 일 {24 - Data.dungeonHour}시간 남음");
         Console.WriteLine("--------------------------------------------------------------------------------------");
         Dungeon.MiniMap();
         Dungeon.PrintMap();
@@ -294,8 +294,9 @@ public static class DungeonSystem
         public static bool Move(ref bool moveError, ref bool moveError2)
         {
             Console.Clear();
+            Art.MakeImage("Image/dungeon.png", width: 60);
             Console.WriteLine($"현재 층 수 : {Data.floor}");
-            Console.WriteLine($"{Data.floor}층 붕괴까지 : {Data.dungeonDay} 일 {24 - Data.dungeonHour}시간 남음");
+            Console.WriteLine($"{Data.floor}층 붕괴까지 : {Data.dungeonDay - 1} 일 {24 - Data.dungeonHour}시간 남음");
             Console.WriteLine("--------------------------------------------------------------------------------------");
             MiniMap();
             PrintMap();
@@ -596,6 +597,7 @@ public static class DungeonSystem
                 if (playerTurn)
                 {
                     // 현재 상태 출력
+                    Art.MakeImage($"Image/monster{monsterIndex}.png", width: 60);
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("[나의 차례]\n");
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -610,7 +612,7 @@ public static class DungeonSystem
                     Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}\n");
                     Console.ResetColor();
                     Console.WriteLine("---------------------");
-                    Console.WriteLine("당신의 선택은…\n1. 공격하기\n2. 마법 사용하기");
+                    Console.WriteLine("당신의 선택은…\n1. 공격하기\n2. 마법 사용하기\n3. 포션 마시기");
                     // 이전 턴에 잘못된 입력이 있었는지 표시
                     if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
 
@@ -641,7 +643,8 @@ public static class DungeonSystem
                             break;
 
                         case "2": // 마법 사용
-                            Console.Clear();
+                            MainFrame.ClearConsoleLine(1);
+                            Console.WriteLine("---------------------");
                             bool useSkill = false;
                             bool skillBook = Skill(ref monsterHp, monsterAttack, monsterHpMX, ref useSkill);
                             if (!skillBook)
@@ -657,7 +660,7 @@ public static class DungeonSystem
                             break;
 
                         case "3": // 아이템 사용
-                            Console.Clear();
+                            MainFrame.ClearConsoleLine(1);
                             bool usedPotion = inventory.showInventoryPotion();
                             if (!usedPotion)
                             {
@@ -760,11 +763,7 @@ public static class DungeonSystem
             while (true)
             {
                 Stats stats = new Stats();
-
-                Console.WriteLine($"\n적 체력: {monsterHp} / {monsterHpMX}");
-                Console.WriteLine($"적공격력{monsterAttack}.");
-                Console.WriteLine($"\n체력: {Data.Hp} / {Data.HpMax}");
-                Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}");
+                
                 switch (Data.JobNames)
                 {
                     case 1: // 전사

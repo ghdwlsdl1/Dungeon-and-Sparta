@@ -29,7 +29,7 @@ namespace Team_T_RPG
         // { 이름(자유), 실제 경로 (Sound 폴더 기준) }
         // 예시: Sound.PlayBgm("mainBgm")로 나중에 사용하기 편한 이름으로 지을 것
         { "mainBgm", "Sound/Nameless Tavern.mp3" },     // 마을 BGM
-        { "dungeonBgm", "Sound/Dungeon Opening.mp3" },  // 던전 입장 BGM
+        { "dungeonBgm", "Sound/Dungeon Opening.wav" },  // 던전 입장 BGM
         { "select", "Sound/select.wav" },               // 메뉴 선택 효과음
         { "win", "Sound/win.wav" }                      // 전투 승리 효과음
 

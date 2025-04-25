@@ -47,9 +47,10 @@ namespace Team_T_RPG
                 }
                 else if (userinput == 2)
                 {
-                    Console.WriteLine("세이브파일이 존재하지 않습니다.\n 잠시 후 돌아갑니다.");
+                    Console.WriteLine("세이브파일이 존재하지 않습니다.\n 게임을 다시 시작해 주세요.");
+                    Sound.StopBgm();
                     Thread.Sleep(2000);
-                    Console.Clear();
+                    Environment.Exit(0);
                 }
                 else if (userinput == 0)
                 {

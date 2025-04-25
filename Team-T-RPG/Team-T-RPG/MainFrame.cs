@@ -29,6 +29,7 @@ namespace Team_T_RPG
                 {
                     string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
                     File.Delete(path);
+                    Art.MakeImage("Image/death.png", width: 60);
                     Console.WriteLine("\n당신의 체력이 끝내 고갈되고 말았습니다!\n");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     SerialTextWrite("사망하셨습니다!", 150);
@@ -36,7 +37,7 @@ namespace Team_T_RPG
                     break;
                 }
                     
-                if (!Data.duty) // 세금 납부
+                if (Data.duty) // 세금 납부
                 {
                     PayTax();
                 }
@@ -45,6 +46,7 @@ namespace Team_T_RPG
                 {
                     string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
                     File.Delete(path);
+                    Art.MakeImage("Image/death.png", width: 60);
                     Console.WriteLine("\n납부할 세금이 부족한 당신은, 마을 밖으로 쫒겨났습니다.\n 마을 밖의 마물들은 너무 강했습니다.");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     SerialTextWrite("사망하셨습니다!", 150);
@@ -62,6 +64,7 @@ namespace Team_T_RPG
 
             Console.WriteLine($"\n당신의 생존 일수 : {Data.Day} 일\n");
             Console.WriteLine("다시 시작하려면 재실행해주세요.");
+            Environment.Exit(0);
             // 사인을 넣고 싶으면 다 하고 추후 기능 구현하기!
 
         }
@@ -126,6 +129,7 @@ namespace Team_T_RPG
                 case 6: // 던전 입장
                     {
                         Console.Clear();
+                        Sound.PlaySound("dungeonBgm");
                         Art.MakeImage("Image/dungeonentry.png", width: 60);
                         Console.ForegroundColor = ConsoleColor.Blue;
                         SerialTextWrite("던전으로 들어가는 중 ▶▷▶▷▶",150);
@@ -151,7 +155,8 @@ namespace Team_T_RPG
                         Console.Clear();
                         SaveSystem.Save();
                         Console.Write("저장이 완료되었습니다.");
-                        Thread.Sleep(2000);
+                        Thread.Sleep(1000);
+                        Console.Clear();
                         break;
                     }
             }
@@ -161,14 +166,15 @@ namespace Team_T_RPG
 
         public static void PayTax() // 세금 계속 루프돌때마다 세금내면 곤란하니 bool값 써서 Day 변동이 있을 시만 걷기
         {
-            if (Data.Day <= 2)
+            if (Data.Day <= 1)
             {
-                Console.WriteLine("\n ※7일 간은 세금이 면제됩니다. \n");
-                return; // 7일이 지날 때까진 바로 리턴
+                Console.WriteLine("\n ※첫 날은 세금이 면제됩니다. \n");
+                return; // 첫날은 바로 리턴
             }
 
             if (Data.duty)
             {
+                Art.MakeImage("Image/receptionist.png", width: 60);
                 Console.WriteLine($"마을에 온 지 {Data.Day}일이 지났습니다.");
                 Console.WriteLine($"당신은 세금으로 {Data.Day * 143} G를 납부해야 합니다.");
                 Console.WriteLine($"( 현재 소지 골드 : {Data.Money} G )\n");

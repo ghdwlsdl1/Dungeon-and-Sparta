@@ -103,7 +103,8 @@ namespace Team_T_RPG
         public static void Load()
         {
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json");
-                MainFrame.SerialTextWrite("세이브파일을 불러오는 중...");
+            Art.MakeImage("Image/dungeon.png", width: 60);
+            MainFrame.SerialTextWrite("세이브파일을 불러오는 중...");
                 string json = File.ReadAllText(path);
                 TempData loaded = JsonSerializer.Deserialize<TempData>(json);
                 CopyInstanceToStatic(loaded);

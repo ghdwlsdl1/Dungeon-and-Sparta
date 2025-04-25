@@ -144,6 +144,7 @@ namespace Team_T_RPG
         public static void ShowQuestList()
         {
             Console.Clear();
+            Art.MakeImage("Image/Quest.png", width: 60);
             Console.WriteLine("퀘스트 목록\n");
 
             for (int i = 0; i < Quests.Count; i++)
@@ -179,6 +180,7 @@ namespace Team_T_RPG
         {
             var q = Quests[index];
             Console.Clear();
+            Art.MakeImage("Image/Quest.png", width: 60);
             Console.WriteLine("퀘스트 상세\n");
             Console.WriteLine($"제목: {q.Title}");
             Console.WriteLine($"설명: {q.Description}");
@@ -216,6 +218,11 @@ namespace Team_T_RPG
                 ShowQuestList();
             }
             else if (userinput == 0)
+            {
+                Console.Clear();
+                ShowQuestList();
+            }
+            else
             {
                 Console.Clear();
                 ShowQuestList();

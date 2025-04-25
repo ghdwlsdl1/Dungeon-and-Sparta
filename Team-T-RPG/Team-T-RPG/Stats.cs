@@ -236,6 +236,7 @@ namespace Team_T_RPG
         {
             UpdateStats();
             Console.Clear();
+            Art.MakeImage("Image/Stats.png", width: 60);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("[상태 보기]");
             Console.ResetColor();

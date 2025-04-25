@@ -14,6 +14,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
+                Art.MakeImage("Image/inventory.png", width: 60);
                 Console.WriteLine("--------------------------------------------------------------------------------------");
 
                 Console.WriteLine("1.무기");
@@ -37,6 +38,7 @@ namespace Team_T_RPG
                         showInventoryArmor();
                         break;
                     case 4:
+                        Console.Clear();
                         showInventoryPotion();
                         break;
 
@@ -49,6 +51,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
+                Art.MakeImage("Image/inventory.png", width: 60);
                 Console.WriteLine("--------------------------------------------------------------------------------------");
 
                 for (int i = 1; i < Data.weapon.Length; i++)
@@ -115,6 +118,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
+                Art.MakeImage("Image/inventory.png", width: 60);
                 Console.WriteLine("--------------------------------------------------------------------------------------");
 
                 for (int i = 1; i < Data.assist.Length; i++)
@@ -178,6 +182,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Console.Clear();
+                Art.MakeImage("Image/inventory.png", width: 60);
                 Console.WriteLine("--------------------------------------------------------------------------------------");
                 for (int i = 1; i < Data.armor.Length; i++)
                 {
@@ -240,7 +245,7 @@ namespace Team_T_RPG
         {
             while (true)
             {
-                Console.Clear();
+                
                 Console.WriteLine("--------------------------------------------------------------------------------------");
 
                 for (int i = 1; i < Data.potion.Length; i++)
@@ -294,6 +299,8 @@ namespace Team_T_RPG
                     {
                         Console.WriteLine("포션이 부족합니다");
                         Thread.Sleep(1000);
+                        MainFrame.ClearConsoleLine(12);
+                        
                     }
                 }
             }
