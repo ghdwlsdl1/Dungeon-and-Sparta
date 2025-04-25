@@ -41,7 +41,7 @@ namespace Team_T_RPG
 
         private static WaveOutEvent bgmPlayer;
         private static AudioFileReader bgmReader;
-
+        
 
         // 효과음을 재생하는 함수 (WAV 전용)
         public static void PlaySound(string name)
