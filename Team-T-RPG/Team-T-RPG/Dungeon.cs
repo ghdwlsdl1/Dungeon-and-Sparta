@@ -1019,7 +1019,8 @@ public static class DungeonSystem
             Data.treasureY = -1;
             Data.floor = 1; //층수
             Data.floorChange = false; //층변경감지
-            Data.map; //맵
+            Data.monsterPositions = new List<(int x, int y)>();
+            Data.map = null; //맵
             Data.monsterTurn = 0; //몬스터 행동
             Data.tired = 0;
             Data.ultimate = 0;
