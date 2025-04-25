@@ -20,7 +20,7 @@ namespace Team_T_RPG
             while (true)
             {
                 Sound.PlayBgm("mainBgm", 0.1f);
-                Art.MakeImage("Image/dungeon.png", width: 40);
+                Art.MakeImage("Image/dungeon.png", width: 60);
                 MainFrame.SerialTextWrite("던전 엔 스파르타에 오신 것을 환영합니다.\n\n");
 
                 Console.WriteLine("1. 새로 하기");

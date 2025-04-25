@@ -82,11 +82,11 @@ namespace Team_T_RPG
         public static int[] potionDeal = { 0, 10, 20, 30, 40, 50 }; // 금액 
         //====================몬스터====================
 
-        public static string[] monster = { "고블린", "오크", "오우거", "리치" };
+        public static string[] monster = { "고블린", "오크", "골램", "리치" };
         public static int[] monster_drop_weapon_index = { 2, 1, 3, 4 };
-        public static int[] msAtk = { 0, 0, 0, 0 }; // 기본 공격력
-        public static int[] msHp = { 0, 0, 0, 0 }; // 기본 체력
-        public static int[] msDex = { 0, 0, 0, 0 }; // 기본 이속
+        public static int[] msAtk = { 0, 3, 3, 10 }; // 기본 공격력
+        public static int[] msHp = { 5, 10, 15, 5 }; // 기본 체력
+        public static int[] msDex = { 5, 0, -5, 0 }; // 기본 이속
 
         //====================주사위====================
         public static Random random = new Random(); // static으로 변경
