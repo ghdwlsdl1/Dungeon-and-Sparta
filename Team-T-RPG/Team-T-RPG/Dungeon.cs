@@ -518,14 +518,20 @@ public static class DungeonSystem
             Console.WriteLine("적을 만났습니다! 전투를 시작합니다.\n\n\n");
 
             // 몬스터 능력치 설정 (층 수에 비례하여 HP, 공격력 생성)
-            int monsterHP = Data.random.Next(1 + (Data.floor * Data.floor), (Data.floor * 5) + (Data.floor * Data.floor));
-            int monsterAttack = Data.random.Next(1 + Data.floor, 3 + Data.floor * 2);
+            int monsterIndex = Data.random.Next(Data.monster.Length); // 배열 기반 몬스터 랜덤 선택
+            string monsterName = Data.monster[monsterIndex]; // 몬스터 이름
+            int monsterHP = Data.msHp[monsterIndex]; // 몬스터 체력
+            int monsterAttack = Data.msAtk[monsterIndex]; // 몬스터 공격력
+            int monsterDex = Data.msDex[monsterIndex];
+
             bool battleError = false; // 잘못된 입력 여부
 
             // 속도값 설정
-            int monsterSpeed = Data.random.Next(Data.floor, Data.floor * 2);
+            int monsterSpeed = Data.random.Next(Data.floor, Data.floor * 2);                   
             int playerSpeed = Data.Dex;
+
             bool playerTurn = playerSpeed >= monsterSpeed;
+
             while (Data.Hp > 0 && monsterHP > 0)
             {
 
@@ -579,6 +585,24 @@ public static class DungeonSystem
                         Data.Money += Data.dice20() * (Data.floor * Data.floor); // 돈 지급
                                                                                  //Stats.UpdateStats(); // 스탯 갱신 필요 시 주석 해제
                                                                                  //Quest.ReportKill("몹 이름");
+                        int dropRoll = Data.dice20(); // Luk 반영 주사위
+                        if (dropRoll >= 15) // 조건: 주사위 결과가 15 이상일 경우 드랍
+                        {
+                            int[] weaponOptions = Data.monsterWeaponOptions[monsterIndex];
+                            int weaponIndex = weaponOptions[Data.random.Next(weaponOptions.Length)];
+
+                            // 무기 이름 가져오기 (무기 이름 배열이 필요함)
+                            string weaponName = Data.weaponNames[weaponIndex]; // Data.weaponNames[] 가정
+
+                            Console.WriteLine($"[아이템 드랍] {weaponName}을(를) 획득했습니다!");
+
+                            // 인벤토리 추가 로직이 있다면 여기에 삽입
+                            // Inventory.AddItem(weaponIndex);
+                        }
+                        else
+                        {
+                            Console.WriteLine("[아이템 드랍 실패] 아무 아이템도 떨어지지 않았습니다...");
+                        }
                         break;
                     }
 

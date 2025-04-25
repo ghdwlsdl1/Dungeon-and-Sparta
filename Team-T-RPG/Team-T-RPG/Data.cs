@@ -62,17 +62,25 @@ namespace Team_T_RPG
         //====================몬스터====================
         public static string[] monster = {"고블린", "오크", "오우거", "리치"};
        
-        public static int[] msAtk = { 10, 10, 5, 15 }; // 기본 공격력
-        public static int[] msHp = {30, 50, 50, 30}; // 기본 체력
-
-        public static int[] msWeaponEquip = { 0, 0, 0, 0 };
+        public static int[] msAtk = {10, 10, 10, 15}; // 기본 공격력
+        public static int[] msHp = {30, 50, 70, 30}; // 기본 체력
+        public static int[] msDex = {15, 10, 5, 10}; // 기본 이속
         public static int[][] monsterWeaponOptions = new int[][]
         {
         new int[] { 2 },            // 고블린 → 단검
         new int[] { 1 },            // 오크 → 롱소드
         new int[] { 4 },            // 오우거 → 도끼
-        new int[] { 3 }          // 리치 → 지팡이
+        new int[] { 3 }             // 리치 → 지팡이
         };
+
+        public static string[] weaponNames =
+        {
+        "롱소드",  // 0
+        "단검",    // 1
+        "지팡이",  // 2
+        "도끼"     // 3
+        };
+
         //====================주사위====================
         public static Random random = new Random(); // static으로 변경
 
