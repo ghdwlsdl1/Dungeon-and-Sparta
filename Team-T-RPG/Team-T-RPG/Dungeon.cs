@@ -22,7 +22,7 @@ public static class DungeonSystem
             Data.dungeonHour -= 24;
         }
     }
-
+    public static string search_result_print = "";
     //던전UI
     public static bool DungeonEntry(ref bool DungeonEntryError, ref bool DungeonEntryEnd)
     {
@@ -87,48 +87,60 @@ public static class DungeonSystem
 
             Data.Money += 200 * Data.floor * Data.floor;
         }
-
+       
+        Console.WriteLine($"현재 층 수 : {Data.floor}");
+        Console.WriteLine($"{Data.floor}층 붕괴까지 : {Data.dungeonDay} 일 {24 - Data.dungeonHour}시간 남음");
+        Console.WriteLine("--------------------------------------------------------------------------------------");
         Dungeon.MiniMap();
-
         Dungeon.PrintMap();
-
-        Console.WriteLine($"\n\n{Data.floor}층 던전 안 입니다.");
-        Console.WriteLine($"던전 남은 일수   {Data.dungeonDay}");
-        Console.WriteLine($"던전 지난 시간   {Data.dungeonHour}");
-        Console.WriteLine("\n행동을 정해 주세요.");
-        Console.WriteLine("1. 상태 보기");
-        Console.WriteLine("2. 인벤토리");
-        Console.WriteLine("3. 이동하기");
-        Console.WriteLine("4. 휴식하기");
-        Console.WriteLine("5. 조사하기");
-        if (Data.tired >= 12)
-        {
-            Console.WriteLine("피곤합니다 휴식을 권장합니다.\n");
-        }
-        else if(Data.tired >= 20)
-        {
-            Console.WriteLine("지나친 피로로 탈진상태에 돌입합니다.\n");
-        }
-
+        Console.WriteLine("--------------------------------------------------------------------------------------");
         if (DungeonEntryError)
         {
             Console.WriteLine("잘못된 입력입니다.\n");
             DungeonEntryError = false;
         }
 
-        string text = Console.ReadLine();
+        if (search_result_print != "")
+        {
+            Console.WriteLine("탐색 결과 : " + search_result_print);
+            search_result_print = "";
+        }
 
+        if (Data.tired >= 12)
+        {
+            Console.WriteLine("피로가 몰려오는 것이 느껴집니다.");
+            Console.WriteLine("--------------------------------------------------------------------------------------");
+        }
+        else if (Data.tired >= 20)
+        {
+            Console.WriteLine("극심한 피로로 인해 모든 행동에 제약이 생깁니다.");
+            Console.WriteLine("--------------------------------------------------------------------------------------");
+        }
+        Console.WriteLine("무엇을 할까?\n");
+        Console.WriteLine("1. 상태 보기");
+        Console.WriteLine("2. 인벤토리");
+        Console.WriteLine("3. 이동하기");
+        Console.WriteLine("4. 휴식하기");
+        Console.WriteLine("5. 조사하기");
+        string text = Console.ReadLine();
+        
         switch (text)
         {
             case "1":
                 Console.Clear();
+<<<<<<< HEAD
                 
+=======
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             case "2":
                 Console.Clear();
+<<<<<<< HEAD
                 
                 Console.Clear();
+=======
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             case "3":
@@ -145,12 +157,25 @@ public static class DungeonSystem
 
             case "4":
                 Data.monsterTurn += 6; Data.dungeonHour += 6; Data.tired -= 6; Data.ultimate += 6;
+<<<<<<< HEAD
                 Console.WriteLine("6시간동안 휴식을 취합니다.\n");
+=======
+                Console.Clear();
+                Console.WriteLine("당신은 지친 몸을 눕히고 휴식하기로 했습니다.\n");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                MainFrame.SerialTextWrite("휴식 취하는 중 ▶▷▶▷▶");
+                Console.ResetColor();
+                Console.Clear();
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             case "5":
                 Data.monsterTurn += 3; Data.dungeonHour += 3; Data.tired += 3; Data.ultimate += 3;
+<<<<<<< HEAD
                 SearchSystem.Search();
+=======
+                search_result_print = SearchSystem.Search();
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
                 break;
 
             default:
@@ -277,11 +302,13 @@ public static class DungeonSystem
         public static bool Move(ref bool moveError, ref bool moveError2)
         {
             Console.Clear();
-
+            Console.WriteLine($"현재 층 수 : {Data.floor}");
+            Console.WriteLine($"{Data.floor}층 붕괴까지 : {Data.dungeonDay} 일 {24 - Data.dungeonHour}시간 남음");
+            Console.WriteLine("--------------------------------------------------------------------------------------");
             MiniMap();
             PrintMap();
-
-            Console.WriteLine("이동 방향을 정해주세요.");
+            Console.WriteLine("--------------------------------------------------------------------------------------");
+            Console.WriteLine("어느 방향으로 갈까?\n");
             Console.WriteLine("1. 위");
             Console.WriteLine("2. 아래");
             Console.WriteLine("3. 오른쪽");
@@ -294,7 +321,7 @@ public static class DungeonSystem
             }
             else if (moveError2)
             {
-                Console.WriteLine("이동할 수 없습니다.\n");
+                Console.WriteLine("벽과 마주한 당신은, 다른 방향으로 이동하기로 했습니다.\n");
                 moveError2 = false;
             }
 
@@ -348,19 +375,26 @@ public static class DungeonSystem
             return vertical + horizontal;
         }
         // 조사하기
-        public static void Search()
+        public static string Search()
         {
             int px = Data.playerX;
             int py = Data.playerY;
-
+            string search_result = "";
             // 현재 위치에 보물이 있을 경우 즉시 획득
             if (px == Data.treasureX && py == Data.treasureY)
             {
                 Console.Clear();
-                Console.WriteLine("보물을 획득했다");
+                int treasureGold = Data.dice20() * Data.floor * 70;
+                Data.Money += treasureGold;
+                Console.WriteLine("수상한 레버를 당기자, 작은 보물상자가 나타났다!");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                MainFrame.SerialTextWrite($"상자 안에서 {treasureGold}G 를 발견했다!");
+                Console.ResetColor();
+                Thread.Sleep(1000);
+                Console.Clear();
                 Data.treasureX = -1; // 보물 위치 초기화
                 Data.treasureY = -1;
-                return;
+                return search_result;
             }
 
             int range = 2 + (Data.Wis / 2); // 탐색 범위 (지혜에 비례)
@@ -388,15 +422,15 @@ public static class DungeonSystem
                             int dx = x - px;
                             int dy = y - py;
                             string direction = GetDirection(dx, dy);
-                            Console.WriteLine($"{direction}에서 희미한 기운이 느껴진다…");
+                            search_result = $"{direction}쪽에서 희미한 기운이 느껴진다…";
                         }
                         else
                         {
                             // 실패
                             Console.Clear();
-                            Console.WriteLine("뭔가 있을 것 같지만 확신이 없다.");
+                            search_result = "희미한 기운이 느껴지지만, 이내 사라졌다…";
                         }
-                        return; // 보물 찾기 여부에 관계없이 한 번만 시도함
+                        return search_result; // 보물 찾기 여부에 관계없이 한 번만 시도함
                     }
                 }
             }
@@ -405,8 +439,10 @@ public static class DungeonSystem
             if (!found)
             {
                 Console.Clear();
-                Console.WriteLine("[아무것도 느껴지지 않는다.]");
+                search_result = "아무 것도 느껴지지 않는다…";
+                return search_result;
             }
+            return search_result;
         }
     }
 
@@ -524,9 +560,10 @@ public static class DungeonSystem
         {
             Stats stats = new Stats();
             // 콘솔 초기화 및 전투 시작 메시지
+            
+            Console.WriteLine("\n\n\n");
+            MainFrame.SerialTextWrite("적을 만났습니다! 전투를 시작합니다.",70);
             Console.Clear();
-            Console.WriteLine("적을 만났습니다! 전투를 시작합니다.\n\n\n");
-
             // 몬스터 능력치 설정 (층 수에 비례하여 HP, 공격력 생성)
             int monsterHp = Data.random.Next(1 + (Data.floor * Data.floor), (Data.floor * 5) + (Data.floor * Data.floor));
             int monsterHpMX = monsterHp;
@@ -546,7 +583,11 @@ public static class DungeonSystem
                     TimetoDie++;
                     if (TimetoDie >= 5)
                     {
+<<<<<<< HEAD
                         Console.WriteLine("당신의 시간이 끝났습니다.");
+=======
+                        Console.WriteLine("불사의 힘이 빠져나가는 것이 느껴집니다.");
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
                         Data.Hp = 0;
                         return;
                     }
@@ -554,7 +595,11 @@ public static class DungeonSystem
 
                 if (smokeShell)
                 {
+<<<<<<< HEAD
                     Console.WriteLine("전투가 강제로 종료되었습니다.");
+=======
+                    Console.WriteLine("자욱한 연기 사이로 몰래 도망쳤습니다!");
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
                     Data.Dex -= doping;
                     doping = 0;
                     stats.UpdateStats();
@@ -565,11 +610,27 @@ public static class DungeonSystem
                 if (playerTurn)
                 {
                     // 현재 상태 출력
+<<<<<<< HEAD
                     Console.WriteLine($"\n적 체력: {monsterHp} / {monsterHpMX}");
                     Console.WriteLine($"적공격력{monsterAttack}.");
                     Console.WriteLine($"\n체력: {Data.Hp} / {Data.HpMax}\n마나: {Data.Mp} / {Data.MpMax}");
                     Console.WriteLine($"마나: {Data.Mp} / {Data.MpMax}");
                     Console.WriteLine("플레이어 턴입니다.\n1. 공격\n2. 마법\n3. 아이템");
+=======
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("[나의 차례]\n");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"적 체력: {monsterHp} / {monsterHpMX}");
+                    Console.WriteLine($"적 공격력 : {monsterAttack}");
+                    Console.Write("---------V");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("S---------\n");
+                    Console.WriteLine($"나의 체력: {Data.Hp} / {Data.HpMax}");
+                    Console.WriteLine($"나의 마나: {Data.Mp} / {Data.MpMax}\n");
+                    Console.ResetColor();
+                    Console.WriteLine("---------------------");
+                    Console.WriteLine("당신의 선택은…\n1. 공격하기\n2. 마법 사용하기");
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
 
                     // 이전 턴에 잘못된 입력이 있었는지 표시
                     if (battleError) Console.WriteLine("잘못된 입력. 아무 행동도 하지 못했습니다.");
@@ -603,12 +664,15 @@ public static class DungeonSystem
                         case "2": // 마법 사용
                             Console.Clear();
                             Skill(ref monsterHp, monsterAttack, monsterHpMX);
+<<<<<<< HEAD
                             break;
 
                         case "3": // 아이템 사용
                             Console.Clear();
                             
                             Console.Clear();
+=======
+>>>>>>> parent of 6f50b74 (Merge branch '승우')
                             break;
 
                         default: // 잘못된 입력
@@ -680,6 +744,7 @@ public static class DungeonSystem
 
             // 전투 종료 대기
             Console.ReadKey();
+            Console.Clear();
         }
 
         //스킬

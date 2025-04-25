@@ -188,24 +188,24 @@ namespace Team_T_RPG
             Console.WriteLine("\n[무기 목록]");
             for (int i = 1; i < Data.weapon.Length; i++)
             {
-                Console.WriteLine($"W{i}.[x{Data.weaponTf[i]}] {Data.weapon[i]} {Data.weaponDeal[i]}Gold");
+                Console.WriteLine($"W{i}.[ {((Data.weaponTf[i] == 1) ? "소지중" : "없음")}] {Data.weapon[i]} {Data.weaponDeal[i]}Gold");
             }
             // 보조 장비 목록
             Console.WriteLine("\n[보조 장비 목록]");
             for (int i = 1; i < Data.assist.Length; i++)
             {
-                Console.WriteLine($"A{i}.[x{Data.assistTf[i]}] {Data.assist[i]} {Data.assistDeal[i]}Gold");
+                Console.WriteLine($"A{i}.[  {((Data.assistTf[i] == 1) ? "소지중" : "없음")}] {Data.assist[i]} {Data.assistDeal[i]}Gold");
             }
             // 갑옷 목록
             Console.WriteLine("\n[갑옷 목록]");
             for (int i = 1; i < Data.armor.Length; i++)
             {
-                Console.WriteLine($"R{i}.[x{Data.armorTf[i]}] {Data.armor[i]} {Data.armorDeal[i]}Gold");
+                Console.WriteLine($"R{i}.[ {((Data.armorTf[i] == 1) ? "소지중" : "없음")}] {Data.armor[i]} {Data.armorDeal[i]}Gold");
             }
             Console.WriteLine("\n[포션 목록]");
             for (int i = 1; i < Data.potion.Length; i++)
             {
-                Console.WriteLine($"P{i}.[x{Data.potionTf[i]}] {Data.potion[i]} {Data.potionDeal[i]}Gold");
+                Console.WriteLine($"P{i}.[ {((Data.potionTf[i] == 1) ? "소지중" : "없음")}] {Data.potion[i]} {Data.potionDeal[i]}Gold");
             }
         }
 
