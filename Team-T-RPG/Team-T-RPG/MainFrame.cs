@@ -75,7 +75,8 @@ namespace Team_T_RPG
             Console.Write($" $ {Data.Money} G  \n");
             Console.ResetColor();
             Console.WriteLine("--------------------------------------------------------------------------------------\n");
-            Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n\n0. 가이드북");
+            Console.WriteLine("1. 스탯 확인\n2. 인벤토리\n3. 상점\n4. 퀘스트\n5. 휴식\n6. 던전 진입\n\n0. 저장하기");
+            
             int userinput = UserInputHandler(0,6);
             switch (userinput)
             {
@@ -138,13 +139,16 @@ namespace Team_T_RPG
                         }
                         Console.Clear();
                         Data.Day++;
+                        Data.map = null;
 
                         break;
                     }
                     case 0:
                     {
                         Console.Clear();
-                        gameStarter.GuideBook();
+                        SaveSystem.Save();
+                        Console.Write("저장이 완료되었습니다.");
+                        Thread.Sleep(2000);
                         break;
                     }
             }

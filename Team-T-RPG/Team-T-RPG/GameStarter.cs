@@ -46,11 +46,17 @@ namespace Team_T_RPG
                     break;
 
                 }
-                else if (userinput == 2) // 추후 이어하기 구현 시 여기서 다 불러오고 break
+                else if (userinput == 2 && File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "save.json"))) // 추후 이어하기 구현 시 여기서 다 불러오고 break
                 {
                     Console.Clear();
-                    Console.WriteLine("저장 기능은 미구현입니다. 죄송합니다.\n잠시 후 시작화면으로 돌아갑니다.");
-                    Thread.Sleep(2000); // 2초 대기
+                    SaveSystem.Load();
+                    Console.Clear();
+                    break;
+                }
+                else if (userinput == 2)
+                {
+                    Console.WriteLine("세이브파일이 존재하지 않습니다.\n 잠시 후 돌아갑니다.");
+                    Thread.Sleep(2000);
                     Console.Clear();
                 }
                 else if (userinput == 0)
