@@ -101,7 +101,7 @@ namespace Team_T_RPG
             return random.Next(1, 7);
         }
         //====================던전 시스템====================
-        public static int dungeonDay = 1;   //날짜
+        public static int dungeonDay = 3;   //날짜
         public static int dungeonHour = 0;   //시간
         //====================던전 맵====================
         public static int playerX = -1; //플레이어좌표x

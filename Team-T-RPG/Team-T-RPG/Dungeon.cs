@@ -50,16 +50,26 @@ public static class DungeonSystem
 
             if (dx <= 1 && dy <= 1)
             {
+                // ===== 전투 시작 =====
                 BattleSystem.Battle();
-                Data.monsterPositions.RemoveAt(i);
-                Data.map[my, mx] = ' ';
-                int targetMonsterCount = Data.floor * 2;
-                int currentMonsterCount = Data.monsterPositions.Count;
-                int toSpawn = targetMonsterCount - currentMonsterCount;
 
-                if (toSpawn > 0)
-                    MonstersSystem.PlaceMonsters(toSpawn);
+                // 몬스터 삭제
+                Data.map[my, mx] = ' ';
+                Data.monsterPositions.RemoveAt(i); // 충돌한 몬스터 하나만 제거
+
+                // 몬스터 1마리 추가 리젠
+                MonstersSystem.PlaceMonsters(1);
+
+                // 모든 살아있는 몬스터 다시 맵에 'M' 찍기
+                for (int j = 0; j < Data.monsterPositions.Count; j++)
+                {
+                    int tx = Data.monsterPositions[j].x;
+                    int ty = Data.monsterPositions[j].y;
+                    Data.map[ty, tx] = 'M';
+                }
+
                 Data.dungeonHour += 2;
+
                 return true;
             }
         }
@@ -270,6 +280,7 @@ public static class DungeonSystem
 
             // 6. 현재 층 수에 비례하여 몬스터 배치
             int monsterCount = Data.floor*2;
+            Data.monsterPositions.Clear();
             MonstersSystem.PlaceMonsters(monsterCount);
 
             // 7. 최종적으로 포탈과 플레이어 위치를 맵에 시각적으로 표시
@@ -445,19 +456,6 @@ public static class DungeonSystem
         // 몬스터 배치
         public static void PlaceMonsters(int count)
         {
-            // 기존에 있던 몬스터 초기화 ('M' 제거)
-            for (int y = 0; y < Data.map.GetLength(0); y++)
-            {
-                for (int x = 0; x < Data.map.GetLength(1); x++)
-                {
-                    if (Data.map[y, x] == 'M')
-                        Data.map[y, x] = ' ';
-                }
-            }
-
-            // 이전 몬스터 위치 정보 초기화
-            Data.monsterPositions.Clear();
-
             int size = Data.map.GetLength(0); // 맵 크기
             int placed = 0; // 배치된 몬스터 수
 
