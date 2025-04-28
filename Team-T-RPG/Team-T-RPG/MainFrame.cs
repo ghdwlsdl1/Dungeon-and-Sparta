@@ -71,6 +71,7 @@ namespace Team_T_RPG
         
         public static void TownScene() // 가장 중심 씬이 될 마을. 각 선택지에 따라 기능 구현 (업무 여기서 나누는 느낌으로)
         {
+            stats.UpdateStats();
             Console.WriteLine("--------------------------------------------------------------------------------------");
             Console.Title = $"Dungeon & Sparta : {Data.Name} / {Data.Day}일차";
             Art.MakeImage("Image/village.png", width: 60);

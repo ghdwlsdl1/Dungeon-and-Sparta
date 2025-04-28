@@ -182,7 +182,7 @@ namespace Team_T_RPG
         {
             int weaponBonus = 0;
 
-            int weaponIndex = assistNumFind();
+            int weaponIndex = weaponNumFind();
             if (weaponIndex != -1 && Data.weaponEquip[weaponNumFind()] == 1)
             {
                 weaponBonus += Data.weaponAtk[weaponNumFind()];
