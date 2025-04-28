@@ -1,2 +1,2 @@
-# Team-T-RPG
+# Dungeon and Sparta
 3주차 팀과제
